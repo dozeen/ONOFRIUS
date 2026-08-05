@@ -1,0 +1,27 @@
+{
+    "global": {
+        "mode": "on"
+    },
+    "contacts": {
+        "Federico": {
+            "mode": "on"
+        },
+        "Dolly": {
+            "mode": "off"
+        },
+        "Mercadante": {
+            "mode": "listen"
+        },
+        "federico": {
+            "mode": "off"
+        },
+        "dolly": {
+            "mode": "off"
+        }
+    },
+    "groups": {
+        "Mercadante": {
+            "mode": "listen"
+        }
+    }
+}

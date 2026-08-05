@@ -1,0 +1,195 @@
+const AgendaEngine = require("../agenda/AgendaEngine");
+const AgendaContextSelector = require("../agenda/AgendaContextSelector");
+const AgendaPrivacyPolicy = require("../agenda/AgendaPrivacyPolicy");
+const CognitivePipeline = require("../cognition/CognitivePipeline");
+const DecisionEngine = require("../cognition/DecisionEngine");
+const CharacterEngine = require("../character/characterEngine");
+const Perception = require("../perception");
+const Planner = require("../planner/planner");
+const debug = require("../debug");
+const History = require("../history/history");
+const MemoryEngine = require("../memory/memoryEngine");
+const Reasoner = require("../reasoning/reasoner");
+const StyleEngine = require("../style/styleEngine");
+const ContactResolver = require("../contacts/contactResolver");
+
+class Brain {
+
+    constructor() {
+this.perception = Perception;
+this.reasoner = new Reasoner();
+this.pipeline = new CognitivePipeline();
+        this.planner = new Planner();
+        this.history = new History();
+        this.memory = new MemoryEngine();
+
+        this.perception = Perception;
+        this.reasoner = new Reasoner();
+        this.character = CharacterEngine;
+        this.decision = DecisionEngine;
+        this.style = new StyleEngine();
+
+    }
+
+    async process(message) {
+
+        console.log("");
+
+        debug.log("");
+        debug.log("🧠 Brain");
+        debug.log("----------------------------");
+
+
+console.log("\n========== IDENTIFICATORI ==========");
+console.log("chatId :", message.chatId);
+console.log("source :", message.source);
+console.log("from   :", message.from);
+console.log("author :", message.author);
+console.log("contact:", message.contact);
+console.log("====================================");
+        // -------------------------------------------------
+        // CONTATTO
+        // -------------------------------------------------
+
+        // Il Kernel dovrebbe aver già risolto il contatto.
+        // Usa ContactResolver solo come fallback.
+
+        if (!message.contact) {
+
+            message.contact =
+                ContactResolver.resolve(message.chatId);
+
+        }
+
+        console.log("");
+        console.log("👤 CONTACT");
+        console.dir(message.contact, { depth: null });
+        console.log("");
+
+        // -------------------------------------------------
+        // CRONOLOGIA
+        // -------------------------------------------------
+
+        message.history =
+            await this.history.load(message.chatId);
+
+        // -------------------------------------------------
+        // MEMORIA
+        // -------------------------------------------------
+
+        message.memory =
+            await this.memory.buildContext(message.chatId);
+// -------------------------------------------------
+// AGENDA / EVENTI TEMPORALI
+// -------------------------------------------------
+
+const fullAgenda =
+    await AgendaEngine.buildCognitiveContext(message);
+
+const selectedAgenda =
+    AgendaContextSelector.select(
+        message,
+        fullAgenda,
+        {
+            limit: 8
+        }
+    );
+
+message.agenda =
+    AgendaPrivacyPolicy.filter(
+        message,
+        selectedAgenda
+    );
+
+console.log("");
+console.log("📅 AGENDA CONTEXT");
+console.log(
+    `Eventi disponibili: ${fullAgenda.length}`
+);
+console.log(
+    `Eventi selezionati: ${message.agenda.length}`
+);
+
+for (const event of message.agenda) {
+
+    console.log(
+        `  [${event.relevanceScore}]`,
+        event.date,
+        event.time || "ALL-DAY",
+        "-",
+        String(event.title || "")
+            .replace(/\s+/g, " ")
+            .slice(0, 120)
+    );
+}
+
+console.log("");
+        // -------------------------------------------------
+// COGNITIVE PIPELINE
+// -------------------------------------------------
+
+message =
+    await this.pipeline.process(message);
+
+console.log("");
+console.log("👁 PERCEPTION");
+console.dir(message.perception, { depth: null });
+
+console.log("");
+console.log("🧠 ANALYSIS");
+console.dir(message.analysis, { depth: null });
+console.log("");
+        // -------------------------------------------------
+        // RAGIONAMENTO
+        // -------------------------------------------------
+
+        message.analysis =
+            this.reasoner.analyze(message);
+
+        // -------------------------------------------------
+        // PIANIFICAZIONE
+        // -------------------------------------------------
+
+        message.plan =
+            this.planner.plan(message);
+
+        // -------------------------------------------------
+        // CHARACTER
+        // -------------------------------------------------
+
+        message.character =
+            this.character.build(message);
+
+        console.log("");
+        console.log("🎭 CHARACTER");
+        console.dir(message.character, { depth: null });
+        console.log("");
+
+        // -------------------------------------------------
+        // STILE
+        // -------------------------------------------------
+
+        message.style =
+            await this.style.getPrompt(message.contact);
+
+        // -------------------------------------------------
+        // SALVATAGGIO CRONOLOGIA
+        // -------------------------------------------------
+
+        await this.history.saveUser(
+
+            message.chatId,
+
+            message
+
+        );
+
+        console.log("✅ Brain completato");
+
+        return message;
+
+    }
+
+}
+
+module.exports = Brain;

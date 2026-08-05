@@ -1,0 +1,489 @@
+/**
+ * PromptBuilder
+ * 
+ * Costruisce prompt ottimizzati per l'LLM basati su promptContext.
+ * 
+ * Principi:
+ * - Context-aware: adatta il prompt al contesto
+ * - Conciso: elimina verbosità inutile
+ * - Structure: usa template coerenti
+ * - Emotion: include contesto emotico
+ * - Relationship: personalizza in base alla relazione
+ * - Constraints: rispetta vincoli e agenda
+ */
+
+class PromptBuilder {
+
+    constructor(config = {}) {
+
+        this.config = {
+            model: config.model || 'default',
+            maxLength: config.maxLength || 2000,
+            temperature: config.temperature || 0.7,
+            includeEmotionalContext: config.includeEmotionalContext !== false,
+            includeRelationshipContext: config.includeRelationshipContext !== false,
+            includeAgendaContext: config.includeAgendaContext !== false,
+            includePriorities: config.includePriorities !== false,
+            verbose: config.verbose === true
+        };
+
+        this.systemPrompt = this.buildSystemPrompt();
+        this.builtPrompts = [];
+
+    }
+
+    /**
+     * Costruisce il system prompt (istruzioni di base per l'LLM)
+     */
+    buildSystemPrompt() {
+
+        return `You are Gordon, a cognitive AI assistant created by Docker Inc.
+
+Your role:
+- Provide helpful, technical, and pragmatic responses
+- Adapt your communication style to the user's relationship level
+- Consider emotional context and urgency
+- Respect time constraints and priorities
+- Be concise and action-oriented
+
+Core principles:
+- First: understand the intent
+- Second: consider constraints
+- Third: provide optimal solution
+- Always: be respectful of the user's time`;
+
+    }
+
+    /**
+     * Processa il context e costruisce il prompt finale
+     */
+    async process(context) {
+
+        if (!context.promptContext) {
+            return context;
+        }
+
+        const promptContext = context.promptContext;
+
+        // 1. Costruisci il contesto principale
+        const mainContext = this.buildMainContext(promptContext);
+
+        // 2. Aggiungi contesto emotico se rilevante
+        const emotionalContext = this.config.includeEmotionalContext
+            ? this.buildEmotionalContext(promptContext)
+            : '';
+
+        // 3. Aggiungi contesto relazionale
+        const relationshipContext = this.config.includeRelationshipContext
+            ? this.buildRelationshipContext(promptContext)
+            : '';
+
+        // 4. Aggiungi vincoli e opportunità
+        const constraintContext = this.buildConstraintContext(promptContext);
+
+        // 5. Aggiungi agenda se rilevante
+        const agendaContext = this.config.includeAgendaContext
+            ? this.buildAgendaContext(promptContext)
+            : '';
+
+        // 6. Aggiungi priorità
+        const priorityContext = this.config.includePriorities
+            ? this.buildPriorityContext(promptContext)
+            : '';
+
+        // 7. Costruisci il prompt messaggi conversazione
+        const conversationPrompt = this.buildConversationPrompt(promptContext);
+
+        // 8. Assembla il prompt finale
+        const userPrompt = this.assemblePrompt(
+            mainContext,
+            emotionalContext,
+            relationshipContext,
+            constraintContext,
+            agendaContext,
+            priorityContext,
+            conversationPrompt
+        );
+
+        // 9. Valuta la qualità del prompt
+        const promptQuality = this.evaluatePromptQuality(userPrompt, promptContext);
+
+        // Salva nel contesto
+        context.systemPrompt = this.systemPrompt;
+        context.userPrompt = userPrompt;
+        context.promptBuilder = {
+            builtAt: Date.now(),
+            systemPromptLength: this.systemPrompt.length,
+            userPromptLength: userPrompt.length,
+            sections: {
+                main: mainContext.length,
+                emotional: emotionalContext.length,
+                relationship: relationshipContext.length,
+                constraints: constraintContext.length,
+                agenda: agendaContext.length,
+                priorities: priorityContext.length,
+                conversation: conversationPrompt.length
+            },
+            quality: promptQuality
+        };
+
+        if (this.config.verbose) {
+            console.log(`[PromptBuilder] Built prompt: ${userPrompt.length} chars, quality: ${promptQuality.score.toFixed(2)}`);
+        }
+
+        return context;
+
+    }
+
+    /**
+     * Costruisci il contesto principale
+     */
+    buildMainContext(promptContext) {
+
+        const lines = [];
+
+        lines.push('## CONTEXT');
+        lines.push(`Intent: ${promptContext.mainIntent}`);
+        lines.push(`Urgency: ${promptContext.mainUrgency}`);
+        lines.push(`Focus: ${promptContext.focus}`);
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci il contesto emotico
+     */
+    buildEmotionalContext(promptContext) {
+
+        if (!promptContext.emotionalTone) {
+            return '';
+        }
+
+        const lines = [];
+
+        lines.push('## EMOTIONAL CONTEXT');
+        lines.push(`Tone: ${promptContext.emotionalTone}`);
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci il contesto relazionale
+     */
+    buildRelationshipContext(promptContext) {
+
+        if (!promptContext.relationshipContext) {
+            return '';
+        }
+
+        const rel = promptContext.relationshipContext;
+        const lines = [];
+
+        lines.push('## RELATIONSHIP CONTEXT');
+        lines.push(`Trust Level: ${(rel.trustLevel * 100).toFixed(0)}%`);
+        lines.push(`Communication Style: ${rel.communicationStyle || 'standard'}`);
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci il contesto dei vincoli
+     */
+    buildConstraintContext(promptContext) {
+
+        const lines = [];
+        let hasConstraints = false;
+
+        if (promptContext.constraints?.threats?.length > 0) {
+            hasConstraints = true;
+            lines.push('## CONSTRAINTS');
+            lines.push('Threats:');
+            promptContext.constraints.threats.forEach(threat => {
+                lines.push(`  - ${threat.threat} (${threat.severity})`);
+            });
+        }
+
+        if (promptContext.constraints?.agendaConstraints?.length > 0) {
+            if (!hasConstraints) {
+                lines.push('## CONSTRAINTS');
+                hasConstraints = true;
+            }
+            lines.push('Agenda:');
+            promptContext.constraints.agendaConstraints.forEach(item => {
+                lines.push(`  - ${item.description}`);
+            });
+        }
+
+        if (hasConstraints) {
+            lines.push('');
+        }
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci il contesto agenda
+     */
+    buildAgendaContext(promptContext) {
+
+        if (!promptContext.requiresImmedateAction) {
+            return '';
+        }
+
+        const lines = [];
+
+        lines.push('## IMMEDIATE ACTION REQUIRED');
+        lines.push('This requires prompt attention.');
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci il contesto priorità
+     */
+    buildPriorityContext(promptContext) {
+
+        if (!promptContext.topPriorities || promptContext.topPriorities.length === 0) {
+            return '';
+        }
+
+        const lines = [];
+
+        lines.push('## PRIORITIES');
+        promptContext.topPriorities.forEach((priority, idx) => {
+            lines.push(`${idx + 1}. ${priority.priority}`);
+        });
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci il prompt della conversazione
+     */
+    buildConversationPrompt(promptContext) {
+
+        const lines = [];
+        const messages = promptContext.conversationContext?.recentMessages || [];
+
+        if (messages.length === 0) {
+            return '';
+        }
+
+        lines.push('## CONVERSATION HISTORY');
+        lines.push('');
+
+        messages.forEach(msg => {
+            const actor = msg.actor === 'user1' ? 'User' : 'Gordon';
+            lines.push(`${actor}: ${msg.text}`);
+        });
+
+        lines.push('');
+        lines.push('## YOUR RESPONSE');
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Assembla il prompt finale
+     */
+    assemblePrompt(
+        mainContext,
+        emotionalContext,
+        relationshipContext,
+        constraintContext,
+        agendaContext,
+        priorityContext,
+        conversationPrompt
+    ) {
+
+        const parts = [
+            mainContext,
+            emotionalContext,
+            relationshipContext,
+            constraintContext,
+            agendaContext,
+            priorityContext,
+            conversationPrompt
+        ].filter(p => p.length > 0);
+
+        const prompt = parts.join('\n');
+
+        // Trunca se necessario
+        if (prompt.length > this.config.maxLength) {
+            return prompt.substring(0, this.config.maxLength) + '\n...[truncated]';
+        }
+
+        return prompt;
+
+    }
+
+    /**
+     * Valuta la qualità del prompt
+     */
+    evaluatePromptQuality(prompt, promptContext) {
+
+        let score = 0.5; // Base
+        let issues = [];
+
+        // Verifica che abbia il contesto minimo
+        if (prompt.includes('Intent:')) score += 0.1;
+        if (prompt.includes('Urgency:')) score += 0.1;
+        if (prompt.includes('Focus:')) score += 0.1;
+
+        // Verifica contesto emotico
+        if (promptContext.emotionalTone && prompt.includes('Tone:')) {
+            score += 0.05;
+        }
+
+        // Verifica relazione
+        if (promptContext.relationshipContext && prompt.includes('Trust Level:')) {
+            score += 0.05;
+        }
+
+        // Verifica conversazione
+        if (prompt.includes('CONVERSATION HISTORY')) {
+            score += 0.1;
+        }
+
+        // Penalizza per prompt vuoti/corti
+        if (prompt.length < 100) {
+            score -= 0.2;
+            issues.push('prompt_too_short');
+        }
+
+        // Penalizza per prompt troppo lunghi
+        if (prompt.length > this.config.maxLength) {
+            score -= 0.1;
+            issues.push('prompt_truncated');
+        }
+
+        // Verifica che abbia messaggi di conversazione
+        const messageCount = (prompt.match(/User:|Gordon:/g) || []).length;
+        if (messageCount === 0) {
+            score -= 0.1;
+            issues.push('no_conversation_history');
+        }
+
+        return {
+            score: Math.max(0, Math.min(1, score)),
+            issues: issues,
+            messageCount: messageCount,
+            length: prompt.length
+        };
+
+    }
+
+    /**
+     * Costruisci prompt specializzato per decision-making
+     */
+    buildDecisionPrompt(context, options) {
+
+        if (!context.promptContext) {
+            return null;
+        }
+
+        const promptContext = context.promptContext;
+        const lines = [];
+
+        lines.push(this.buildMainContext(promptContext));
+        lines.push('## DECISION REQUIRED');
+        lines.push('');
+
+        options.forEach((option, idx) => {
+            lines.push(`Option ${idx + 1}: ${option.description}`);
+            if (option.pros) {
+                lines.push(`  Pros: ${option.pros.join(', ')}`);
+            }
+            if (option.cons) {
+                lines.push(`  Cons: ${option.cons.join(', ')}`);
+            }
+        });
+
+        lines.push('');
+        lines.push('Choose the best option and explain why.');
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci prompt specializzato per planning
+     */
+    buildPlanningPrompt(context, goal) {
+
+        if (!context.promptContext) {
+            return null;
+        }
+
+        const promptContext = context.promptContext;
+        const lines = [];
+
+        lines.push(this.buildMainContext(promptContext));
+        lines.push('## PLANNING');
+        lines.push(`Goal: ${goal}`);
+        lines.push('');
+        lines.push(this.buildConstraintContext(promptContext));
+        lines.push('Create a step-by-step plan to achieve this goal.');
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Costruisci prompt specializzato per problem-solving
+     */
+    buildProblemSolvingPrompt(context, problem) {
+
+        if (!context.promptContext) {
+            return null;
+        }
+
+        const promptContext = context.promptContext;
+        const lines = [];
+
+        lines.push(this.buildMainContext(promptContext));
+        lines.push('## PROBLEM SOLVING');
+        lines.push(`Problem: ${problem}`);
+        lines.push('');
+        lines.push(this.buildConstraintContext(promptContext));
+        lines.push(this.buildPriorityContext(promptContext));
+        lines.push('Analyze the problem and propose solutions.');
+        lines.push('');
+
+        return lines.join('\n');
+
+    }
+
+    /**
+     * Ottieni statistiche sui prompt generati
+     */
+    getStats() {
+
+        return {
+            promptsBuilt: this.builtPrompts.length,
+            averageLength: this.builtPrompts.length > 0
+                ? this.builtPrompts.reduce((a, b) => a + b, 0) / this.builtPrompts.length
+                : 0,
+            config: this.config
+        };
+
+    }
+
+}
+
+module.exports = PromptBuilder;

@@ -1,0 +1,26 @@
+class ShouldReply {
+
+    execute(message) {
+
+        // nessun testo
+        if (!message.text || message.text.trim() === "") {
+
+            if (message.media?.isVideo) return false;
+            if (message.media?.isImage) return false;
+            if (message.media?.isSticker) return false;
+            if (message.media?.isVoice) return false;
+
+        }
+
+        // solo emoji
+        if (/^[👍❤️😂🤣🔥👏🙏😘🥰😅🙂😀]+$/.test(message.text.trim())) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+}
+
+module.exports = ShouldReply;

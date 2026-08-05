@@ -1,0 +1,59 @@
+const PromptBuilder = require('../../prompt/PromptBuilder');
+
+/**
+ * PromptBuilderHandler
+ * 
+ * Integra PromptBuilder nella pipeline del Brain.
+ * Costruisce il prompt finale per l'LLM.
+ */
+
+class PromptBuilderHandler {
+
+    constructor() {
+
+        this.promptBuilder = new PromptBuilder({
+            includeEmotionalContext: true,
+            includeRelationshipContext: true,
+            includeAgendaContext: true,
+            includePriorities: true,
+            verbose: false
+        });
+
+    }
+
+    async process(context) {
+
+        return await this.promptBuilder.process(context);
+
+    }
+
+    /**
+     * Costruisci un prompt specializzato per decision-making
+     */
+    buildDecisionPrompt(context, options) {
+
+        return this.promptBuilder.buildDecisionPrompt(context, options);
+
+    }
+
+    /**
+     * Costruisci un prompt specializzato per planning
+     */
+    buildPlanningPrompt(context, goal) {
+
+        return this.promptBuilder.buildPlanningPrompt(context, goal);
+
+    }
+
+    /**
+     * Costruisci un prompt specializzato per problem-solving
+     */
+    buildProblemSolvingPrompt(context, problem) {
+
+        return this.promptBuilder.buildProblemSolvingPrompt(context, problem);
+
+    }
+
+}
+
+module.exports = PromptBuilderHandler;

@@ -1,0 +1,38 @@
+{
+  "name": "onofrius",
+  "version": "0.1.0-alpha",
+  "description": "ONOFRIUS Cognitive Operating System",
+  "main": "app.js",
+
+  "scripts": {
+    "start": "node app.js",
+    "setup": "node setup.js",
+    "forge": "node forge/Forge.js",
+    "scan": "node tools/dependencyScanner.js",
+"info": "node info/index.js",
+"constitution": "node constitution/index.js",
+"demo": "node demo/Demo.js",
+"explain": "node explain/Explain.js",
+    "test": "echo \"No tests configured\"",
+"cli": "node cli/index.js"  },
+
+  "keywords": [
+    "ai",
+    "cognitive",
+    "assistant",
+    "ollama",
+    "whatsapp",
+    "agent",
+    "event-driven"
+  ],
+
+  "author": "Onofrio Cannone",
+
+  "license": "MIT",
+
+  "dependencies": {
+    "axios": "^1.18.1",
+    "dotenv": "^17.4.2",
+    "whatsapp-web.js": "^1.34.7"
+  }
+}
