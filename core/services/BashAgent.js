@@ -1,19 +1,15 @@
-const Registry = require("./ServiceRegistry");
+class BashAgent {
 
-class NullBashAgent {
-
-    async execute() {
+    async execute(command) {
 
         return {
-
             success: false,
-
-            reason: "Bash Agent not installed"
-
+            disabled: true,
+            message: "BashAgent is not available in this release."
         };
 
     }
 
 }
 
-module.exports = Registry.resolve("BashAgent") || new NullBashAgent();
+module.exports = BashAgent;

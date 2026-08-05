@@ -1,4 +1,3 @@
-const config = require("../../config/config");
 
 /*
  * Tipi di messaggio che Gordon è autorizzato a processare.

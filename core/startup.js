@@ -3,30 +3,36 @@ const axios = require("axios");
 const config = require("./config");
 const logger = require("./logger");
 
+const health = {
+    folders: true,
+    ollama: false
+};
+
+function ensureFolder(folder) {
+
+    if (!fs.existsSync(folder)) {
+
+        fs.mkdirSync(folder, {
+            recursive: true
+        });
+
+        logger.info("Startup", `Cartella creata: ${folder}`);
+
+    }
+
+}
+
 async function checkFolders() {
 
-    const folders = [
+    [
         "logs",
         "memory",
         "plugins",
         "personality"
-    ];
+    ].forEach(ensureFolder);
 
-    for (const folder of folders) {
+    logger.info("Startup", "✔ Cartelle OK");
 
-        if (!fs.existsSync(folder)) {
-
-            logger.error(`Cartella mancante: ${folder}`);
-            return false;
-
-        }
-
-    }
-
-logger.info(
-    "Startup",
-    "✔ Cartelle OK"
-);
     return true;
 
 }
@@ -35,41 +41,48 @@ async function checkOllama() {
 
     try {
 
-        const r = await axios.get(`${config.ollama.host}/api/tags`);
+        const r = await axios.get(
+            `${config.ollama.host}/api/tags`,
+            {
+                timeout: 2000
+            }
+        );
 
-        if (!r.data.models) {
+        if (r.data.models) {
 
-            logger.error("Ollama non risponde.");
+            logger.info(
+                "Startup",
+                "✔ Ollama raggiungibile"
+            );
 
-            return false;
+            health.ollama = true;
 
         }
-
-logger.info(
-    "Startup",
-    "✔ Ollama raggiungibile"
-);
-        return true;
 
     }
 
     catch {
 
-        logger.error("Impossibile raggiungere Ollama.");
+        logger.warn(
+            "Startup",
+            "AI Engine Offline"
+        );
 
-        return false;
+        health.ollama = false;
 
     }
+
+    return true;
 
 }
 
 async function runChecks() {
 
-    const folders = await checkFolders();
+    await checkFolders();
 
-    const ollama = await checkOllama();
+    await checkOllama();
 
-    return folders && ollama;
+    return health;
 
 }
 

@@ -1,7 +1,7 @@
 const logger = require("./logger");
 const pluginLoader = require("./pluginLoader");
 const CognitiveOrchestrator = require("./cognition/CognitiveOrchestrator");
-const startup = require("./startup");
+const BootManager = require("./boot/BootManager");
 const pluginManager = require("./pluginManager");
 const bus = require("./events/EventBus");
 
@@ -57,20 +57,31 @@ bus.on("message.received", async (context) => {
 
 // BOOT
 async function boot() {
+
     pluginLoader.loadPlugins();
+
     logger.info("Kernel", "Kernel avviato");
+
     const plugins = pluginManager.list();
+
     logger.info("Kernel", `Plugin caricati: ${plugins.length}`);
+
     for (const plugin of plugins) {
-        logger.info("Kernel", `✔ ${plugin.name || plugin.__filename}`);
+
+        logger.info(
+            "Kernel",
+            `✔ ${plugin.name || plugin.__filename}`
+        );
+
     }
 
-    const ok = await startup.runChecks();
-    if (!ok) {
-        logger.error("Kernel", "Startup fallito.");
-        process.exit(1);
-    }
-    logger.info("Kernel", "Kernel pronto.");
+    await BootManager.boot();
+
+    logger.info(
+        "Kernel",
+        "Kernel pronto."
+    );
+
 }
 
 async function start() {

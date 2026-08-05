@@ -1,5 +1,30 @@
+const fs = require("fs");
+const path = require("path");
+
 const contacts = require("../../config/contacts.json");
-const identities = require("../../config/identities.json");
+
+const identitiesFile = path.join(
+    __dirname,
+    "../../config/identities.json"
+);
+
+let identities = {};
+
+if (fs.existsSync(identitiesFile)) {
+
+    try {
+
+        identities = JSON.parse(
+            fs.readFileSync(identitiesFile, "utf8")
+        );
+
+    } catch {
+
+        identities = {};
+
+    }
+
+}
 
 function normalize(id) {
 
