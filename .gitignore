@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+
+# WhatsApp
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Logs
+logs/
+*.log
+
+# Runtime
+tmp/
+cache/
+backup/
+release/
+
+# Memory
+memory/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Certificates
+*.pem
+*.key
+
+# npm
+npm-debug.log*
+package-lock.old
+
+# Generated
+coverage/
+dist/
