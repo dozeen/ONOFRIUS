@@ -1,193 +1,222 @@
-# GORDON 3 — MASTER TODO
+<p align="center">
+    <img src="assets/cover.png" width="100%">
+</p>
 
-> Documento unico che rappresenta lo stato reale del progetto.
-> Contiene esclusivamente ciò che è ancora da completare.
-> Quando una funzionalità è completata viene rimossa da questo file
-> e documentata nella documentazione definitiva.
+<h1 align="center">
+ONOFRIUS
+</h1>
 
--------------------------------------------------------------------------------
+<p align="center">
+<b>Your Invisible Friend</b>
+</p>
 
-# PRIORITÀ ALTA
+<p align="center">
+An Event-Driven Cognitive Operating System for Persistent AI Agents
+</p>
 
-## Logging
+---
 
-- [ ] Migrare completamente tutti i `console.*` al Logger
-- [ ] Introdurre `logger.section()`
-- [ ] Aggiungere log su file
-- [ ] Rotazione automatica dei log
-- [ ] Modalità JSON
-- [ ] Filtri per modulo
+# What is ONOFRIUS?
 
--------------------------------------------------------------------------------
+ONOFRIUS is not a chatbot.
 
-## Brain
+It is an **Event-Driven Cognitive Operating System** designed to build persistent AI agents capable of observing, reasoning, learning and evolving over time.
 
-- [ ] Rifinire la pipeline cognitiva
-- [ ] Eliminare codice duplicato
-- [ ] Uniformare tutti gli Handler
-- [ ] Migliorare il tracing degli eventi
+Everything begins with an Event.
 
--------------------------------------------------------------------------------
+Every Event may become Knowledge.
 
-## Event System
+Every Knowledge may improve Intelligence.
 
-- [ ] Event Replay
-- [ ] Event Inspector
-- [ ] Event Query Engine
-- [ ] Event Timeline
-- [ ] Event Metrics
+---
 
--------------------------------------------------------------------------------
+# Philosophy
 
-## Memory
+Traditional assistants start from a prompt.
 
-- [ ] Memory Consolidation completa
-- [ ] Consolidamento relazioni
-- [ ] Consolidamento gruppi
-- [ ] Consolidamento conoscenza
-- [ ] Memoria semantica
+ONOFRIUS starts from reality.
 
--------------------------------------------------------------------------------
+An incoming event enters a cognitive pipeline where it is:
 
-## Agenda
+- Perceived
+- Classified
+- Enriched
+- Remembered
+- Reasoned
+- Verified
+- Answered
 
-- [ ] Conflict Detection
-- [ ] Disponibilità automatica
-- [ ] Priorità appuntamenti
-- [ ] Reminder intelligenti
+The response is only the final step.
 
--------------------------------------------------------------------------------
+The real goal is continuous cognitive growth.
 
-## AI
+---
 
-- [ ] Ottimizzazione Prompt Builder
-- [ ] Multi-model support
-- [ ] Streaming risposte
-- [ ] Retry automatico
-- [ ] Metriche prestazioni
+# Architecture
 
--------------------------------------------------------------------------------
+```
+Incoming Event
+        │
+        ▼
+ Perception Engine
+        │
+        ▼
+ Attention Engine
+        │
+        ▼
+ Working Memory
+        │
+        ▼
+ Fact Extraction
+        │
+        ▼
+ Reasoning Engine
+        │
+        ▼
+ Decision Engine
+        │
+        ▼
+ Prompt Builder
+        │
+        ▼
+ Verification
+        │
+        ▼
+ Response
+```
 
-## Cognizione
+---
 
-- [ ] Goal Manager
-- [ ] Attention Engine v2
-- [ ] Decision Engine v2
-- [ ] Ragionamento multi-step
-- [ ] Priorità dinamiche
+# Main Components
 
--------------------------------------------------------------------------------
+- Event Bus
+- Cognitive Kernel
+- Memory System
+- Attention Engine
+- Knowledge Base
+- Learning Engine
+- Agenda Engine
+- Identity Engine
+- Plugin System
+- Forge Release Builder
 
-## Agenti
+---
 
-- [ ] Bash Agent
-- [ ] Browser Agent
-- [ ] Vision Agent
-- [ ] Voice Agent
-- [ ] Calendar Agent
-- [ ] Email Agent
+# Features
 
--------------------------------------------------------------------------------
+- Event-first architecture
+- Persistent memory
+- Cognitive reasoning
+- Explainable decisions
+- Plugin architecture
+- Privacy by design
+- Release certification
+- Modular services
+- Multi-agent ready
 
-## Adapter
+---
 
-- [ ] Telegram
-- [ ] Email
-- [ ] REST API
-- [ ] Discord
+# Repository Structure
 
--------------------------------------------------------------------------------
+```
+core/
+adapters/
+plugins/
+forge/
+setup/
+docs/
+templates/
+tools/
+config/
+```
 
-## Test
+---
 
-- [ ] Migrare tutti i test a `node:test`
-- [ ] Test Brain
-- [ ] Test Plugin Manager
-- [ ] Test Logger
-- [ ] Test Memory
-- [ ] Test Agenda
+# Installation
 
--------------------------------------------------------------------------------
+Clone the repository
 
-## Refactoring
+```bash
+git clone git@github.com:dozeen/ONOFRIUS.git
 
-- [ ] Eliminare dipendenze obsolete residue
-- [ ] Uniformare tutti i `require()`
-- [ ] Ridurre codice duplicato
-- [ ] Uniformare convenzioni dei moduli
+cd ONOFRIUS
+```
 
--------------------------------------------------------------------------------
+Install dependencies
 
-## Infrastruttura
+```bash
+npm install
+```
 
-- [ ] Dashboard di diagnostica
-- [ ] Monitoraggio performance
-- [ ] Backup automatici
-- [ ] Health Check avanzato
+Run the setup wizard
 
--------------------------------------------------------------------------------
+```bash
+npm run setup
+```
 
-## Documentazione
+Start ONOFRIUS
 
-### Architettura
+```bash
+npm start
+```
 
-- [ ] ARCHITECTURE.md
+---
 
-### Runtime
+# Forge
 
-- [ ] BRAIN.md
-- [ ] PLUGINS.md
-- [ ] ADAPTERS.md
+Forge is the internal release certification system.
 
-### Cognizione
+Every public release can be verified through a sequence of audits:
 
-- [ ] MEMORY.md
-- [ ] IDENTITY.md
-- [ ] AGENDA.md
-- [ ] DECISION.md
-- [ ] PROMPT.md
+- Dependency Audit
+- Privacy Audit
+- Runtime Audit
+- Documentation Audit
+- Architecture Audit
 
-### Infrastruttura
+Only certified releases should be published.
 
-- [ ] LOGGER.md
-- [ ] EVENT_SYSTEM.md
-- [ ] TESTING.md
+---
 
-### Sviluppo
+# Constitution
 
-- [ ] IMPORT_TOOLS.md
-- [ ] CONTRIBUTING.md
+The architectural principles of ONOFRIUS are documented in:
 
--------------------------------------------------------------------------------
+```
+CONSTITUTION.md
+```
 
-## Futuro
+Every important design decision must respect the Constitution.
 
-### Gordon come Sistema Cognitivo
+---
 
-- [ ] Identity Registry
-- [ ] Multi Agent Architecture
-- [ ] Ragionamento distribuito
-- [ ] Auto-apprendimento continuo
-- [ ] Tool dinamici
-- [ ] Pianificazione autonoma
-- [ ] Sistema di competenze
-- [ ] Cognizione persistente
-- [ ] Meta-ragionamento
-- [ ] Auto-diagnostica
+# Roadmap
 
--------------------------------------------------------------------------------
+Current development focuses on:
 
-# FILOSOFIA DEL MASTER TODO
+- Event Intelligence
+- Cognitive Planning
+- Multi-Agent Architecture
+- Bash Agent
+- Browser Agent
+- Vision Agent
+- Autonomous Learning
+- Distributed Cognition
 
-Questo file rappresenta esclusivamente il lavoro ancora da svolgere.
+---
 
-Non è documentazione tecnica.
-Non è un changelog.
-Non descrive le funzionalità già completate.
+# License
 
-Ogni attività completata deve essere:
+MIT License
 
-1. Rimossa da questo file.
-2. Documentata nella cartella `docs/`.
-3. Tracciata nella cronologia Git.
-4. Coperta da test automatici quando applicabile.
+---
+
+<p align="center">
+
+**ONOFRIUS**
+
+*Your Invisible Friend*
+
+*"Every Event may become Knowledge."*
+
+</p>
