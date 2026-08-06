@@ -6,7 +6,7 @@ module.exports = {
   id: 'permissions',
   name: 'Directory Permissions & Structure',
 
-  requiredDirs: ['logs', 'config', 'memory', 'plugins', 'adapters'],
+  requiredDirs: ['logs', 'config', 'memory', 'plugins', 'adapters', 'personality'],
 
   async run(context) {
     const missingDirs = [];

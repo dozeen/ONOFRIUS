@@ -6,8 +6,19 @@ async function main() {
   const args = process.argv.slice(2);
   const fix = args.includes('--fix') || args.includes('-f');
   const json = args.includes('--json');
-  const checkArg = args.find(a => a.startsWith('--check='));
-  const checkFilter = checkArg ? checkArg.split('=')[1] : null;
+  
+  let checkFilter = null;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg.startsWith('--check=')) {
+      checkFilter = arg.split('=')[1];
+    } else if (arg === '--check' || arg === '-c') {
+      if (i + 1 < args.length) {
+        checkFilter = args[i + 1];
+        i++;
+      }
+    }
+  }
 
   const engine = new DoctorEngine({
     fix,

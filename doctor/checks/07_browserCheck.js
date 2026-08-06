@@ -49,9 +49,9 @@ module.exports = {
       return {
         id: this.id,
         name: this.name,
-        status: 'WARN',
-        message: 'No system Chrome/Chromium binary found in PATH.',
-        details: 'whatsapp-web.js will use bundled Puppeteer Chromium binary.',
+        status: 'ERROR',
+        message: 'No Chrome/Chromium binary found in PATH or puppeteer cache.',
+        details: 'Install Google Chrome or Chromium to enable browser engine.',
         fixable: false
       };
     }

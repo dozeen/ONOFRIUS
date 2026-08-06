@@ -22,7 +22,7 @@ module.exports = {
                 id: this.id,
                 name: this.name,
                 status: 'OK',
-                message: `Ollama operational at ${host} (${modelCount} model(s) available: ${models.slice(0, 3).join(', ')}${modelCount > 3 ? '...' : ''}).`,
+                message: `Ollama operational at ${host} (${modelCount} model(s) available).`,
                 fixable: false
               });
             } else {
@@ -30,7 +30,7 @@ module.exports = {
                 id: this.id,
                 name: this.name,
                 status: 'WARN',
-                message: `Ollama returned HTTP status ${res.statusCode}.`,
+                message: `Ollama Offline (HTTP ${res.statusCode}).`,
                 details: 'Make sure Ollama service is running.',
                 fixable: false
               });
@@ -40,7 +40,7 @@ module.exports = {
               id: this.id,
               name: this.name,
               status: 'WARN',
-              message: `Failed to parse response from Ollama at ${host}.`,
+              message: `Ollama Offline (Invalid response format from ${host}).`,
               fixable: false
             });
           }
@@ -52,8 +52,8 @@ module.exports = {
           id: this.id,
           name: this.name,
           status: 'WARN',
-          message: `Ollama service unreachable at ${host}: ${err.message}`,
-          details: 'Run "ollama serve" or check if Ollama is running in background.',
+          message: `Ollama Offline (${err.message})`,
+          details: 'Run "ollama serve" or "sudo systemctl start ollama" to enable local models.',
           fixable: false
         });
       });
@@ -64,7 +64,7 @@ module.exports = {
           id: this.id,
           name: this.name,
           status: 'WARN',
-          message: `Connection to Ollama at ${host} timed out.`,
+          message: `Ollama Offline (Connection timeout at ${host})`,
           fixable: false
         });
       });
