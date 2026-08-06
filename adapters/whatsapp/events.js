@@ -81,9 +81,11 @@ function registerEvents(client) {
 
         const event = EventBuilder.fromWhatsApp(msg);
 
-        EventStore.add(event);
+        const added = EventStore.add(event);
 
-        EventBus.emit("message.received", event);
+        if (added) {
+            EventBus.emit("message.received", added);
+        }
 
     });
 

@@ -42,13 +42,35 @@ class IdentityResolver {
         }
 
         if (!contact) {
-            contact = contacts.default;
+            contact = contacts.default || {};
         }
+
+        const enrichedContact = {
+            name: displayName || contact.name || "Unknown",
+            type: contact.type || (context.isOwner ? "Owner" : "Contact"),
+            relationship: contact.relationship || contact.relation || (context.isOwner ? "Owner" : "Standard Contact"),
+            role: contact.role || (context.isOwner ? "owner" : "user"),
+            model: contact.model || "qwen2.5:latest",
+            personality: contact.personality || "standard",
+            style: {
+                verbosity: contact.style?.verbosity || "Medium",
+                emoji: contact.style?.emoji || "Moderate",
+                smallTalk: contact.style?.smallTalk || "Low",
+                humor: contact.style?.humor || "Light",
+                romantic: contact.style?.romantic || "None",
+                explanations: contact.style?.explanations || "Concise"
+            },
+            ...contact
+        };
+
+        enrichedContact.name = enrichedContact.name || displayName || "Unknown";
+        enrichedContact.type = enrichedContact.type || "Contact";
+        enrichedContact.relationship = enrichedContact.relationship || "Standard Contact";
 
         return {
             id,
-            displayName: displayName || contact.name,
-            contact,
+            displayName: enrichedContact.name,
+            contact: enrichedContact,
             groups: []
         };
     }

@@ -14,6 +14,8 @@ module.exports = {
             if (context.profiler) context.profiler.start("Prompt");
 
             const prompt = promptBuilder.build(context);
+            context.prompt = prompt;
+            context.promptLength = prompt ? prompt.length : 0;
 
             if (context.profiler) context.profiler.end("Prompt");
 

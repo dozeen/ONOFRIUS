@@ -1,36 +1,33 @@
 module.exports = function (context) {
-
     const c = context.identity?.contact;
 
-    if (!c)
-        return "";
+    if (!c) return "";
 
     return `
 # IDENTITÀ
 
 Nome:
-${c.name}
+${c.name || "Unknown"}
 
 Tipo:
-${c.type}
+${c.type || "Contact"}
 
 Relazione:
-${c.relationship}
+${c.relationship || c.relation || "Standard"}
 
 Modello:
-${c.model}
+${c.model || "qwen2.5:latest"}
 
 Personalità:
-${c.personality}
+${c.personality || "Standard"}
 
 Stile:
 
-- Verbosità: ${c.style?.verbosity}
-- Emoji: ${c.style?.emoji}
-- Small Talk: ${c.style?.smallTalk}
-- Umorismo: ${c.style?.humor}
-- Romantico: ${c.style?.romantic}
-- Spiegazioni: ${c.style?.explanations}
+- Verbosità: ${c.style?.verbosity || "Medium"}
+- Emoji: ${c.style?.emoji || "Moderate"}
+- Small Talk: ${c.style?.smallTalk || "Low"}
+- Umorismo: ${c.style?.humor || "Light"}
+- Romantico: ${c.style?.romantic || "None"}
+- Spiegazioni: ${c.style?.explanations || "Concise"}
 `;
-
 };

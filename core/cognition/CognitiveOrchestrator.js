@@ -3,6 +3,7 @@
  * Integrate con CognitiveProfiler, QuestionClassifier (Assioma 11) e RelevanceFilter.
  */
 
+const crypto = require("crypto");
 const { buildContext } = require("../perception/contextBuilder");
 const FactExtractor = require("./facts/FactExtractor");
 const FactRegistry = require("./facts/FactRegistry");
@@ -82,11 +83,12 @@ class CognitiveOrchestrator {
      * @returns {Object} Context arricchito e validato
      */
     async processEvent(eventOrContext) {
+        const cycleId = crypto.randomUUID ? crypto.randomUUID().slice(0, 8) : Date.now().toString(36);
         const profiler = new CognitiveProfiler();
         profiler.startTotal();
 
-        console.log("➡️ TRACE 5: Orchestrator -> processEvent() INIZIO");
-        logger.info("CognitiveOrchestrator", "🧠 Inizio ciclo cognitivo per evento");
+        console.log(`➡️ TRACE 5: Orchestrator -> processEvent() INIZIO [cycleId: ${cycleId}]`);
+        logger.info("CognitiveOrchestrator", `🧠 Inizio ciclo cognitivo per evento [cycleId: ${cycleId}]`);
 
         let context;
 
@@ -209,11 +211,28 @@ class CognitiveOrchestrator {
             profiler.end("Verifier");
         }
 
-        console.log("========== FINE ORCHESTRATOR ==========");
-        console.log("context.response:", context.response);
-        console.log("context.skipLLM:", context.skipLLM);
-        console.log("context.responseBlocked:", context.responseBlocked);
-        console.log("=======================================");
+        const llmTime = profiler.records.get("LLM") || 0;
+        let totalTime = 0;
+        if (profiler.startTime) {
+            const diff = process.hrtime(profiler.startTime);
+            totalTime = Math.round((diff[0] * 1000) + (diff[1] / 1000000));
+        }
+        const promptLen = context.promptLength || (context.prompt ? context.prompt.length : 0);
+
+        console.log("");
+        console.log("══════════════════════════════════════");
+        console.log("        COGNITIVE CYCLE COMPLETE      ");
+        console.log("══════════════════════════════════════");
+        console.log(`Cycle ID ....... ${cycleId}`);
+        console.log(`Message ID ..... ${context.id || context.payload?.raw?.id?._serialized || "N/A"}`);
+        console.log(`Chat ........... ${context.chatId || context.sender || "N/A"}`);
+        console.log(`Prompt ......... ${promptLen} chars`);
+        console.log(`Model .......... ${context.identity?.contact?.model || "qwen2.5:latest"}`);
+        console.log(`LLM ............ ${llmTime} ms`);
+        console.log(`Verified ....... ${context.responseBlocked === false ? "YES" : (context.responseBlocked ? "NO (Blocked)" : "N/A")}`);
+        console.log(`Sent ........... ${context.response && !context.responseBlocked ? "YES" : "NO"}`);
+        console.log(`Total .......... ${totalTime} ms`);
+        console.log("══════════════════════════════════════\n");
 
         console.log(profiler.formatSummary());
         return context;
