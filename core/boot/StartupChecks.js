@@ -1,3 +1,5 @@
+const BrowserCheck =
+    require("./checks/BrowserCheck");
 const fs = require("fs");
 const axios = require("axios");
 
@@ -108,6 +110,8 @@ async function runChecks() {
     const report = new HealthReport();
 
     await checkFolders(report);
+
+    BrowserCheck.run(report);
 
     await checkOllama(report);
 

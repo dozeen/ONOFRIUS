@@ -16,23 +16,26 @@ function createClient() {
 
         },
 
-        puppeteer: {
+puppeteer: {
 
-            headless: true,
+    headless: true,
 
-            executablePath: "/usr/bin/google-chrome",
+    executablePath: "/usr/bin/google-chrome",
 
-            protocolTimeout: 300000,
+    dumpio: true,
 
-            args: [
+    protocolTimeout: 300000,
 
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-dev-shm-usage"
+args: [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage",
+    "--disable-gpu",
+    "--disable-software-rasterizer",
+    "--disable-features=UseSkiaRenderer"
+]
 
-            ]
-
-        }
+}
 
     });
 

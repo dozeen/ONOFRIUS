@@ -9,11 +9,19 @@ class ServiceRegistry {
     register(name, options = {}) {
 
         this.services.set(name, {
+
             name,
+
             status: options.status || "ONLINE",
+
             version: options.version || "1.0",
+
             optional: options.optional || false,
-            description: options.description || ""
+
+            description: options.description || "",
+
+            ...options
+
         });
 
     }
@@ -33,6 +41,20 @@ class ServiceRegistry {
     get(name) {
 
         return this.services.get(name);
+
+    }
+
+    has(name) {
+
+        return this.services.has(name);
+
+    }
+
+    isOnline(name) {
+
+        const service = this.services.get(name);
+
+        return !!service && service.status === "ONLINE";
 
     }
 
