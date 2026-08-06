@@ -1,60 +1,72 @@
-<p align="center">
-    <img src="assets/cover.png" width="100%">
-</p>
+<div align="center">
 
-<h1 align="center">
-ONOFRIUS
-</h1>
+# ONOFRIUS
 
-<p align="center">
-<b>Your Invisible Friend</b>
-</p>
+### Your Invisible Friend
 
-<p align="center">
-An Event-Driven Cognitive Operating System for Persistent AI Agents
-</p>
+**An Event-Driven Cognitive Operating System for Persistent AI Agents**
+
+[![Website](https://img.shields.io/badge/Website-Online-00ff99?style=for-the-badge)](https://dozeen.ns0.it/onofrius/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-22-green?style=for-the-badge)]()
+
+🌐 **Official Website:** https://dozeen.ns0.it/onofrius/
+
+📖 [Constitution](CONSTITUTION.md) • ⭐ [GitHub Repository](https://github.com/dozeen/ONOFRIUS)
+
+---
+
+*"Everything begins with an Event."*
+
+</div>
 
 ---
 
 # What is ONOFRIUS?
 
-ONOFRIUS is not a chatbot.
+ONOFRIUS is **not a chatbot**.
 
-It is an **Event-Driven Cognitive Operating System** designed to build persistent AI agents capable of observing, reasoning, learning and evolving over time.
+It is an **Event-Driven Cognitive Operating System** designed to build persistent AI agents capable of:
 
-Everything begins with an Event.
+- observing
+- reasoning
+- learning
+- remembering
+- evolving over time
 
-Every Event may become Knowledge.
+Instead of reacting to isolated prompts, ONOFRIUS continuously transforms incoming events into persistent knowledge.
 
-Every Knowledge may improve Intelligence.
+> **Every Event may become Knowledge.**
+>
+> **Every Knowledge may improve Intelligence.**
 
 ---
 
 # Philosophy
 
-Traditional assistants start from a prompt.
+Traditional assistants begin with a prompt.
 
-ONOFRIUS starts from reality.
+ONOFRIUS begins with reality.
 
-An incoming event enters a cognitive pipeline where it is:
+Every interaction enters a cognitive pipeline where it is:
 
 - Perceived
 - Classified
 - Enriched
-- Remembered
+- Stored
 - Reasoned
 - Verified
 - Answered
 
 The response is only the final step.
 
-The real goal is continuous cognitive growth.
+The real objective is continuous cognitive growth.
 
 ---
 
-# Architecture
+# Cognitive Pipeline
 
-```
+```text
 Incoming Event
         │
         ▼
@@ -87,7 +99,7 @@ Incoming Event
 
 ---
 
-# Main Components
+# Core Components
 
 - Event Bus
 - Cognitive Kernel
@@ -95,10 +107,12 @@ Incoming Event
 - Attention Engine
 - Knowledge Base
 - Learning Engine
-- Agenda Engine
 - Identity Engine
+- Agenda Engine
 - Plugin System
 - Forge Release Builder
+- Boot Manager
+- Service Registry
 
 ---
 
@@ -112,13 +126,14 @@ Incoming Event
 - Privacy by design
 - Release certification
 - Modular services
+- Health monitoring
 - Multi-agent ready
 
 ---
 
-# Repository Structure
+# Project Structure
 
-```
+```text
 core/
 adapters/
 plugins/
@@ -132,29 +147,28 @@ config/
 
 ---
 
-# Installation
+# Quick Start
 
-Clone the repository
+Clone the repository:
 
 ```bash
 git clone git@github.com:dozeen/ONOFRIUS.git
-
 cd ONOFRIUS
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Run the setup wizard
+Initialize ONOFRIUS:
 
 ```bash
 npm run setup
 ```
 
-Start ONOFRIUS
+Start the system:
 
 ```bash
 npm start
@@ -166,7 +180,7 @@ npm start
 
 Forge is the internal release certification system.
 
-Every public release can be verified through a sequence of audits:
+Every public release is validated through a series of automated audits:
 
 - Dependency Audit
 - Privacy Audit
@@ -180,13 +194,13 @@ Only certified releases should be published.
 
 # Constitution
 
-The architectural principles of ONOFRIUS are documented in:
+The architectural principles of ONOFRIUS are defined in:
 
-```
+```text
 CONSTITUTION.md
 ```
 
-Every important design decision must respect the Constitution.
+Every major architectural decision should respect the Constitution.
 
 ---
 
@@ -196,6 +210,7 @@ Current development focuses on:
 
 - Event Intelligence
 - Cognitive Planning
+- Service Registry
 - Multi-Agent Architecture
 - Bash Agent
 - Browser Agent
@@ -211,12 +226,22 @@ MIT License
 
 ---
 
-<p align="center">
+<div align="center">
 
-**ONOFRIUS**
+## ONOFRIUS
 
-*Your Invisible Friend*
+### Your Invisible Friend
 
-*"Every Event may become Knowledge."*
+**Traditional AI starts from Prompts.**
 
-</p>
+**ONOFRIUS starts from Events.**
+
+---
+
+*Every Event begins a Story.*
+
+*Every Story becomes Knowledge.*
+
+*Every Knowledge improves Intelligence.*
+
+</div>
