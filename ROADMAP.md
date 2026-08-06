@@ -26,7 +26,7 @@
 
 ---
 
-## Alpha 0.3 — Self Diagnostics
+## Alpha 0.3 — Self Diagnostics ✅
 
 **Obiettivo:** ONOFRIUS impara a controllare sé stesso.
 
@@ -45,16 +45,21 @@
 - Permissions
 - ffmpeg
 - Git
+- .env
 
 ### Auto Fix
 `npm run doctor --fix`
 
-**Ripara automaticamente:**
-- cartelle mancanti
-- permessi
-- configurazioni
-- cache
-- sessioni WhatsApp
+---
+
+## Alpha 0.3.1 — Auto Doctor & Self Healing ✅
+
+**Obiettivo:** ONOFRIUS verifica sé stesso ad ogni avvio.
+
+- ✅ Doctor eseguito automaticamente all'avvio (`npm start`).
+- ✅ Ollama senza `.env` → WARN invece di ERROR.
+- ✅ Browser con istruzioni di installazione specifiche per la distribuzione Linux.
+- ✅ `doctor --fix` crea automaticamente un `.env` di esempio se manca.
 
 ---
 
@@ -84,26 +89,11 @@ Nasce il primo agente di sistema.
 
 Espansione della memoria.
 
-**Introduzione di:**
-- Episodic Memory
-- Semantic Memory
-- Working Memory
-- Long Term Memory
-- Thought Stream
-- Memory Consolidation
-
 ---
 
 ## Alpha 0.6 — Knowledge Engine
 
 Costruzione automatica della conoscenza.
-
-- estrazione fatti
-- relazioni
-- concetti
-- grafi
-- deduplicazione
-- confidence score
 
 ---
 
@@ -111,28 +101,11 @@ Costruzione automatica della conoscenza.
 
 ONOFRIUS pianifica.
 
-**Nascono:**
-- Goal
-- Task
-- Plan
-- Scheduler
-- Priorità
-- Dipendenze
-
 ---
 
 ## Alpha 0.8 — Multi Agent
 
 Separazione delle responsabilità.
-
-**Agenti:**
-- Conversation Agent
-- Memory Agent
-- Bash Agent
-- Browser Agent
-- Vision Agent
-- Planner Agent
-- Knowledge Agent
 
 ---
 
@@ -140,46 +113,17 @@ Separazione delle responsabilità.
 
 Il Kernel diventa completamente Event Driven.
 
-**Pipeline:**
-```text
-Event -> Perception -> Attention -> Memory -> Knowledge -> Reasoning -> Planning -> Decision -> Response
-```
-
 ---
 
 ## Alpha 1.0 — ONOFRIUS First Stable
 
 Prima release stabile.
 
-**Comprenderà:**
-- Cognitive Kernel
-- Event Bus
-- Persistent Memory
-- Knowledge Engine
-- Bash Agent
-- Browser Agent
-- WhatsApp Adapter
-- Plugin System
-- Forge Certification
-- Doctor
-- Web Dashboard
-- Health Monitor
-- Setup Wizard
-- Release Builder
-
 ---
 
 ## Versione 2.0 — Distributed Cognition
 
 Più istanze di ONOFRIUS collaborano tra loro.
-
-**Funzionalità previste:**
-- Agent-to-Agent Communication
-- Shared Knowledge
-- Distributed Memory
-- Cluster di agenti
-- Federated Learning
-- Remote Event Bus
 
 ---
 
@@ -188,7 +132,3 @@ Più istanze di ONOFRIUS collaborano tra loro.
 L'obiettivo non è costruire un chatbot.
 
 L'obiettivo è costruire un **Sistema Operativo Cognitivo**.
-
-```text
-Reality -> Events -> Perception -> Attention -> Memory -> Knowledge -> Reasoning -> Planning -> Decision -> Action -> New Events
-```

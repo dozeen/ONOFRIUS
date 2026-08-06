@@ -1,5 +1,35 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
+const os = require('os');
+
+function getDistroInstallCommand() {
+  const platform = os.platform();
+  if (platform === 'darwin') {
+    return 'brew install --cask google-chrome';
+  }
+  if (platform === 'win32') {
+    return 'winget install Google.Chrome';
+  }
+  if (platform === 'linux') {
+    if (fs.existsSync('/etc/os-release')) {
+      const osRelease = fs.readFileSync('/etc/os-release', 'utf8').toLowerCase();
+      if (osRelease.includes('ubuntu') || osRelease.includes('debian')) {
+        return 'sudo apt update && sudo apt install -y google-chrome-stable (or chromium-browser)';
+      }
+      if (osRelease.includes('fedora') || osRelease.includes('rhel') || osRelease.includes('centos')) {
+        return 'sudo dnf install -y chromium';
+      }
+      if (osRelease.includes('arch') || osRelease.includes('manjaro')) {
+        return 'sudo pacman -S chromium';
+      }
+      if (osRelease.includes('alpine')) {
+        return 'apk add chromium';
+      }
+    }
+    return 'sudo apt install -y google-chrome-stable';
+  }
+  return 'Install Google Chrome or Chromium for your operating system.';
+}
 
 module.exports = {
   id: 'browser',
@@ -8,7 +38,6 @@ module.exports = {
   async run(context) {
     let browserPath = null;
 
-    // Check system binaries first
     const binaries = ['google-chrome', 'chromium-browser', 'chromium'];
     for (const bin of binaries) {
       try {
@@ -22,7 +51,6 @@ module.exports = {
       }
     }
 
-    // Check node_modules puppeteer cache if no system binary
     if (!browserPath) {
       try {
         const puppeteer = require('whatsapp-web.js/node_modules/puppeteer-core') || require('puppeteer-core');
@@ -46,12 +74,14 @@ module.exports = {
         fixable: false
       };
     } else {
+      const installCmd = getDistroInstallCommand();
       return {
         id: this.id,
         name: this.name,
         status: 'ERROR',
         message: 'No Chrome/Chromium binary found in PATH or puppeteer cache.',
-        details: 'Install Google Chrome or Chromium to enable browser engine.',
+        details: `Install browser using your package manager:
+       -> ${installCmd}`,
         fixable: false
       };
     }
