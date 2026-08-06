@@ -2,6 +2,7 @@
  * FactExtractor.js - Motore di estrazione entità e categorizzazione cognizione
  */
 
+const { ENTITY_TYPES, FACT_CATEGORIES } = require("./FactTypes");
 const OwnerProfile = require("../../identity/OwnerProfile");
 
 function getKnownPersonNames() {

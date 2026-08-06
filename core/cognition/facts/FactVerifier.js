@@ -2,6 +2,9 @@
  * FactVerifier.js - Gatekeeper di Verità Zero-Trust per risposte LLM
  */
 
+const { ENTITY_TYPES } = require("./FactTypes");
+const FactExtractor = require("./FactExtractor");
+const FamilyPrivacyManager = require("../../privacy/FamilyPrivacyManager");
 const OwnerProfile = require("../../identity/OwnerProfile");
 
 function getSystemPeople() {
