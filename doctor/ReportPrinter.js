@@ -1,3 +1,5 @@
+const { getEnvironmentInfo } = require('./utils/envDetector');
+
 class ReportPrinter {
   static print(results, options = {}) {
     let okCount = 0;
@@ -16,9 +18,20 @@ class ReportPrinter {
     if (errorCount > 0) overallStatus = 'FAILED';
     else if (warnCount > 0) overallStatus = 'WARNINGS';
 
+    const envInfo = getEnvironmentInfo();
+    const browserCheck = results.find(r => r.id === 'browser');
+    const browserDisplay = (browserCheck && browserCheck.status === 'OK')
+      ? `${browserCheck.browserName || 'Browser'} \x1b[32m✓\x1b[0m`
+      : 'Missing \x1b[31m✖\x1b[0m';
+
     if (options.json) {
       const output = {
         timestamp: new Date().toISOString(),
+        environment: {
+          os: envInfo.osName,
+          node: envInfo.nodeVersion,
+          browser: browserCheck ? (browserCheck.browserName || 'Missing') : 'Unknown'
+        },
         summary: {
           checks: results.length,
           ok: okCount,
@@ -37,17 +50,22 @@ class ReportPrinter {
     console.log('       ONOFRIUS DOCTOR REPORT          ');
     console.log('========================================\n');
 
+    console.log('══════════════════════════════════════');
+    console.log('ENVIRONMENT\n');
+    console.log(`OS: ${envInfo.osName}`);
+    console.log(`Node: ${envInfo.nodeVersion}`);
+    console.log(`Browser: ${browserDisplay}`);
+    console.log('══════════════════════════════════════\n');
+
     if (results.length === 0) {
       console.log('No diagnostic checks were registered or matched the filter.\n');
       return;
     }
 
-    // Print Status Box
     console.log('══════════════════════════════════════');
-    console.log('STATUS');
-    console.log(`\n${overallStatus}\n`);
+    console.log('STATUS\n');
+    console.log(`${overallStatus}\n`);
     
-    // Group services into required and optional
     const requiredIds = ['node', 'npm', 'browser', 'permissions', 'storage', 'memory', 'git'];
     const required = results.filter(r => requiredIds.includes(r.id));
     const optional = results.filter(r => !requiredIds.includes(r.id));

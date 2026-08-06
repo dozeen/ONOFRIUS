@@ -30,36 +30,23 @@
 
 **Obiettivo:** ONOFRIUS impara a controllare sé stesso.
 
-### Doctor
-`npm run doctor`
-
-**Controlli:**
-- Node
-- npm
-- Browser
-- WhatsApp
-- Ollama
-- Plugins
-- Memory
-- Storage
-- Permissions
-- ffmpeg
-- Git
-- .env
-
-### Auto Fix
-`npm run doctor --fix`
-
 ---
 
 ## Alpha 0.3.1 — Auto Doctor & Self Healing ✅
 
 **Obiettivo:** ONOFRIUS verifica sé stesso ad ogni avvio.
 
-- ✅ Doctor eseguito automaticamente all'avvio (`npm start`).
-- ✅ Ollama senza `.env` → WARN invece di ERROR.
-- ✅ Browser con istruzioni di installazione specifiche per la distribuzione Linux.
-- ✅ `doctor --fix` crea automaticamente un `.env` di esempio se manca.
+---
+
+## Alpha 0.3.2 — Environment Awareness & Resilience ✅
+
+**Obiettivo:** auto-rilevamento dell'ambiente e massima tolleranza ai difetti.
+
+- ✅ Browser auto-detection ancora più robusta (Google Chrome, Chromium, Chrome Stable, Chrome Beta).
+- ✅ OLLAMA_HOST con valore di default (http://localhost:11434) se manca.
+- ✅ Su WSL degradare automaticamente gli errori DBus a messaggi di debug.
+- ✅ Se viene rilevato WSL e manca ffmpeg, suggerire `sudo apt install ffmpeg`.
+- ✅ Aggiunta sezione ENVIRONMENT nel report del Doctor.
 
 ---
 
@@ -87,43 +74,29 @@ Nasce il primo agente di sistema.
 
 ## Alpha 0.5 — Cognitive Memory
 
-Espansione della memoria.
-
 ---
 
 ## Alpha 0.6 — Knowledge Engine
-
-Costruzione automatica della conoscenza.
 
 ---
 
 ## Alpha 0.7 — Planning Engine
 
-ONOFRIUS pianifica.
-
 ---
 
 ## Alpha 0.8 — Multi Agent
-
-Separazione delle responsabilità.
 
 ---
 
 ## Alpha 0.9 — Cognitive Kernel
 
-Il Kernel diventa completamente Event Driven.
-
 ---
 
 ## Alpha 1.0 — ONOFRIUS First Stable
 
-Prima release stabile.
-
 ---
 
 ## Versione 2.0 — Distributed Cognition
-
-Più istanze di ONOFRIUS collaborano tra loro.
 
 ---
 

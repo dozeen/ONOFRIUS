@@ -40,7 +40,7 @@ module.exports = {
               id: this.id,
               name: this.name,
               status: 'WARN',
-              message: `Ollama Offline (Invalid response format from ${host}).`,
+              message: `Ollama Offline (Invalid response from ${host}).`,
               fixable: false
             });
           }

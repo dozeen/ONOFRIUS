@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const LEVELS = {
     ERROR: 0,
     WARN: 1,
@@ -7,11 +9,11 @@ const LEVELS = {
 };
 
 const COLORS = {
-    ERROR: "\x1b[31m", // Rosso
-    WARN: "\x1b[33m",  // Giallo
-    INFO: "\x1b[36m",  // Ciano
-    DEBUG: "\x1b[90m", // Grigio
-    TRACE: "\x1b[37m", // Bianco
+    ERROR: "\x1b[31m",
+    WARN: "\x1b[33m",
+    INFO: "\x1b[36m",
+    DEBUG: "\x1b[90m",
+    TRACE: "\x1b[37m",
     RESET: "\x1b[0m"
 };
 
@@ -83,6 +85,14 @@ class Logger {
 
         if (!this.enabled("ERROR"))
             return;
+
+        const isWSL = fs.existsSync("/proc/version") && fs.readFileSync("/proc/version", "utf8").toLowerCase().includes("microsoft");
+        const errStr = (err instanceof Error ? err.message : String(err)) || "";
+
+        if (isWSL && (errStr.includes("DBus") || errStr.includes("bus.cc") || errStr.includes("Failed to connect to the bus"))) {
+            this.debug(scope, `[WSL DBus Suppressed] ${errStr}`);
+            return;
+        }
 
         if (err instanceof Error) {
 

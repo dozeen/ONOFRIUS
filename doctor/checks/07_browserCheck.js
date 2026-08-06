@@ -1,9 +1,11 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const os = require('os');
+const { getEnvironmentInfo } = require('../utils/envDetector');
 
 function getDistroInstallCommand() {
   const platform = os.platform();
+  const env = getEnvironmentInfo();
   if (platform === 'darwin') {
     return 'brew install --cask google-chrome';
   }
@@ -11,9 +13,9 @@ function getDistroInstallCommand() {
     return 'winget install Google.Chrome';
   }
   if (platform === 'linux') {
-    if (fs.existsSync('/etc/os-release')) {
-      const osRelease = fs.readFileSync('/etc/os-release', 'utf8').toLowerCase();
-      if (osRelease.includes('ubuntu') || osRelease.includes('debian')) {
+    if (env.isWSL || fs.existsSync('/etc/os-release')) {
+      const osRelease = fs.existsSync('/etc/os-release') ? fs.readFileSync('/etc/os-release', 'utf8').toLowerCase() : '';
+      if (env.isWSL || osRelease.includes('ubuntu') || osRelease.includes('debian')) {
         return 'sudo apt update && sudo apt install -y google-chrome-stable (or chromium-browser)';
       }
       if (osRelease.includes('fedora') || osRelease.includes('rhel') || osRelease.includes('centos')) {
@@ -37,13 +39,24 @@ module.exports = {
 
   async run(context) {
     let browserPath = null;
+    let browserName = 'Browser';
 
-    const binaries = ['google-chrome', 'chromium-browser', 'chromium'];
-    for (const bin of binaries) {
+    const binaries = [
+      { name: 'Google Chrome', bin: 'google-chrome-stable' },
+      { name: 'Google Chrome', bin: 'google-chrome' },
+      { name: 'Google Chrome Beta', bin: 'google-chrome-beta' },
+      { name: 'Chromium', bin: 'chromium-browser' },
+      { name: 'Chromium', bin: 'chromium' },
+      { name: 'Chrome', bin: 'chrome' },
+      { name: 'Microsoft Edge', bin: 'msedge' }
+    ];
+
+    for (const item of binaries) {
       try {
-        const path = execSync(`which ${bin}`, { encoding: 'utf8' }).trim();
+        const path = execSync(`which ${item.bin}`, { encoding: 'utf8' }).trim();
         if (path && fs.existsSync(path)) {
           browserPath = path;
+          browserName = item.name;
           break;
         }
       } catch (e) {
@@ -58,6 +71,7 @@ module.exports = {
           const pPath = puppeteer.executablePath();
           if (pPath && fs.existsSync(pPath)) {
             browserPath = pPath;
+            browserName = 'Bundled Puppeteer Chromium';
           }
         }
       } catch (e) {
@@ -70,7 +84,9 @@ module.exports = {
         id: this.id,
         name: this.name,
         status: 'OK',
-        message: `Headless browser found at: ${browserPath}`,
+        message: `${browserName} found at: ${browserPath}`,
+        browserName,
+        browserPath,
         fixable: false
       };
     } else {
@@ -80,8 +96,9 @@ module.exports = {
         name: this.name,
         status: 'ERROR',
         message: 'No Chrome/Chromium binary found in PATH or puppeteer cache.',
-        details: `Install browser using your package manager:
-       -> ${installCmd}`,
+        details: `Install browser using your package manager:\n       -> ${installCmd}`,
+        browserName: 'Missing',
+        browserPath: null,
         fixable: false
       };
     }
