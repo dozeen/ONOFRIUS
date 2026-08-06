@@ -1,9 +1,11 @@
 # Dependencies
 node_modules/
 
-# Environment
+# Environment & Config
 .env
 .env.*
+config/*.json
+!config/*.example.json
 
 # WhatsApp
 .wwebjs_auth/

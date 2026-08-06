@@ -53,7 +53,7 @@ class IdentityResolver {
         }
 
         // =====================================
-        // 2) Ricerca per chiave (dolly, roberta...)
+        // 2) Ricerca per chiave di contatto
         // =====================================
 
         if (!contact) {

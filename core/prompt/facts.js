@@ -1,6 +1,6 @@
 /**
  * facts.js - Formattatore della sezione FACTS per Prompt Builder 2.1
- * Include il FamilyPrivacyManager per proteggere le informazioni riservate su Dolly e Silvana Inglese.
+ * Include il FamilyPrivacyManager per proteggere le informazioni riservate e familiari.
  */
 
 const { ENTITY_TYPES } = require("../cognition/facts/FactTypes");

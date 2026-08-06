@@ -2,18 +2,36 @@
  * FactVerifier.js - Gatekeeper di Verità Zero-Trust per risposte LLM
  */
 
+const fs = require("fs");
+const path = require("path");
 const { ENTITY_TYPES } = require("./FactTypes");
 const FactExtractor = require("./FactExtractor");
 const FamilyPrivacyManager = require("../../privacy/FamilyPrivacyManager");
+
+function getSystemPeople() {
+    const people = ["owner", "system", "gordon", "onofrius", "me"];
+    const ownerPath = path.resolve(__dirname, "../../../config/owner.json");
+    if (fs.existsSync(ownerPath)) {
+        try {
+            const owner = JSON.parse(fs.readFileSync(ownerPath, "utf8"));
+            if (owner.name) people.push(owner.name.toLowerCase());
+            if (Array.isArray(owner.aliases)) owner.aliases.forEach(a => people.push(a.toLowerCase()));
+            if (Array.isArray(owner.familyMembers)) {
+                owner.familyMembers.forEach(m => {
+                    if (m.name) people.push(m.name.toLowerCase());
+                    if (Array.isArray(m.aliases)) m.aliases.forEach(a => people.push(a.toLowerCase()));
+                });
+            }
+        } catch (e) {}
+    }
+    return people;
+}
 
 class FactVerifier {
     constructor() {
         this.extractor = new FactExtractor();
     }
 
-    /**
-     * Normalizza la rappresentazione di un orario per confronto flessibile (es. "alle 18", "18:00:00" -> "18:00")
-     */
     _normalizeTime(timeStr) {
         if (!timeStr) return "";
         const digits = timeStr.match(/\b([0-2]?[0-9])(?::([0-5][0-9]))?\b/);
@@ -25,13 +43,6 @@ class FactVerifier {
         return timeStr.toLowerCase().trim();
     }
 
-    /**
-     * Verifica la risposta generata rispetto ai fatti/entità di contesto e alle regole di riservatezza
-     * @param {string} llmOutput - Testo prodotto dall'LLM
-     * @param {Array} contextEntities - Entità accertate presenti nello stimolo o nel contesto
-     * @param {Object} [meta={}] - Metadati di contesto (recipient, isOwner, etc.)
-     * @returns {Object} { valid: boolean, violations: Array, reason?: string }
-     */
     verify(llmOutput, contextEntities = [], meta = {}) {
         if (!llmOutput || typeof llmOutput !== "string") {
             return { valid: true, violations: [] };
@@ -39,7 +50,6 @@ class FactVerifier {
 
         const violations = [];
 
-        // 0. Privacy Guard: Riservatezza Familiare tramite FamilyPrivacyManager (passando l'intero oggetto meta)
         const privacyCheck = FamilyPrivacyManager.checkPrivacy(llmOutput, meta);
         if (!privacyCheck.allowed) {
             violations.push({
@@ -49,11 +59,9 @@ class FactVerifier {
             });
         }
 
-        // Se ci sono entità di contesto note
         if (contextEntities && contextEntities.length > 0) {
             const outputEntities = this.extractor._extractEntities(llmOutput);
 
-            // 1. Controllo Orari (Time Mismatches)
             const contextTimes = contextEntities.filter(e => e.type === ENTITY_TYPES.TIME).map(e => this._normalizeTime(e.value));
             const outputTimes = outputEntities.filter(e => e.type === ENTITY_TYPES.TIME).map(e => this._normalizeTime(e.value));
 
@@ -71,13 +79,12 @@ class FactVerifier {
                 }
             }
 
-            // 2. Controllo Persone (Person Name Alteration)
             const contextPeople = contextEntities.filter(e => e.type === ENTITY_TYPES.PERSON).map(e => e.value.toLowerCase().trim());
             
             if (meta.contactName) contextPeople.push(meta.contactName.toLowerCase().trim());
             if (meta.senderName) contextPeople.push(meta.senderName.toLowerCase().trim());
             if (meta.identity?.contact?.name) contextPeople.push(meta.identity.contact.name.toLowerCase().trim());
-            contextPeople.push("onofrio", "gordon", "dolly", "silvana", "roberta");
+            contextPeople.push(...getSystemPeople());
 
             const outputPeople = outputEntities.filter(e => e.type === ENTITY_TYPES.PERSON).map(e => e.value.toLowerCase().trim());
 

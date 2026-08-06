@@ -1,9 +1,3 @@
-class SocialObserver {
-
-    observe() {
-        return [];
-    }
-
-}
+const SocialObserver = require("../observers/SocialObserver");
 
 module.exports = SocialObserver;

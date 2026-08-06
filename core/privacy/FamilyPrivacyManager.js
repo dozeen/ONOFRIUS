@@ -1,28 +1,73 @@
 /**
- * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale
+ * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale Astratta
  * 
- * Regole applicate:
- * 1. Dolly: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Dolly o Onofrio.
- * 2. Silvana Inglese (Moglie): visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Silvana Inglese, Roberta Cannone (Figlia) o Onofrio.
+ * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json).
  */
 
-const PRIVACY_POLICIES = [
-    {
-        name: "Dolly Confidentiality",
-        subjectKeywords: ["dolly"],
-        allowedRecipients: ["dolly", "onofrio", "me", "217535983173871"]
-    },
-    {
-        name: "Silvana Inglese Confidentiality",
-        subjectKeywords: ["silvana", "silvana inglese"],
-        allowedRecipients: ["silvana", "silvana inglese", "roberta", "roberta cannone", "onofrio", "me"]
+const fs = require('fs');
+const path = require('path');
+
+function getOwnerConfig() {
+    const ownerPath = path.resolve(__dirname, '../../config/owner.json');
+    if (fs.existsSync(ownerPath)) {
+        try {
+            return JSON.parse(fs.readFileSync(ownerPath, 'utf8'));
+        } catch (e) {}
     }
-];
+    return {
+        name: "Owner",
+        aliases: ["owner", "me"],
+        familyMembers: [],
+        confidentialSubjects: []
+    };
+}
 
 class FamilyPrivacyManager {
-    /**
-     * Risolve tutte le possibili rappresentazioni del destinatario dal contesto
-     */
+    static getPolicies() {
+        const owner = getOwnerConfig();
+        const policies = [];
+
+        const ownerAllowed = [
+            "owner",
+            "me",
+            (owner.name || "").toLowerCase(),
+            ...(owner.aliases || []).map(a => a.toLowerCase())
+        ].filter(Boolean);
+
+        if (Array.isArray(owner.confidentialSubjects)) {
+            for (const subj of owner.confidentialSubjects) {
+                if (subj.keywords && subj.keywords.length > 0) {
+                    policies.push({
+                        name: `${subj.name || subj.keywords[0]} Confidentiality`,
+                        subjectKeywords: subj.keywords.map(k => k.toLowerCase()),
+                        allowedRecipients: Array.from(new Set([
+                            ...ownerAllowed,
+                            ...(subj.allowedRecipients || []).map(r => r.toLowerCase())
+                        ]))
+                    });
+                }
+            }
+        }
+
+        if (Array.isArray(owner.familyMembers)) {
+            for (const member of owner.familyMembers) {
+                if (member.privacyLevel === "confidential" && member.name) {
+                    const memberKeywords = [member.name.toLowerCase(), ...(member.aliases || []).map(a => a.toLowerCase())];
+                    policies.push({
+                        name: `${member.name} Confidentiality`,
+                        subjectKeywords: memberKeywords,
+                        allowedRecipients: Array.from(new Set([
+                            ...ownerAllowed,
+                            ...memberKeywords
+                        ]))
+                    });
+                }
+            }
+        }
+
+        return policies;
+    }
+
     static resolveRecipientString(metaOrName) {
         if (!metaOrName) return "";
         if (typeof metaOrName === "string") return metaOrName.toLowerCase();
@@ -41,23 +86,17 @@ class FamilyPrivacyManager {
         return candidates;
     }
 
-    /**
-     * Verifica se una frase o risposta rispetta le politiche di riservatezza familiare in base al destinatario reale
-     * @param {string} text - Testo da analizzare
-     * @param {string|Object} metaOrName - Nome del destinatario o oggetto di contesto
-     * @returns {Object} { allowed: boolean, violation?: Object }
-     */
     static checkPrivacy(text, metaOrName = "") {
         if (!text) return { allowed: true };
 
         const lowerText = text.toLowerCase();
         const lowerRecipient = FamilyPrivacyManager.resolveRecipientString(metaOrName);
+        const policies = FamilyPrivacyManager.getPolicies();
 
-        for (const policy of PRIVACY_POLICIES) {
+        for (const policy of policies) {
             const matchesSubject = policy.subjectKeywords.some(kw => lowerText.includes(kw));
 
             if (matchesSubject) {
-                // Controlla se il destinatario effettivo della chat fa parte dei destinatari autorizzati
                 const isAllowedRecipient = policy.allowedRecipients.some(allowed => lowerRecipient.includes(allowed));
                 
                 if (!isAllowedRecipient) {
@@ -77,12 +116,6 @@ class FamilyPrivacyManager {
         return { allowed: true };
     }
 
-    /**
-     * Filtra una lista di elementi (fatti, pensieri, intenzioni) consentendo solo quelli ammessi per il destinatario della chat
-     * @param {Array} items
-     * @param {string|Object} metaOrName
-     * @returns {Array} Array di elementi consentiti
-     */
     static filterAllowed(items, metaOrName = "") {
         if (!items || !Array.isArray(items)) return [];
         return items.filter(item => {

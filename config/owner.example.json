@@ -1,0 +1,9 @@
+{
+  "name": "Owner",
+  "aliases": ["owner", "me"],
+  "language": "en",
+  "timezone": "Europe/Rome",
+  "familyMembers": [],
+  "trustedContacts": [],
+  "confidentialSubjects": []
+}

@@ -1,18 +1,16 @@
 const people = [
-
     "papà",
     "mamma",
-    "roberta",
-    "martina",
+    "figlio",
+    "figlia",
+    "fratello",
+    "sorella",
     "professore",
-    "nonna"
-
+    "nonna",
+    "nonno"
 ];
 
-module.exports = function detectEntities(ctx){
-
+module.exports = function detectEntities(ctx) {
     const txt = (ctx.message || "").toLowerCase();
-
-    return people.filter(p=>txt.includes(p));
-
-}
+    return people.filter(p => txt.includes(p));
+};

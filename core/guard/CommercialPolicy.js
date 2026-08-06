@@ -7,7 +7,7 @@
  * Gordon può conoscere prezzi e riferimenti economici,
  * ma NON può inventare, modificare o negoziare prezzi.
  *
- * La decisione economica finale appartiene a Onofrio.
+ * La decisione economica finale appartiene all'Owner.
  */
 
 const CommercialPolicy = {
@@ -42,7 +42,7 @@ const CommercialPolicy = {
     allowEstimatedPricesToCustomer: false,
 
     // =====================================================
-    // DECISIONI RISERVATE A ONOFRIO
+    // DECISIONI RISERVATE ALL'OWNER
     // =====================================================
 
     requireOwnerApprovalFor: [

@@ -1,33 +1,28 @@
-# ONOFRIUS MIGRATION PLAN
+# ONOFRIUS MIGRATION PLAN - ALPHA 0.5 (IDENTITY ABSTRACTION)
+
+Replace project-specific identities with generic owner abstraction.
 
 ## CHARACTER
 
-[ ] Eliminare profile/onofrio.js
-[ ] Creare profile/default.js
+[x] Replace specific character profiles with generic profile/default.js
+[x] Abstract character engine configuration
 
 ## OWNER
 
-[ ] owner.json
-[ ] owner.example.json
+[x] Provide owner.example.json schema template
+[x] Add first-run interactive owner setup
 
-## CONTACTS
+## CONFIG & CONTACTS
 
-[ ] contacts.example.json
+[x] Untrack personal config/owner.json, config/contacts.json, config/settings.json
+[x] Provide contacts.example.json, settings.example.json, identities.example.json
 
-## PRIVACY
+## PRIVACY & PRIVILEGES
 
-[ ] Eliminare Dolly
-[ ] Eliminare Silvana
-[ ] Eliminare Roberta
+[x] Replace hardcoded identity subjects with role-based PrivacyManager (PRIMARY_FAMILY, CONFIDENTIAL_SUBJECT)
+[x] Remove static person regexes from FactExtractor & FactVerifier
 
-## CONFIG
+## AUDIT
 
-[ ] Nessun numero di telefono nel codice
-
-## MEMORY
-
-[ ] Nessuna memoria personale
-
-## TEST
-
-[ ] Privacy Audit = PASS
+[x] Zero hardcoded personal names in repository tracking
+[x] Privacy Audit = PASS

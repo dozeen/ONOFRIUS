@@ -1,20 +1,9 @@
-const onofrio = require("./profiles/onofrio");
-const normal = require("./profiles/default");
+const ownerProfile = require("./profiles/default");
 
 class CharacterEngine {
-
     build(message) {
-
-        let profile = onofrio;
-
-        if (message.contact?.personality === "formal") {
-            profile = normal;
-        }
-
-        return profile;
-
+        return ownerProfile;
     }
-
 }
 
 module.exports = new CharacterEngine();

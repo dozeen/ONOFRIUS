@@ -30,7 +30,7 @@
     "agent",
     "event-driven"
   ],
-  "author": "Onofrio Cannone",
+  "author": "ONOFRIUS Project",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.18.1",

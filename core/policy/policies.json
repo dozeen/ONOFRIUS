@@ -3,25 +3,9 @@
         "mode": "on"
     },
     "contacts": {
-        "Federico": {
+        "default": {
             "mode": "on"
-        },
-        "Dolly": {
-            "mode": "off"
-        },
-        "Mercadante": {
-            "mode": "listen"
-        },
-        "federico": {
-            "mode": "off"
-        },
-        "dolly": {
-            "mode": "off"
         }
     },
-    "groups": {
-        "Mercadante": {
-            "mode": "listen"
-        }
-    }
+    "groups": {}
 }
