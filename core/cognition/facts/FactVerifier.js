@@ -2,27 +2,18 @@
  * FactVerifier.js - Gatekeeper di Verità Zero-Trust per risposte LLM
  */
 
-const fs = require("fs");
-const path = require("path");
-const { ENTITY_TYPES } = require("./FactTypes");
-const FactExtractor = require("./FactExtractor");
-const FamilyPrivacyManager = require("../../privacy/FamilyPrivacyManager");
+const OwnerProfile = require("../../identity/OwnerProfile");
 
 function getSystemPeople() {
     const people = ["owner", "system", "gordon", "onofrius", "me"];
-    const ownerPath = path.resolve(__dirname, "../../../config/owner.json");
-    if (fs.existsSync(ownerPath)) {
-        try {
-            const owner = JSON.parse(fs.readFileSync(ownerPath, "utf8"));
-            if (owner.name) people.push(owner.name.toLowerCase());
-            if (Array.isArray(owner.aliases)) owner.aliases.forEach(a => people.push(a.toLowerCase()));
-            if (Array.isArray(owner.familyMembers)) {
-                owner.familyMembers.forEach(m => {
-                    if (m.name) people.push(m.name.toLowerCase());
-                    if (Array.isArray(m.aliases)) m.aliases.forEach(a => people.push(a.toLowerCase()));
-                });
-            }
-        } catch (e) {}
+    const owner = OwnerProfile.get();
+    if (owner.name) people.push(owner.name.toLowerCase());
+    if (Array.isArray(owner.aliases)) owner.aliases.forEach(a => people.push(a.toLowerCase()));
+    if (Array.isArray(owner.familyMembers)) {
+        owner.familyMembers.forEach(m => {
+            if (m.name) people.push(m.name.toLowerCase());
+            if (Array.isArray(m.aliases)) m.aliases.forEach(a => people.push(a.toLowerCase()));
+        });
     }
     return people;
 }

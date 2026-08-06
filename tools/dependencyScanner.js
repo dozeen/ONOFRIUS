@@ -12,6 +12,8 @@ const ignore = new Set([
     "backup"
 ]);
 
+const OwnerProfile = require("../core/identity/OwnerProfile");
+
 function getScannerPatterns() {
     const patterns = [
         "config/",
@@ -24,14 +26,9 @@ function getScannerPatterns() {
         "session-gordon"
     ];
 
-    const ownerPath = path.join(ROOT, "config", "owner.json");
-    if (fs.existsSync(ownerPath)) {
-        try {
-            const owner = JSON.parse(fs.readFileSync(ownerPath, "utf8"));
-            if (owner.name) patterns.push(owner.name);
-            if (Array.isArray(owner.aliases)) patterns.push(...owner.aliases);
-        } catch (e) {}
-    }
+    const owner = OwnerProfile.get();
+    if (owner.name) patterns.push(owner.name);
+    if (Array.isArray(owner.aliases)) patterns.push(...owner.aliases);
     return patterns;
 }
 

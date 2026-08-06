@@ -2,31 +2,24 @@
  * FactExtractor.js - Motore di estrazione entità e categorizzazione cognizione
  */
 
-const fs = require("fs");
-const path = require("path");
-const { ENTITY_TYPES, FACT_CATEGORIES } = require("./FactTypes");
+const OwnerProfile = require("../../identity/OwnerProfile");
 
 function getKnownPersonNames() {
     const names = new Set(["Owner", "Admin"]);
-    const ownerPath = path.resolve(__dirname, "../../../config/owner.json");
-    if (fs.existsSync(ownerPath)) {
-        try {
-            const owner = JSON.parse(fs.readFileSync(ownerPath, 'utf8'));
-            if (owner.name) names.add(owner.name);
-            if (Array.isArray(owner.aliases)) owner.aliases.forEach(a => names.add(a));
-            if (Array.isArray(owner.familyMembers)) {
-                owner.familyMembers.forEach(m => {
-                    if (m.name) names.add(m.name);
-                    if (Array.isArray(m.aliases)) m.aliases.forEach(a => names.add(a));
-                });
-            }
-            if (Array.isArray(owner.trustedContacts)) {
-                owner.trustedContacts.forEach(c => {
-                    if (typeof c === 'string') names.add(c);
-                    else if (c.name) names.add(c.name);
-                });
-            }
-        } catch (e) {}
+    const owner = OwnerProfile.get();
+    if (owner.name) names.add(owner.name);
+    if (Array.isArray(owner.aliases)) owner.aliases.forEach(a => names.add(a));
+    if (Array.isArray(owner.familyMembers)) {
+        owner.familyMembers.forEach(m => {
+            if (m.name) names.add(m.name);
+            if (Array.isArray(m.aliases)) m.aliases.forEach(a => names.add(a));
+        });
+    }
+    if (Array.isArray(owner.trustedContacts)) {
+        owner.trustedContacts.forEach(c => {
+            if (typeof c === 'string') names.add(c);
+            else if (c.name) names.add(c.name);
+        });
     }
     return Array.from(names).filter(n => n && n.length > 1);
 }

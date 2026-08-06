@@ -6,7 +6,7 @@ function createClient() {
 
         authStrategy: new LocalAuth({
 
-            clientId: "gordon3"
+            clientId: process.env.WHATSAPP_CLIENT_ID || "onofrius"
 
         }),
 

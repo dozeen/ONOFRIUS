@@ -1,5 +1,4 @@
-const fs = require("fs");
-const path = require("path");
+const OwnerProfile = require("../core/identity/OwnerProfile");
 
 const ROOT = process.cwd();
 
@@ -16,19 +15,14 @@ const IGNORE = [
 
 function getOwnerForbiddenRules() {
     const rules = [];
-    const ownerPath = path.join(ROOT, "config", "owner.json");
-    if (fs.existsSync(ownerPath)) {
-        try {
-            const owner = JSON.parse(fs.readFileSync(ownerPath, "utf8"));
-            const names = [owner.name, ...(owner.aliases || [])].filter(Boolean);
-            if (names.length > 0) {
-                const pattern = names.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
-                rules.push({
-                    name: "Hardcoded Owner Data",
-                    regex: new RegExp(`\\b(${pattern})\\b`, 'gi')
-                });
-            }
-        } catch (e) {}
+    const owner = OwnerProfile.get();
+    const names = [owner.name, ...(owner.aliases || [])].filter(Boolean);
+    if (names.length > 0) {
+        const pattern = names.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+        rules.push({
+            name: "Hardcoded Owner Data",
+            regex: new RegExp(`\\b(${pattern})\\b`, 'gi')
+        });
     }
     rules.push(
         { name: "Phone Number", regex: /\+?\d{9,15}/g },

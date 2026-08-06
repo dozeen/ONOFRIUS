@@ -16,7 +16,7 @@ module.exports = {
     },
     logLevel: process.env.LOG_LEVEL || "INFO",
     whatsapp: {
-        clientId: process.env.WHATSAPP_CLIENT_ID || "gordon3"
+        clientId: process.env.WHATSAPP_CLIENT_ID || "onofrius"
     },
     memoryPath: process.env.MEMORY_PATH || "./memory",
     debug: process.env.DEBUG === "true"

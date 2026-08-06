@@ -2,19 +2,8 @@
  * InteractionEngine.js - Motore per l'adattamento sociale e dello stile di risposta
  */
 
-const fs = require("fs");
-const path = require("path");
+const OwnerProfile = require("../../identity/OwnerProfile");
 const InteractionProfile = require("./InteractionProfile");
-
-function getOwnerConfig() {
-    const ownerPath = path.resolve(__dirname, "../../../config/owner.json");
-    if (fs.existsSync(ownerPath)) {
-        try {
-            return JSON.parse(fs.readFileSync(ownerPath, "utf8"));
-        } catch (e) {}
-    }
-    return { name: "Owner", aliases: ["owner", "me"] };
-}
 
 class InteractionEngine {
     static INPUT = ["context", "senderName", "contactName"];
@@ -25,7 +14,7 @@ class InteractionEngine {
     }
 
     evaluateStyle(context) {
-        const owner = getOwnerConfig();
+        const owner = OwnerProfile.get();
         const sender = context.sender || context.senderName || "unknown";
         const senderName = (context.senderName || context.contactName || "").toLowerCase();
 

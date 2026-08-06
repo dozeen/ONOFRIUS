@@ -1,9 +1,10 @@
-const owner = require("../../config/owner");
+const OwnerProfile = require("../identity/OwnerProfile");
 const { detectMedia } = require("./media");
 const { Actors } = require("../events");
 const logger = require("../logger");
 
 async function buildContext(event) {
+    const owner = OwnerProfile.get();
 
     if (!event) {
         throw new Error("Evento mancante");

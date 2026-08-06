@@ -4,27 +4,11 @@
  * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json).
  */
 
-const fs = require('fs');
-const path = require('path');
-
-function getOwnerConfig() {
-    const ownerPath = path.resolve(__dirname, '../../config/owner.json');
-    if (fs.existsSync(ownerPath)) {
-        try {
-            return JSON.parse(fs.readFileSync(ownerPath, 'utf8'));
-        } catch (e) {}
-    }
-    return {
-        name: "Owner",
-        aliases: ["owner", "me"],
-        familyMembers: [],
-        confidentialSubjects: []
-    };
-}
+const OwnerProfile = require('../identity/OwnerProfile');
 
 class FamilyPrivacyManager {
     static getPolicies() {
-        const owner = getOwnerConfig();
+        const owner = OwnerProfile.get();
         const policies = [];
 
         const ownerAllowed = [
