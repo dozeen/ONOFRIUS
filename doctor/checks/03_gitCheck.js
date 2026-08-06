@@ -6,24 +6,33 @@ module.exports = {
 
   async run(context) {
     try {
-      const gitVer = execSync('git --version', { encoding: 'utf8' }).trim();
-      let branch = 'unknown';
+      execSync('git --version', { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] });
+      let branch = 'main';
       let isClean = true;
+      let hasOrigin = false;
 
       try {
-        branch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: context.rootDir, encoding: 'utf8' }).trim();
-        const status = execSync('git status --porcelain', { cwd: context.rootDir, encoding: 'utf8' }).trim();
+        branch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: context.rootDir, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
+        const status = execSync('git status --porcelain', { cwd: context.rootDir, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
         isClean = (status.length === 0);
+        const remotes = execSync('git remote', { cwd: context.rootDir, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
+        hasOrigin = remotes.includes('origin');
       } catch (e) {
-        // Not a git repo or git error
+        // Fallback for git commands
       }
+
+      const originStr = hasOrigin ? 'origin OK' : 'no origin';
+      const treeStr = isClean ? 'working tree clean' : '⚠ Uncommitted changes';
 
       if (isClean) {
         return {
           id: this.id,
           name: this.name,
           status: 'OK',
-          message: `${gitVer} detected on branch '${branch}' (clean workspace).`,
+          message: `Git Repository (${branch} | ${originStr} | ${treeStr})`,
+          branch,
+          hasOrigin,
+          isClean,
           fixable: false
         };
       } else {
@@ -31,8 +40,10 @@ module.exports = {
           id: this.id,
           name: this.name,
           status: 'WARN',
-          message: `${gitVer} on branch '${branch}' (uncommitted changes present).`,
-          details: 'Working directory has uncommitted files.',
+          message: `Git Repository (${branch} | ${originStr} | ${treeStr})`,
+          branch,
+          hasOrigin,
+          isClean,
           fixable: false
         };
       }
@@ -41,7 +52,7 @@ module.exports = {
         id: this.id,
         name: this.name,
         status: 'ERROR',
-        message: `Git not found or executable error: ${err.message}`,
+        message: `Git not installed or repository error: ${err.message}`,
         fixable: false
       };
     }

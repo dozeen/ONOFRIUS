@@ -1,12 +1,8 @@
 // app.js
 
-const kernel = require("./core/kernel");
-const whatsapp = require("./adapters/whatsapp");
+const bootstrap = require("./bootstrap");
 
 (async () => {
-
-    await kernel.boot();
-
-    await whatsapp.start();
-
+    await bootstrap();
 })();
+

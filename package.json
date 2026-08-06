@@ -3,8 +3,12 @@
   "version": "0.1.0-alpha",
   "description": "ONOFRIUS Cognitive Operating System",
   "main": "app.js",
+  "bin": {
+    "onofrius": "./bin/onofrius.js"
+  },
   "scripts": {
     "start": "node app.js",
+    "bootstrap": "node bootstrap/index.js",
     "setup": "node setup.js",
     "forge": "node forge/Forge.js",
     "scan": "node tools/dependencyScanner.js",
