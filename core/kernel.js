@@ -45,6 +45,7 @@ bus.on("message.received", async (context) => {
             return;
         }
 
+        console.log("DISPATCH =", context.response);
         console.log("➡️ TRACE 8: Kernel -> bus.emit('message.reply')");
         bus.emit("message.reply", {
             context,

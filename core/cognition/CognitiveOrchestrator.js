@@ -191,6 +191,7 @@ class CognitiveOrchestrator {
         // 9. FACT & PRIVACY VERIFIER GATEKEEPING
         if (context.response) {
             profiler.start("Verifier");
+            console.log("VERIFY INPUT =", context.response);
             const allEntities = this._collectAllContextEntities(context, factsPayload.entities);
             const verification = this.factVerifier.verify(context.response, allEntities, context);
             context.verification = verification;
@@ -199,9 +200,11 @@ class CognitiveOrchestrator {
                 logger.warn("CognitiveOrchestrator", `🛑 FactVerifier/PrivacyGuard ha bloccato la risposta: ${verification.reason}`);
                 context.responseBlocked = true;
                 context.responseError = verification.reason;
+                console.log("VERIFY OUTPUT = null (Blocked)");
             } else {
                 logger.info("CognitiveOrchestrator", "✅ FactVerifier: Risposta verificata e approvata");
                 context.responseBlocked = false;
+                console.log("VERIFY OUTPUT =", context.response);
             }
             profiler.end("Verifier");
         }

@@ -26,6 +26,10 @@ module.exports = {
 
             const response = await ai.ask(prompt);
 
+            console.log("LLM RAW =", response);
+            console.log("LLM TYPE =", typeof response);
+            console.log("LLM LENGTH =", response?.length);
+
             if (context.profiler) context.profiler.end("LLM");
 
             console.log("✅ AI OK");

@@ -6,21 +6,36 @@ function getOllamaUrl() {
     if (!host.startsWith("http://") && !host.startsWith("https://")) {
         host = `http://${host}`;
     }
-    return `${host.replace(/\/+$/, "")}/api/generate`;
+    try {
+        const urlObj = new URL(host);
+        if (!urlObj.port) {
+            urlObj.port = "11434";
+        }
+        host = urlObj.toString().replace(/\/+$/, "");
+    } catch (e) {}
+
+    return `${host}/api/generate`;
 }
 
 async function ask(prompt, model = (config.ollama && config.ollama.model) || "qwen2.5:latest") {
+    const host = (config.ollama && config.ollama.host) || "http://localhost:11434";
     const url = getOllamaUrl();
+    const promptStr = String(prompt || "");
 
     try {
         console.log(`🧠 Modello: ${model}`);
+        console.log(`HOST = ${host}`);
+        console.log(`URL  = ${url}`);
+        console.log(`MODEL = ${model}`);
+        console.log(`PROMPT LENGTH = ${promptStr.length}`);
+        console.log(`PROMPT SLICE = ${JSON.stringify(promptStr.slice(0, 300))}`);
         console.log(`📤 Invio richiesta a Ollama (${url})...`);
 
         const response = await axios.post(
             url,
             {
                 model,
-                prompt,
+                prompt: promptStr,
                 stream: false,
                 think: false
             },
@@ -29,17 +44,11 @@ async function ask(prompt, model = (config.ollama && config.ollama.model) || "qw
             }
         );
 
-        console.log("✅ Ollama ha risposto.");
+        console.log(`OLLAMA STATUS = ${response.status}`);
         if (response.data && response.data.thinking) {
             console.log("🧠 Thinking ricevuto ma ignorato.");
             delete response.data.thinking;
         }
-
-        console.log("");
-        console.log("========== RAW OLLAMA ==========");
-        console.dir(response.data, { depth: null });
-        console.log("================================");
-        console.log("");
 
         let text = "";
 
@@ -55,7 +64,11 @@ async function ask(prompt, model = (config.ollama && config.ollama.model) || "qw
             }
         }
 
-        return text.trim();
+        text = text.trim();
+        console.log(`OLLAMA RESPONSE = ${text}`);
+        console.log("✅ Ollama ha risposto con successo.\n");
+
+        return text;
 
     } catch (err) {
         console.error("❌ Errore Ollama:");

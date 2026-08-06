@@ -6,7 +6,15 @@ function getOllamaHost() {
     if (!rawHost.startsWith("http://") && !rawHost.startsWith("https://")) {
         rawHost = `http://${rawHost}`;
     }
-    return rawHost.replace(/\/+$/, "");
+    try {
+        const urlObj = new URL(rawHost);
+        if (!urlObj.port) {
+            urlObj.port = "11434";
+        }
+        return urlObj.toString().replace(/\/+$/, "");
+    } catch (e) {
+        return "http://localhost:11434";
+    }
 }
 
 module.exports = {
