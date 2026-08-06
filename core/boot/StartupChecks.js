@@ -5,6 +5,7 @@ const config = require("../config");
 const logger = require("../logger");
 
 const HealthReport = require("./HealthReport");
+const ServiceRegistry = require("../services/ServiceRegistry");
 
 async function checkFolders(report) {
 
@@ -34,6 +35,13 @@ async function checkFolders(report) {
 
     report.ok("Storage");
 
+    ServiceRegistry.register(
+        "Storage",
+        {
+            status: "ONLINE"
+        }
+    );
+
 }
 
 async function checkOllama(report) {
@@ -51,6 +59,14 @@ async function checkOllama(report) {
 
             report.ok("AI Engine");
 
+            ServiceRegistry.register(
+                "AI Engine",
+                {
+                    status: "ONLINE",
+                    optional: true
+                }
+            );
+
         } else {
 
             report.warn(
@@ -58,15 +74,29 @@ async function checkOllama(report) {
                 "Unavailable"
             );
 
+            ServiceRegistry.register(
+                "AI Engine",
+                {
+                    status: "OFFLINE",
+                    optional: true
+                }
+            );
+
         }
 
-    }
-
-    catch {
+    } catch {
 
         report.warn(
             "AI Engine",
             "Offline"
+        );
+
+        ServiceRegistry.register(
+            "AI Engine",
+            {
+                status: "OFFLINE",
+                optional: true
+            }
         );
 
     }

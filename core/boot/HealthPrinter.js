@@ -1,3 +1,5 @@
+const ServiceRegistry = require("../services/ServiceRegistry");
+
 class HealthPrinter {
 
     print(report) {
@@ -8,23 +10,42 @@ class HealthPrinter {
         console.log("         ONOFRIUS HEALTH");
         console.log("══════════════════════════════════════");
 
-        for (const s of report.services) {
+        const services = ServiceRegistry.list();
 
-            if (s.status === "OK") {
+        if (services.length > 0) {
 
-                console.log("✓", s.name);
+            for (const service of services) {
+
+                const icon =
+                    service.status === "ONLINE"
+                        ? "✓"
+                        : service.optional
+                            ? "⚠"
+                            : "✖";
+
+                console.log(icon, service.name);
 
             }
 
-            else if (s.status === "WARN") {
+        } else {
 
-                console.log("⚠", s.name, "-", s.message);
+            // Compatibilità con il vecchio HealthReport
 
-            }
+            for (const s of report.services) {
 
-            else {
+                if (s.status === "OK") {
 
-                console.log("✖", s.name, "-", s.message);
+                    console.log("✓", s.name);
+
+                } else if (s.status === "WARN") {
+
+                    console.log("⚠", s.name, "-", s.message);
+
+                } else {
+
+                    console.log("✖", s.name, "-", s.message);
+
+                }
 
             }
 

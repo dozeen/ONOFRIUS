@@ -6,21 +6,39 @@ class ServiceRegistry {
 
     }
 
-    register(name, service) {
+    register(name, options = {}) {
 
-        this.services.set(name, service);
+        this.services.set(name, {
+            name,
+            status: options.status || "ONLINE",
+            version: options.version || "1.0",
+            optional: options.optional || false,
+            description: options.description || ""
+        });
 
     }
 
-    resolve(name) {
+    setStatus(name, status) {
 
-        return this.services.get(name) || null;
+        const service = this.services.get(name);
+
+        if (service) {
+
+            service.status = status;
+
+        }
 
     }
 
-    has(name) {
+    get(name) {
 
-        return this.services.has(name);
+        return this.services.get(name);
+
+    }
+
+    list() {
+
+        return [...this.services.values()];
 
     }
 
