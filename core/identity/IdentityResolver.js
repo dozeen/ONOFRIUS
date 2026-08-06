@@ -1,116 +1,57 @@
-const contacts =
-    require("../../config/contacts.json");
-
-const IdentifierResolver =
-    require("./IdentifierResolver");
+const ConfigManager = require("../config/ConfigManager");
+const IdentifierResolver = require("./IdentifierResolver");
 
 class IdentityResolver {
-
     constructor() {
-
-        this.identifier =
-            new IdentifierResolver();
-
+        this.identifier = new IdentifierResolver();
     }
 
-
     normalizeName(name) {
-
-        if (!name)
-            return "";
-
-        return name
-            .toLowerCase()
-            .trim();
-
+        if (!name) return "";
+        return name.toLowerCase().trim();
     }
 
     resolve(context) {
-
-        const chatId =
-            context.chatId ||
-            context.sender ||
-            "";
-
-        const id =
-            this.identifier.normalize(chatId);
-
-        const displayName =
-            context.contactName ||
-            context.chat?.name ||
-            "";
+        const contacts = ConfigManager.contacts();
+        const chatId = context.chatId || context.sender || "";
+        const id = this.identifier.normalize(chatId);
+        const displayName = context.contactName || context.chat?.name || "";
 
         let contact = null;
 
-        // =====================================
-        // 1) Ricerca per numero
-        // =====================================
-
         if (contacts[id]) {
-
             contact = contacts[id];
-
         }
 
-        // =====================================
-        // 2) Ricerca per chiave di contatto
-        // =====================================
-
         if (!contact) {
-
-            const name =
-                this.normalizeName(displayName);
+            const name = this.normalizeName(displayName);
 
             for (const [key, value] of Object.entries(contacts)) {
-
-                if (key === "default")
-                    continue;
+                if (key === "default") continue;
 
                 if (this.normalizeName(key) === name) {
-
                     contact = value;
                     break;
-
                 }
 
-                if (
-                    this.normalizeName(value.name) === name
-                ) {
-
+                if (value && this.normalizeName(value.name) === name) {
                     contact = value;
                     break;
-
                 }
-
             }
-
         }
 
-        // =====================================
-        // 3) Fallback
-        // =====================================
-
         if (!contact) {
-
             contact = contacts.default;
-
         }
 
         return {
-
             id,
-
-            displayName:
-                displayName || contact.name,
-
+            displayName: displayName || contact.name,
             contact,
-
             groups: []
-
         };
-
     }
-
 }
 
 module.exports = new IdentityResolver();
