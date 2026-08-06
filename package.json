@@ -13,7 +13,9 @@
     "demo": "node demo/Demo.js",
     "explain": "node explain/Explain.js",
     "test": "echo \"No tests configured\"",
-    "cli": "node cli/index.js"
+    "cli": "node cli/index.js",
+    "doctor": "node doctor/index.js",
+    "doctor:fix": "node doctor/index.js --fix"
   },
   "keywords": [
     "ai",
