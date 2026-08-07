@@ -38,20 +38,30 @@ async function start() {
         await c.initialize();
     } catch (err) {
         console.error("⚠️ WhatsApp client init error:", err.message);
-        if (err.message.includes("Execution context was destroyed") || err.message.includes("Protocol error")) {
-            console.log("🧹 Session Cache corrotta rilevata. Bonifica della sessione...");
+        if (
+            err.message.includes("Execution context was destroyed") ||
+            err.message.includes("Protocol error") ||
+            err.message.includes("already running")
+        ) {
+            console.log("🧹 Chiusura browser e bonifica della sessione...");
+            try {
+                if (c.pupBrowser) {
+                    await c.pupBrowser.close().catch(() => {});
+                }
+                await c.destroy().catch(() => {});
+            } catch (closeErr) {}
+
             const authDir = path.resolve(__dirname, "../../.wwebjs_auth");
             if (fs.existsSync(authDir)) {
                 try {
                     fs.rmSync(authDir, { recursive: true, force: true });
-                    console.log("✅ Session Cache rimossa. Riavvio client...");
+                    console.log("✅ Session Cache corrotta rimossa.");
                 } catch (rmErr) {
                     console.error("Errore rimozione cache:", rmErr.message);
                 }
             }
             client = null;
-            const newC = getClient();
-            await newC.initialize();
+            throw new Error("Cache corrotta bonificata. Riesegui 'npm start' per la scansione QR code.");
         } else {
             throw err;
         }
