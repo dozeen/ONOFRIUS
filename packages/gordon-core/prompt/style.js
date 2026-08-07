@@ -2,7 +2,7 @@
  * style.js - Sezione STYLE con Principi Conversazionali di GordonStyle
  */
 
-const gordonStyle = require("../../personality/GordonStyle");
+const gordonStyle = require("../personality/GordonStyle");
 
 module.exports = function buildStylePrompt(context) {
     let output = "==================\nSTYLE & PERSONALITY\n==================\n";

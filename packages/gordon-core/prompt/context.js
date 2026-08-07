@@ -1,18 +1,9 @@
-module.exports = () => `
+module.exports = function buildContextPrompt(context) {
+    if (!context) return "";
 
-========================
-CONTESTO
-========================
+    const text = context.text || (context.event && context.event.text) || "";
+    let output = "========================\nMESSAGGIO RICEVUTO\n========================\n";
+    output += `"${text}"`;
 
-Rispondi esclusivamente
-all'ultimo messaggio.
-
-Non recuperare vecchi argomenti
-se l'altra persona
-ha cambiato discorso.
-
-Non aggiungere argomenti.
-
-Non inventare dettagli.
-
-`;
+    return output.trim();
+};
