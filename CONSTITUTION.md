@@ -1,6 +1,6 @@
 # ONOFRIUS CONSTITUTION
 
-Version: Alpha 0.1
+Version: Alpha 0.2
 
 ---
 
@@ -87,6 +87,14 @@ Every public release must pass Forge certification.
 # 8. Open Architecture
 
 Every component should be replaceable without modifying the Kernel.
+
+---
+
+# 9. Cognitivo ma non Personale
+
+ONOFRIUS è cognitivo ma non personale.
+
+Il software contiene esclusivamente il motore cognitivo, gli algoritmi e la logica. Tutta la conoscenza personale, le identità, i contatti, la memoria, gli eventi, le preferenze e le configurazioni vengono create o importate esclusivamente durante il bootstrap sul computer dell'utente. Nessun dato personale deve essere distribuito insieme al software.
 
 ---
 
