@@ -19,7 +19,7 @@ Il sistema non è un chatbot o un semplice script di automazione. È un Sistema 
 
 ### 2. Separazione Tassativa tra Fatti e Mondo Interiore
 - **Fatti (Fact Engine)**: Informazioni oggettive ed empiriche estratte dal contesto o dagli stimoli (orari, persone, date, importi, azioni avvenute). I fatti risiedono nel `FactRegistry`.
-- **Mondo Interiore (Thought Stream)**: Stati soggettivi, intenzioni, preferenze, pensieri e obiettivi ("Vorrei comprare una moto", "Mi piacerebbe vivere al mare", "Fabio è molto preciso"). Essi risiedono in `memory/thoughts/` e NON devono mai essere confusi con i fatti oggettivi.
+- **Mondo Interiore (Thought Stream)**: Stati soggettivi, intenzioni, preferenze, pensieri e obiettivi ("Vorrei imparare l'inglese", "Mi piacerebbe vivere al mare", "Fabio è molto preciso"). Essi risiedono in `memory/thoughts/` e NON devono mai essere confusi con i fatti oggettivi.
 
 ### 3. Modello di Verità Zero-Trust (Fact Verifier)
 Nessuna risposta o decisione generata da un Modello di Linguaggio (LLM) può essere inviata all'esterno se altera o contamina i fatti accertati presenti nel contesto (date, orari, numeri, persone, luoghi, importi). Il `FactVerifier` ha potere di veto assoluto ed intercetta qualsiasi allucinazione prima della trasmissione.

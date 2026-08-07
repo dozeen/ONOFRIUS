@@ -1,25 +1,15 @@
-let gordonCore;
+/**
+ * kernel.js - ONOFRIUS Cognitive OS Kernel
+ * Powered by certified gordon-core engine (packages/gordon-core)
+ */
 
-try {
-    gordonCore = require("gordon-core");
-} catch (e1) {
-    try {
-        gordonCore = require("../../Gordon3/core");
-    } catch (e2) {
-        try {
-            gordonCore = require("../index");
-        } catch (e3) {
-            console.error("❌ Errore caricamento Gordon Core:", e1.message);
-            throw new Error("Impossibile trovare il modulo 'gordon-core' o la cartella '../../Gordon3/core'. Assicurati che Gordon3 sia posizionato a fianco di ONOFRIUS.");
-        }
-    }
-}
+const gordonCore = require("gordon-core");
 
 const logger = gordonCore.logger;
 const bus = gordonCore.EventBus;
 const orchestrator = new gordonCore.CognitiveOrchestrator();
 
-logger.info("Kernel", "ONOFRIUS Kernel avviato su Gordon Core Engine");
+logger.info("Kernel", "ONOFRIUS Kernel avviato su Gordon Core Engine (packages/gordon-core)");
 
 bus.on("event.created", (event) => {
     logger.debug("EventBus", `Evento creato: ${event.type}`);

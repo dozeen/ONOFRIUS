@@ -1,0 +1,19 @@
+module.exports = Object.freeze({
+    FACT: "fact",
+    EVENT: "event",
+    QUESTION: "question",
+    NEWS: "news",
+    SOCIAL: "social",
+    TASK: "task",
+    MEDIA: "media",
+    COMMAND: "command",
+    ALERT: "alert",
+    URL: "url",
+    YOUTUBE: "youtube",
+    TIKTOK: "tiktok",
+    STICKER: "sticker",
+    AUDIO: "audio",
+    DOCUMENT: "document",
+    WORLD_EVENT: "world_event",
+    UNKNOWN: "unknown"
+});

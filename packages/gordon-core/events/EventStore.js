@@ -1,0 +1,38 @@
+class EventStore {
+
+    constructor() {
+        this.events = [];
+    }
+
+    add(event) {
+        this.events.push(event);
+        return event;
+    }
+
+    all() {
+        return this.events;
+    }
+
+    get(id) {
+        return this.events.find(e => e.id === id);
+    }
+
+    findByKind(kind) {
+        return this.events.filter(e => e.kind === kind);
+    }
+
+    findByActor(actor) {
+        return this.events.filter(e => e.actor === actor);
+    }
+
+    latest(limit = 50) {
+        return this.events.slice(-limit);
+    }
+
+    children(parentId) {
+        return this.events.filter(e => e.parentId === parentId);
+    }
+}
+
+module.exports = EventStore;
+module.exports.instance = new EventStore();

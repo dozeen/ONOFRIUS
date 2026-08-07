@@ -1,0 +1,20 @@
+module.exports = [
+    require("./system"),
+    require("./identity"),
+    require("./style"),
+    require("./facts"),
+    require("./thoughts"),
+    require("./goal"),
+    require("./agenda"),
+    require("./relationship"),
+    require("./groups"),
+    require("./context"),
+    require("./history"),
+    require("./memory"),
+    require("./contact"),
+    require("./message"),
+    require("./reasoning"),
+    require("./rules"),
+    require("./character"),
+    require("./objective")
+];
