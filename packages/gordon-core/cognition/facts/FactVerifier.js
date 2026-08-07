@@ -89,7 +89,7 @@ class FactVerifier {
             if (meta.contactName) contextPeople.push(meta.contactName.toLowerCase().trim());
             if (meta.senderName) contextPeople.push(meta.senderName.toLowerCase().trim());
             if (meta.identity?.contact?.name) contextPeople.push(meta.identity.contact.name.toLowerCase().trim());
-            contextPeople.push("onofrio", "gordon", "dolly", "silvana", "roberta");
+            contextPeople.push("owner", "gordon", "alice", "bob");
 
             const outputPeople = outputEntities.filter(e => e.type === ENTITY_TYPES.PERSON).map(e => e.value.toLowerCase().trim());
 

@@ -104,8 +104,8 @@ class FactExtractor {
             });
         }
 
-        // 2. Persone (es. Dolly, Onofrio, Silvana, Roberta, Fabio, Sergio, Gerardo)
-        const personRegex = /\b(Dolly|Onofrio|Silvana|Roberta|Manolo|Riccardo|Eugenio|Fabio|Sergio|Gerardo|Onofrio Cannone|Silvana Inglese|Roberta Cannone)\b/gi;
+        // 2. Persone (es. Alice, Bob, Charlie)
+        const personRegex = /\b(Alice|Bob|Charlie|David|Eva|Frank|Grace)\b/gi;
         while ((match = personRegex.exec(text)) !== null) {
             entities.push({
                 type: ENTITY_TYPES.PERSON,

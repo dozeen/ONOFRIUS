@@ -26,7 +26,7 @@ class InteractionEngine {
 
         if (context.isOwner) {
             defaults = { role: "owner", formality: 0.2, irony: 0.4, affection: 0.5 };
-        } else if (senderName.includes("dolly")) {
+        } else if (senderName.includes("vip")) {
             defaults = { role: "family", formality: 0.1, emojiUsage: 0.6, affection: 0.9, irony: 0.3 };
         } else if (senderName.includes("gerardo") || sender.includes("3500903187")) {
             defaults = { role: "client_reference", formality: 0.8, emojiUsage: 0.1, affection: 0.1, messageLength: "medium" };

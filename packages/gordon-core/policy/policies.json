@@ -6,7 +6,7 @@
         "Federico": {
             "mode": "on"
         },
-        "Dolly": {
+        "VIP": {
             "mode": "off"
         },
         "Mercadante": {
@@ -15,7 +15,7 @@
         "federico": {
             "mode": "off"
         },
-        "dolly": {
+        "vip": {
             "mode": "off"
         }
     },

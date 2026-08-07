@@ -81,7 +81,7 @@ class InputClassifier {
             };
         }
 
-        // 5. Promemoria / Agenda (es. "Domattina quando Dolly dà il buongiorno tu ricordagli...")
+        // 5. Promemoria / Agenda (es. "Domattina quando un contatto dà il buongiorno tu ricordagli...")
         if (lower.startsWith("ricordami ") || lower.startsWith("domattina ") || lower.startsWith("agenda:") || lower.startsWith("domani ") || lower.includes("domani alle ")) {
             return {
                 category: INPUT_CATEGORIES.AGENDA,

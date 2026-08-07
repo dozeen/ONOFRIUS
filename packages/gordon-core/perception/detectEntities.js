@@ -2,7 +2,7 @@ const people = [
 
     "papà",
     "mamma",
-    "roberta",
+    "alice",
     "martina",
     "professore",
     "nonna"

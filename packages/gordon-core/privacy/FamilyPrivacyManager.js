@@ -2,20 +2,20 @@
  * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale
  * 
  * Regole applicate:
- * 1. Dolly: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Dolly o Onofrio.
- * 2. Silvana Inglese (Moglie): visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Silvana Inglese, Roberta Cannone (Figlia) o Onofrio.
+ * 1. VIP: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con VIP o Owner.
+ * 2. Spouse: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Spouse, Child o Owner.
  */
 
 const PRIVACY_POLICIES = [
     {
-        name: "Dolly Confidentiality",
-        subjectKeywords: ["dolly"],
-        allowedRecipients: ["dolly", "onofrio", "me", "217535983173871"]
+        name: "VIP Confidentiality",
+        subjectKeywords: ["vip"],
+        allowedRecipients: ["vip", "owner", "me"]
     },
     {
-        name: "Silvana Inglese Confidentiality",
-        subjectKeywords: ["silvana", "silvana inglese"],
-        allowedRecipients: ["silvana", "silvana inglese", "roberta", "roberta cannone", "onofrio", "me"]
+        name: "Family Confidentiality",
+        subjectKeywords: ["family", "spouse"],
+        allowedRecipients: ["spouse", "child", "owner", "me"]
     }
 ];
 
