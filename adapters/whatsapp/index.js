@@ -1,6 +1,8 @@
 const createClient = require("./client");
 const registerEvents = require("./events");
 const registerReplyHandler = require("./replyHandler");
+const fs = require("fs");
+const path = require("path");
 
 let client = null;
 let isReady = false;
@@ -32,7 +34,28 @@ function getClient() {
 
 async function start() {
     const c = getClient();
-    await c.initialize();
+    try {
+        await c.initialize();
+    } catch (err) {
+        console.error("⚠️ WhatsApp client init error:", err.message);
+        if (err.message.includes("Execution context was destroyed") || err.message.includes("Protocol error")) {
+            console.log("🧹 Session Cache corrotta rilevata. Bonifica della sessione...");
+            const authDir = path.resolve(__dirname, "../../.wwebjs_auth");
+            if (fs.existsSync(authDir)) {
+                try {
+                    fs.rmSync(authDir, { recursive: true, force: true });
+                    console.log("✅ Session Cache rimossa. Riavvio client...");
+                } catch (rmErr) {
+                    console.error("Errore rimozione cache:", rmErr.message);
+                }
+            }
+            client = null;
+            const newC = getClient();
+            await newC.initialize();
+        } else {
+            throw err;
+        }
+    }
 }
 
 async function waitForReady() {
