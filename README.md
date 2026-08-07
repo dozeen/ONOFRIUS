@@ -9,6 +9,7 @@
 [![Website](https://img.shields.io/badge/Website-Online-00ff99?style=for-the-badge)](https://dozeen.ns0.it/onofrius/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-22-green?style=for-the-badge)]()
+[![Release](https://img.shields.io/badge/Release-v1.0.0-purple?style=for-the-badge)]()
 
 🌐 **Official Website:** https://dozeen.ns0.it/onofrius/
 
@@ -32,9 +33,12 @@ It is an **Event-Driven Cognitive Operating System** designed to build persisten
 - extracting facts & fusing multi-source knowledge (Bayesian confidence boost)
 - managing temporal memory decay (ephemeral vs. immutable facts)
 - distinguishing certainty (*Sapere*) vs probability/beliefs (*Credere*)
-- reasoning, verifying truth & maintaining zero-leak privacy
+- learning continuously from real human responses via **StyleLearningEngine** (Few-Shot Canonical Patterns)
+- filtering output authenticity through **LinguisticConscience** (*"Onofrio scriverebbe davvero questa frase?"*)
+- evaluating situational social behavior via **SocialIntuitionEngine** & **ConversationParticipation**
+- transcribing voice notes and audio messages automatically via **Whisper Audio Engine**
 
-Instead of reacting to isolated prompts, ONOFRIUS continuously transforms incoming events into persistent knowledge.
+Instead of reacting to isolated prompts, ONOFRIUS continuously transforms incoming events into persistent knowledge and human-like natural behavior.
 
 > **Every Event may become Knowledge.**
 >
@@ -69,26 +73,30 @@ ONOFRIUS/
 │
 ├── packages/
 │   └── gordon-core/    <-- Certified, Standalone Gordon Core Package
-│       ├── package.json
-│       ├── index.js
 │       ├── brain/
 │       ├── cognition/
+│       │   └── interaction/  <-- ConversationDynamicsEngine & SocialIntuitionEngine
 │       ├── events/
 │       ├── identity/
-│       └── memory/      <-- Empty runtime templates (No personal data)
+│       ├── learning/         <-- StyleLearningEngine (Few-Shot Patterns)
+│       ├── personality/      <-- LinguisticConscience & LanguageEngine
+│       └── memory/           <-- Empty runtime templates (No personal data)
 │
 └── package.json        <-- "dependencies": { "gordon-core": "file:packages/gordon-core" }
 ```
 
 ---
 
-# Cognitive Pipeline
+# Decoupled Cognitive Pipeline
 
 ```text
-Incoming Event (WhatsApp / CLI / System)
+Incoming Event (WhatsApp / CLI / System / Audio Voice Note)
         │
         ▼
  Perception Engine & Passive Status Handler
+        │
+        ▼
+ Whisper Audio Transcriber (faster-whisper + ffmpeg)
         │
         ▼
  Input Classification & Attention Engine
@@ -106,13 +114,22 @@ Incoming Event (WhatsApp / CLI / System)
  Decision Engine & Selective Agenda Loading
         │
         ▼
- Relevant Preference Filter & Prompt Builder
+ SocialIntuitionEngine & ConversationParticipation (SILENT, MINIMAL, NORMAL, ENGAGED, ADVISOR)
         │
         ▼
- Zero-Trust Fact Verifier & ResponseSanitizer (Anti-Prompt-Leak & Family Privacy)
+ StyleLearningEngine (Few-Shot Canonical Patterns Memory)
         │
         ▼
- Response / Action Execution
+ PersonalityEngine & LanguageEngine (Natural Text Generation)
+        │
+        ▼
+ LinguisticConscience ("Onofrio scriverebbe davvero questa frase?")
+        │
+        ▼
+ FactVerifier & ResponseSanitizer (Zero-Trust Anti-Prompt-Leak & Family Privacy)
+        │
+        ▼
+ Response / Action Execution & Dispatch
 ```
 
 ---
