@@ -1,4 +1,5 @@
 const chatControl = require("../../chat/ChatControlManager");
+const personality = require("../../personality/PersonalityEngine");
 const ResponseSanitizer = require("../../cognition/facts/ResponseSanitizer");
 const sanitizer = new ResponseSanitizer();
 
@@ -18,7 +19,10 @@ class ResponseHandler {
             } else {
                 const chatId = context.chatId || (context.event && context.event.chatId) || context.senderId;
 
-                // Se non è una risposta di stato/sistema di controllo ("stop onofrius" / "start onofrius")
+                // 1. Sanitizzazione e Formattazione Personality Engine (GordonStyle)
+                cleaned = personality.format(cleaned, context);
+
+                // 2. Controllo prima risposta in chat
                 const isControlMsg = cleaned.startsWith("🛑 Sistema ONOFRIUS disattivato") || cleaned.startsWith("✅ Sistema ONOFRIUS riattivato");
 
                 if (chatId && !isControlMsg && chatControl.isFirstResponse(chatId)) {
