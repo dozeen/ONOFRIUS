@@ -10,18 +10,18 @@ async function downloadWithRetry(msg) {
 
     for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
         try {
-            console.log(`DOWNLOAD... (tentativo ${attempt}/${MAX_ATTEMPTS})`);
+            console.log(`[Whisper] 📥 Download media (tentativo ${attempt}/${MAX_ATTEMPTS})...`);
             const media = await msg.downloadMedia();
 
             if (media) {
-                console.log("MEDIA OK");
+                console.log("[Whisper] ✅ Download media completato con successo.");
                 return media;
             }
 
-            console.log("MEDIA vuoto, ritento...");
+            console.log("[Whisper] ⚠️ Media vuoto, ritento...");
         } catch (err) {
             lastError = err;
-            console.log(`Tentativo ${attempt} fallito: ${err.message || err}`);
+            console.log(`[Whisper] ⚠️ Tentativo ${attempt} fallito: ${err.message || err}`);
         }
 
         if (attempt < MAX_ATTEMPTS) {
@@ -30,27 +30,58 @@ async function downloadWithRetry(msg) {
     }
 
     if (lastError) {
-        console.error("❌ Download media fallito dopo", MAX_ATTEMPTS, "tentativi");
-        console.error("Ultimo errore:", lastError.message || lastError);
+        console.error("❌ [Whisper] Download media fallito dopo", MAX_ATTEMPTS, "tentativi. Ultimo errore:", lastError.message || lastError);
     }
 
     return null;
 }
 
-async function transcribe(msg) {
-    console.log("");
-    console.log("🎤 Whisper Audio Transcriber");
-    console.log("");
-    console.log("type:", msg.type);
-    console.log("hasMedia:", msg.hasMedia);
+function resolvePythonBinary() {
+    const candidateVenvs = [
+        path.join(__dirname, "..", ".venv", "bin", "python"),
+        path.join(__dirname, "..", "..", "Gordon3", ".venv", "bin", "python"),
+        "/home/onofrio/Gordon3/.venv/bin/python",
+        "python3",
+        "python"
+    ];
 
-    // aspetta che il messaggio sia sincronizzato lato WhatsApp
+    for (const binPath of candidateVenvs) {
+        if (fs.existsSync(binPath)) {
+            return binPath;
+        }
+    }
+    return "python3";
+}
+
+function resolveTranscribeScript() {
+    const candidateScripts = [
+        path.join(__dirname, "..", "python", "transcribe.py"),
+        path.join(__dirname, "..", "..", "Gordon3", "python", "transcribe.py"),
+        "/home/onofrio/Gordon3/python/transcribe.py",
+        "/home/onofrio/ONOFRIUS/python/transcribe.py"
+    ];
+
+    for (const scriptPath of candidateScripts) {
+        if (fs.existsSync(scriptPath)) {
+            return scriptPath;
+        }
+    }
+    return null;
+}
+
+async function transcribe(msg) {
+    console.log("\n=========================================");
+    console.log("🎤 [Whisper] Inizio Trascrizione Vocale");
+    console.log("=========================================");
+    console.log("[Whisper] Type:", msg.type, "| HasMedia:", msg.hasMedia);
+
+    // Aspetta la sincronizzazione del messaggio
     await new Promise(r => setTimeout(r, 1500));
 
     const media = await downloadWithRetry(msg);
 
     if (!media) {
-        console.log("media: false — trascrizione saltata, nessun crash");
+        console.log("❌ [Whisper] Nessun media disponibile. Trascrizione saltata.");
         return "";
     }
 
@@ -64,16 +95,25 @@ async function transcribe(msg) {
 
     try {
         fs.writeFileSync(filepath, Buffer.from(media.data, "base64"));
+        console.log(`[Whisper] 💾 File audio salvato temporaneamente: ${filepath}`);
     } catch (err) {
-        console.error("❌ Scrittura file audio fallita:", err.message);
+        console.error("❌ [Whisper] Scrittura file audio fallita:", err.message);
         return "";
     }
 
+    const pythonBin = resolvePythonBinary();
+    const scriptPath = resolveTranscribeScript();
+
+    if (!scriptPath) {
+        console.error("❌ [Whisper] Script transcribe.py non trovato!");
+        fs.unlink(filepath, () => {});
+        return "";
+    }
+
+    console.log(`[Whisper] 🐍 Esecuzione Python: ${pythonBin} ${scriptPath} ${filepath}`);
+
     return new Promise((resolve) => {
-        const python = spawn(
-            path.join(__dirname, "..", ".venv", "bin", "python"),
-            [path.join(__dirname, "..", "python", "transcribe.py"), filepath]
-        );
+        const python = spawn(pythonBin, [scriptPath, filepath]);
 
         let output = "";
         let errored = false;
@@ -83,28 +123,28 @@ async function transcribe(msg) {
         });
 
         python.stderr.on("data", data => {
-            console.error("Whisper stderr:", data.toString());
+            console.error("[Whisper] Stderr:", data.toString().trim());
         });
 
         python.on("error", err => {
             errored = true;
-            console.error("❌ Impossibile avviare il processo Python:", err.message);
+            console.error("❌ [Whisper] Impossibile avviare il processo Python:", err.message);
         });
 
         python.on("close", (code) => {
             fs.unlink(filepath, () => {});
 
             if (errored || code !== 0) {
-                console.error(`❌ Trascrizione fallita (exit code ${code})`);
+                console.error(`❌ [Whisper] Trascrizione fallita (exit code ${code})`);
                 resolve("");
                 return;
             }
 
-            console.log("");
-            console.log("📝 Trascrizione Audio Completata:");
-            console.log(output.trim());
-            console.log("");
-            resolve(output.trim());
+            const transcribedText = output.trim();
+            console.log("📝 [Whisper] Trascrizione completata con successo:");
+            console.log(`"${transcribedText}"`);
+            console.log("=========================================\n");
+            resolve(transcribedText);
         });
     });
 }
