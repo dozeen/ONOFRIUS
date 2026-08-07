@@ -1,0 +1,134 @@
+[
+  {
+    "id": "int_1785892941582_7cza",
+    "content": "vorrei uscire con dolly giovedi non prima delle 22:30",
+    "meta": {
+      "type": "intention",
+      "content": "vorrei uscire con dolly giovedi non prima delle 22:30",
+      "entities": [
+        {
+          "type": "TIME",
+          "value": "22:30",
+          "index": 48
+        }
+      ],
+      "created_at": 1785892941
+    },
+    "timestamp": "2026-08-05T01:22:21.582Z"
+  },
+  {
+    "id": "int_1786107974944_l46b",
+    "content": "Organizzare la scrivania dello studio",
+    "status": "ACTIVE",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:14.944Z"
+  },
+  {
+    "id": "int_1786107974946_oujy",
+    "content": "Comprare il regalo per la festa",
+    "status": "COMPLETED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:14.946Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786107974946_ygoo",
+    "content": "Fare la prenotazione al ristorante",
+    "status": "CANCELLED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:14.946Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786107988275_kxdl",
+    "content": "Organizzare la scrivania dello studio",
+    "status": "ACTIVE",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:28.276Z"
+  },
+  {
+    "id": "int_1786107988276_h635",
+    "content": "Comprare il regalo per la festa",
+    "status": "COMPLETED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:28.276Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786107988276_m95r",
+    "content": "Fare la prenotazione al ristorante",
+    "status": "CANCELLED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:28.276Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786108002317_u6gx",
+    "content": "Organizzare la scrivania dello studio",
+    "status": "ACTIVE",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:42.317Z"
+  },
+  {
+    "id": "int_1786108002318_j5os",
+    "content": "Comprare il regalo per la festa",
+    "status": "COMPLETED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:42.318Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786108002318_fvn5",
+    "content": "Fare la prenotazione al ristorante",
+    "status": "CANCELLED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:42.318Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786108005547_0lfi",
+    "content": "Organizzare la scrivania dello studio",
+    "status": "ACTIVE",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:45.547Z"
+  },
+  {
+    "id": "int_1786108005548_r2dh",
+    "content": "Comprare il regalo per la festa",
+    "status": "COMPLETED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:45.548Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786108005548_ker6",
+    "content": "Fare la prenotazione al ristorante",
+    "status": "CANCELLED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:45.548Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786108013275_34rz",
+    "content": "Organizzare la scrivania dello studio",
+    "status": "ACTIVE",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:53.275Z"
+  },
+  {
+    "id": "int_1786108013275_6elo",
+    "content": "Comprare il regalo per la festa",
+    "status": "COMPLETED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:53.275Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  },
+  {
+    "id": "int_1786108013275_i6zh",
+    "content": "Fare la prenotazione al ristorante",
+    "status": "CANCELLED",
+    "meta": {},
+    "timestamp": "2026-08-07T13:06:53.275Z",
+    "updatedAt": "2026-08-07T13:06:53.276Z"
+  }
+]

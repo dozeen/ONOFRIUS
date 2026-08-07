@@ -1,0 +1,1200 @@
+[
+  {
+    "id": "785be2a3-930b-47a3-bca9-f85f2e0ced0c",
+    "type": "birthday",
+    "title": "Compleanno di Dolly",
+    "date": "2026-07-29",
+    "time": null,
+    "person": "Dolly",
+    "chatId": "217535983173871",
+    "facts": [
+      "Il 29 luglio è il compleanno di Dolly"
+    ],
+    "intentions": [
+      "Onofrio vorrebbe trascorrere il compleanno con Dolly"
+    ],
+    "evidence": [
+      "Dolly ha detto che vuole vedere Onofrio mercoledì e festeggiare il suo compleanno con lui"
+    ],
+    "status": "planned",
+    "source": "owner",
+    "createdAt": "2026-07-27T21:25:33.091Z",
+    "updatedAt": "2026-07-27T21:25:33.092Z"
+  },
+  {
+    "id": "5cf32c10-faf4-4a8e-b8bb-431883d6fdde",
+    "type": "appointment",
+    "title": "Rinnovare la patente",
+    "date": "2027-11-11",
+    "time": "10:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: This is an event reminder"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "65ij4phlcgp38b9p69gm4b9kcopjib9p68oj0bb1cosj4cr3coqjedhp74@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2027-11-11",
+      "endTime": "11:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.664Z",
+    "updatedAt": "2026-07-27T21:57:53.664Z"
+  },
+  {
+    "id": "f4d8d83d-e9c9-4056-99fa-c252ba883664",
+    "type": "appointment",
+    "title": "Eolo cambio",
+    "date": "2026-10-01",
+    "time": "15:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "69j68c1p70qjeb9h64rm4b9kc5hmabb1cgqj8b9h6pgj2ob271h68e9g6c@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-10-01",
+      "endTime": "16:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.665Z",
+    "updatedAt": "2026-07-27T21:57:53.665Z"
+  },
+  {
+    "id": "49f9d311-4ffc-4c34-8939-4d2cdc86dfb3",
+    "type": "appointment",
+    "title": "Collextro 18 Francesca Masotina Perfetto 😊\nIl 29 agosto al momento sono disponibile.\nPer un 18° al Collextro in zona 167 nessun problema.\nAppena hai conferma sugli orari dimmelo, così ti preparo una proposta precisa.\nPossiamo studiare insieme diversi momenti della serata (ingresso, accoglienza, musica), personalizzandoli in base a quello che ti piace.\nIl budget parte da 250 €, poi varia in base a durata e allestimento scelto.",
+    "date": "2026-08-29",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "c5gj6or26grmcb9n60qmab9kccpj4b9o60r3cb9ickq64cpg60q36dhmcg@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-29",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.665Z",
+    "updatedAt": "2026-07-27T21:57:53.665Z"
+  },
+  {
+    "id": "c5a0a41a-30a4-4edd-8b3c-ab01a84d8ed6",
+    "type": "appointment",
+    "title": "Masseria San Martino Minervino compleanno chiaraluce un anno",
+    "date": "2026-08-08",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "ccpm6d9l6hhj8bb464q68b9k6pgjcb9pcos36b9g6so6aohgccp6ad1nc8@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-08",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.666Z",
+    "updatedAt": "2026-07-27T21:57:53.666Z"
+  },
+  {
+    "id": "902561d3-3207-4610-ba8f-09e258398ca5",
+    "type": "appointment",
+    "title": "?? Non possono mettere i DJ esterni solo quello della sala Villa torre rossa sera Pietro 3791845589",
+    "date": "2026-08-08",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "c8qjgcj6ccs32b9k6sp66b9kcgo3ibb16cq3ab9j6cp3eor5cos38c9l6c@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-08",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.666Z",
+    "updatedAt": "2026-07-27T21:57:53.666Z"
+  },
+  {
+    "id": "f6978601-2a07-4eef-b14e-b2d509c87a9b",
+    "type": "appointment",
+    "title": "Matrimonio a pranzo,Torre Giulia",
+    "date": "2026-08-10",
+    "time": "08:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/yjg-zseq-amj\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-",
+      "Luogo: Torre Giulia, Via Padula, Km 4, 71042 Cerignola FG, Italia"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6tgj2phi68smab9m6spjeb9kcgpj4bb168r3gbb5chj30e36c4rm6pb2cg@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-10",
+      "endTime": "09:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.666Z",
+    "updatedAt": "2026-07-27T21:57:53.666Z"
+  },
+  {
+    "id": "1d3e8ad0-7ace-4cad-93a9-e1f5339ef2c1",
+    "type": "appointment",
+    "title": "PRANZO MINO PUGNOCHIUSO",
+    "date": "2026-09-13",
+    "time": "08:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/tyh-szsy-qsv\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "64o6cd9lcosm4bb474q3ib9k68smcb9o6hi30bb26pgm4dr2c9h6ac31c4@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-13",
+      "endTime": "09:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.666Z",
+    "updatedAt": "2026-07-27T21:57:53.666Z"
+  },
+  {
+    "id": "3eb68c9f-2497-4496-847e-301be9075716",
+    "type": "appointment",
+    "title": "Biancasole sera",
+    "date": "2026-08-08",
+    "time": "14:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "64pj2c316lj38b9h6di36b9k6coj6b9p6dgj8b9icli38c1kcgsmacr46g@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-08",
+      "endTime": "15:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.667Z",
+    "updatedAt": "2026-07-27T21:57:53.667Z"
+  },
+  {
+    "id": "b62ead11-5b6b-4afd-aedf-786ba0fac0ad",
+    "type": "appointment",
+    "title": "Villa karma Barletta piscina 300",
+    "date": "2026-08-14",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "chgm8d1lcgpm2b9gc4rm6b9kcorj8bb26th34b9m71j36dr274rj6oj36k@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-14",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.667Z",
+    "updatedAt": "2026-07-27T21:57:53.667Z"
+  },
+  {
+    "id": "600315fa-3d08-4f84-b619-3b3992020a99",
+    "type": "appointment",
+    "title": "? Ramses Maria 8 anni Rosanna cesare 300 +39 380 766 7777",
+    "date": "2026-07-28",
+    "time": "18:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "ccr68d1k6srj6b9j6tj32b9k64s32b9o60q30b9gckrjior6c4rj4cr674@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-07-28",
+      "endTime": "19:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.667Z",
+    "updatedAt": "2026-07-27T21:57:53.667Z"
+  },
+  {
+    "id": "dfda5022-c82f-4807-bded-f1cbafc1ce00",
+    "type": "appointment",
+    "title": "Matrimonio a pranzo,Torre Giulia",
+    "date": "2026-12-26",
+    "time": "09:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/bdf-yxgv-kwq\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-",
+      "Luogo: Torre Giulia, Via Padula, Km 4, 71042 Cerignola FG, Italia"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "75ijgeb574s3abb6cgpm2b9k6hgm6bb170ojcb9o6hhjgopi64pm4d1lck@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-12-26",
+      "endTime": "10:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.668Z",
+    "updatedAt": "2026-07-27T21:57:53.668Z"
+  },
+  {
+    "id": "f870032a-15b5-4371-a7f8-4b4290aa0888",
+    "type": "appointment",
+    "title": "Biancasole sera",
+    "date": "2026-09-12",
+    "time": "14:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6him4dj36pijibb46oojib9k71gm8bb16hij0b9o6ooj4cj1cco3ap9g6k@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-12",
+      "endTime": "15:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.668Z",
+    "updatedAt": "2026-07-27T21:57:53.668Z"
+  },
+  {
+    "id": "70ea9b71-075a-4916-976a-84322042ce92",
+    "type": "appointment",
+    "title": "Controlla il gruppo elettrogeno ( cambio olio e rifornimento ) probabile lunghe giornate coperte.",
+    "date": "2027-01-07",
+    "time": "16:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "c4s3ioho70o3ib9i6gp30b9kcgp6abb2chhj8b9n6cp30p9o69hmapj16k@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2027-01-07",
+      "endTime": "17:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.668Z",
+    "updatedAt": "2026-07-27T21:57:53.668Z"
+  },
+  {
+    "id": "2c667b8d-2e61-41ad-b8c4-c9eb36a3b033",
+    "type": "appointment",
+    "title": "Matrimonio a pranzo con Mino",
+    "date": "2026-09-26",
+    "time": "08:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/eco-chrq-fkc\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-",
+      "Luogo: Pugnochiuso Resort, SP54, 71019 Vieste FG, Italia"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "cpij8cb46cs3eb9oc5hm2b9kcko3gbb264p3eb9l60q30d1gc4smacb670@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-26",
+      "endTime": "09:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.668Z",
+    "updatedAt": "2026-07-27T21:57:53.668Z"
+  },
+  {
+    "id": "fe4dd13b-a291-4d37-9cc6-303d39cc4667",
+    "type": "appointment",
+    "title": "Ade pranzo",
+    "date": "2026-08-15",
+    "time": "10:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6kr32c9i6kr6cb9p6opm2b9k6pj3abb164o3eb9p60o34d31chj6ap1lcc@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-15",
+      "endTime": "11:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.668Z",
+    "updatedAt": "2026-07-27T21:57:53.668Z"
+  },
+  {
+    "id": "e0e5a9e9-1b3f-497b-958e-7f26a0d07b48",
+    "type": "appointment",
+    "title": "? Zapponeta eugenio impianto audio luci gruppo elettrogeno",
+    "date": "2026-08-06",
+    "time": "16:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6srm8oj36tim6b9jc9j6cb9k69h64b9o61j38b9o74r68db174p6ccj564@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-06",
+      "endTime": "17:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.669Z",
+    "updatedAt": "2026-07-27T21:57:53.669Z"
+  },
+  {
+    "id": "d1571232-a9f6-4e78-8449-15fbef9bed47",
+    "type": "appointment",
+    "title": "Borgo Pineto Castellaneta Marina Carlo Gallo",
+    "date": "2026-08-14",
+    "time": "17:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/ert-jpdo-dbm\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "74r3eob5cdj68bb5clj64b9kclim2bb26hj36bb56dj30chjclhm8e9o6k@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-14",
+      "endTime": "18:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.669Z",
+    "updatedAt": "2026-07-27T21:57:53.669Z"
+  },
+  {
+    "id": "6ad3b321-8af5-40f3-a592-0365f27f8b02",
+    "type": "appointment",
+    "title": "PROVE MINO",
+    "date": "2026-07-29",
+    "time": "08:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/adu-cjik-axt\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "ccr62cj2c9h38b9ic4o34b9k6tgm4bb171i3gb9n69i34php6hij2dj4cc@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-07-29",
+      "endTime": "09:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.670Z",
+    "updatedAt": "2026-07-27T21:57:53.670Z"
+  },
+  {
+    "id": "182fd5e7-baf3-4247-8f5f-fed9a360366a",
+    "type": "appointment",
+    "title": "AVVISATURA POST SCADENZA (AVVISO BONARIO)",
+    "date": "2026-08-28",
+    "time": null,
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6lh6adph6opj6b9o65im8b9k6kq34bb1cgojebb6copjae32cdhjgp9o68@google.com",
+      "allDay": true,
+      "timezone": null,
+      "endDate": null,
+      "endTime": null
+    },
+    "createdAt": "2026-07-27T21:57:53.670Z",
+    "updatedAt": "2026-07-27T21:57:53.670Z"
+  },
+  {
+    "id": "f415320a-1168-48a1-a9fb-23dae74898dc",
+    "type": "appointment",
+    "title": "Sera 3355461644 Paolo u frrer",
+    "date": "2026-09-25",
+    "time": "17:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6di3ad3570r36b9pc8rm2b9k6thj0b9ocos6cb9k6ksm8dr569hj8p1jck@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-25",
+      "endTime": "18:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.670Z",
+    "updatedAt": "2026-07-27T21:57:53.670Z"
+  },
+  {
+    "id": "e49fcbe2-92e8-40b5-bad1-57206e83cad9",
+    "type": "appointment",
+    "title": "Matrimonio a pranzo,Torre Giulia",
+    "date": "2026-12-05",
+    "time": "09:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/sji-aepd-vcy\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-",
+      "Luogo: Torre Giulia, Via Padula, Km 4, 71042 Cerignola FG, Italia"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "70q62d1kcoqj0b9g69j6cb9kc5gmcb9p6pj3ab9lcgr3idj468pm8pb26k@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-12-05",
+      "endTime": "10:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.670Z",
+    "updatedAt": "2026-07-27T21:57:53.670Z"
+  },
+  {
+    "id": "f79d4019-d2de-4140-89f5-6b1d03546c6e",
+    "type": "appointment",
+    "title": "?? Venosa gruppo taranta",
+    "date": "2026-08-15",
+    "time": "16:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6pj38cj1cgpj6b9m71j3cb9k65ijcb9pckqjcb9m71hjadpl75j66cj3cg@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-15",
+      "endTime": "17:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.671Z",
+    "updatedAt": "2026-07-27T21:57:53.671Z"
+  },
+  {
+    "id": "11549cce-5c00-4241-813a-eaab55ec25ab",
+    "type": "appointment",
+    "title": "Rocco carico furgone",
+    "date": "2026-07-30",
+    "time": "06:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/okr-eaik-xjz\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "68rjap1o6lim8b9m70qm4b9k6gpj6b9p68qj6b9m6ormcchocdh38cb5c8@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-07-30",
+      "endTime": "07:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.671Z",
+    "updatedAt": "2026-07-27T21:57:53.671Z"
+  },
+  {
+    "id": "4594f5e3-d23c-461a-96e6-3eb283561dc1",
+    "type": "appointment",
+    "title": "? Domenico Villa Caracciolo battesimo",
+    "date": "2026-12-20",
+    "time": "14:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "cdi30d3165h3gbb3c5i36b9kc4pmcb9pccq68b9k61hmadpk6cojcp1g68@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-12-20",
+      "endTime": "15:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.672Z",
+    "updatedAt": "2026-07-27T21:57:53.672Z"
+  },
+  {
+    "id": "cea7668a-45af-490b-8d7e-e80ef2534935",
+    "type": "appointment",
+    "title": "Biancasole sera.  Dj aperitivi e fine festa gigi procino",
+    "date": "2026-09-04",
+    "time": "14:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6dj62ohm6goj6b9g6lh3cb9k6sp64b9o75im8bb560r36chh6sojichi74@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-04",
+      "endTime": "15:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.672Z",
+    "updatedAt": "2026-07-27T21:57:53.672Z"
+  },
+  {
+    "id": "b84b94ab-d7ab-47df-b89f-161727cc84fa",
+    "type": "appointment",
+    "title": "? Castello del monte 50 sedie 100  domenico",
+    "date": "2026-09-05",
+    "time": "09:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "cpi3ip9n6sqm4bb46lhm6b9k6orm6b9p6sqj0b9i6sr68d326phjeeb270@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-05",
+      "endTime": "10:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.673Z",
+    "updatedAt": "2026-07-27T21:57:53.673Z"
+  },
+  {
+    "id": "704f9b35-d463-435b-b780-ffb446d700c0",
+    "type": "appointment",
+    "title": "Torre giulia",
+    "date": "2026-07-31",
+    "time": "10:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/qdg-xsoc-ufd\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6lim6cpk60r30b9n6pj68b9k6dj3gbb16sq62bb36spm2eb2clh32d1ic8@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-07-31",
+      "endTime": "11:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.673Z",
+    "updatedAt": "2026-07-27T21:57:53.673Z"
+  },
+  {
+    "id": "4051008e-8458-4562-a156-30888ac6b034",
+    "type": "appointment",
+    "title": "Don vito madonna della grazia (castel Andria ) martinelli",
+    "date": "2026-08-04",
+    "time": "17:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "chj3gp9lcgo3gbb56pij2b9kccs3ib9p70pjabb560r64p1mc9gjip34c8@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-04",
+      "endTime": "18:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.673Z",
+    "updatedAt": "2026-07-27T21:57:53.673Z"
+  },
+  {
+    "id": "f21e0498-47a3-4b1f-a51d-2621f7e5e6c6",
+    "type": "appointment",
+    "title": "Villa caracciolo D'Aquino Francesco ( Renata zitoli) entrata con base par Bat  rag serena no Barra colorata   canzone Alessio ma se viene stasera 250€",
+    "date": "2026-07-28",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "c8o34dj2cdhm2b9k64pj4b9k6ss36b9ochijab9ickrm2pb16ks6cp3474@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-07-28",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.674Z",
+    "updatedAt": "2026-07-27T21:57:53.674Z"
+  },
+  {
+    "id": "cdcf2f35-e20b-4e67-90d0-bd6d20abb9b3",
+    "type": "appointment",
+    "title": "? Venosa rocco festa patronale",
+    "date": "2026-08-17",
+    "time": "14:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "71ij4ohn6gpj8bb565j3ab9kcgqj8b9pckr34bb670r6cpb471gm8e9ncg@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-17",
+      "endTime": "15:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.674Z",
+    "updatedAt": "2026-07-27T21:57:53.674Z"
+  },
+  {
+    "id": "1850c043-d565-4ea6-85a5-f895e9f49afa",
+    "type": "appointment",
+    "title": "Villa caracciolo pranzo 50 matrimonio nunzia nicola (fabio)",
+    "date": "2026-08-16",
+    "time": "10:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/xdr-tkdk-apr\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "74sjgdhhccq38bb3clj3ib9k6ko32bb2c8pj4b9gcoqjad36c4rjae9nc4@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-16",
+      "endTime": "11:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.675Z",
+    "updatedAt": "2026-07-27T21:57:53.675Z"
+  },
+  {
+    "id": "1790217a-8fae-4153-941a-71c27408f9b2",
+    "type": "appointment",
+    "title": "Ade sera 300  ?160",
+    "date": "2026-08-10",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "75im4cb2c8qjab9hc8sm4b9k68s6ab9pclgm8b9pc4qmcp1k64q3coj268@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-10",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.675Z",
+    "updatedAt": "2026-07-27T21:57:53.675Z"
+  },
+  {
+    "id": "5727326f-83e5-4c36-af31-e4e14ac66410",
+    "type": "appointment",
+    "title": "?? Ramses",
+    "date": "2026-08-15",
+    "time": "10:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "70q6co9pcdj66bb5coom8b9kcoo32b9ockr38bb371gj4e9g6pj3ee9n6g@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-15",
+      "endTime": "11:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.675Z",
+    "updatedAt": "2026-07-27T21:57:53.675Z"
+  },
+  {
+    "id": "ee9a7a8b-4608-4336-91e0-4dbae929daaf",
+    "type": "appointment",
+    "title": "Biancasole sera",
+    "date": "2026-08-29",
+    "time": "14:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "cks6ac1icos6ab9k65i32b9k6csjab9o75j34bb36csm2dr16sq64dj674@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-29",
+      "endTime": "15:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.676Z",
+    "updatedAt": "2026-07-27T21:57:53.676Z"
+  },
+  {
+    "id": "3dd23ec9-58a2-4c24-923b-751c9ae91c2a",
+    "type": "appointment",
+    "title": "?pedana 6\"8 rocco",
+    "date": "2026-08-01",
+    "time": "20:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "coojidplcgpm2b9j65im4b9k61ij4bb2c8rj8b9kc8qmccb664s66p9l6g@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-01",
+      "endTime": "21:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.676Z",
+    "updatedAt": "2026-07-27T21:57:53.676Z"
+  },
+  {
+    "id": "d461dabe-d754-40f7-8fba-5f35cb7d92e8",
+    "type": "appointment",
+    "title": "Maxischermo Campanile 650",
+    "date": "2026-08-05",
+    "time": "18:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "ckr3ep9ic4pm8b9oc8pjeb9k65gm4bb175ijib9j6ko6aohn60q32c9mc4@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-05",
+      "endTime": "19:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.676Z",
+    "updatedAt": "2026-07-27T21:57:53.676Z"
+  },
+  {
+    "id": "c233d0de-d75c-4560-af8f-fdda9fad869b",
+    "type": "appointment",
+    "title": "Cerignola giardini di gemma sera Miky calia 18. Maxischermo e proiettore 400 la cura battiato elisa",
+    "date": "2026-09-12",
+    "time": "18:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "60q3acj665im8b9h6ksjcb9k64o66b9p71gm8b9h6opjcc1ochij0phhc4@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-12",
+      "endTime": "19:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.677Z",
+    "updatedAt": "2026-07-27T21:57:53.677Z"
+  },
+  {
+    "id": "72401ef6-7fea-4721-a1be-c3f8cf264286",
+    "type": "appointment",
+    "title": "? Luana ardito compleanno figlia",
+    "date": "2026-09-30",
+    "time": "17:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "cksm4e1l6sp30b9k6tgj0b9k71ij4b9o6krjab9hc9j30e9m6tijip1hcg@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-30",
+      "endTime": "18:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.677Z",
+    "updatedAt": "2026-07-27T21:57:53.677Z"
+  },
+  {
+    "id": "6caec825-add7-4337-a07b-f251ee954d1f",
+    "type": "appointment",
+    "title": "Campanile San Sabino proiezione inizio ore 21",
+    "date": "2026-07-31",
+    "time": "19:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "c8r66e1j70sjeb9o6ss36b9k6ssjebb160q64bb66pgjacpkc4sj4cpgck@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-01",
+      "endTime": "20:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.677Z",
+    "updatedAt": "2026-07-27T21:57:53.677Z"
+  },
+  {
+    "id": "adb175e5-23a8-4897-97a2-e69042e9353b",
+    "type": "appointment",
+    "title": "?? Domenico Villa Caracciolo battesimo",
+    "date": "2026-12-13",
+    "time": "14:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6gsj2oj5cpj3cbb660rm2b9kccrj6bb16gr3gb9jckr32e1ic4rj2cpi6s@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-12-13",
+      "endTime": "15:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.678Z",
+    "updatedAt": "2026-07-27T21:57:53.678Z"
+  },
+  {
+    "id": "be630d83-9d53-4aa7-91f4-c14f8a13a984",
+    "type": "appointment",
+    "title": "Villa caracciolo mattina  margiotta 50",
+    "date": "2026-08-11",
+    "time": "10:30:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "ccoj2ohjcgr36bb1ccpjab9k6ph64bb26ph32b9ncorj0pj66gsj6e1h6o@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-08-11",
+      "endTime": "11:30:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.678Z",
+    "updatedAt": "2026-07-27T21:57:53.678Z"
+  },
+  {
+    "id": "ca48eb3c-22ba-447d-b64f-8307db783e5f",
+    "type": "appointment",
+    "title": "Pranzo Villa Jamele Orsara di Puglia",
+    "date": "2026-09-19",
+    "time": "08:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [
+      "Descrizione calendario: -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/bwe-cigu-hnz\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-",
+      "Luogo: Ricevimenti Villa Jamele, Via Piana della Corte, 71027, 71027 Orsara di Puglia FG, Italia"
+    ],
+    "intentions": [],
+    "evidence": [
+      "Evento importato da Google Calendar"
+    ],
+    "status": "planned",
+    "source": "google_calendar",
+    "external": {
+      "provider": "google_calendar",
+      "uid": "6phjad1g6lhm8b9m6kqjgb9k69h3ibb2c8s3eb9j6cs34chhclhjgphh6c@google.com",
+      "allDay": false,
+      "timezone": null,
+      "endDate": "2026-09-19",
+      "endTime": "09:00:00"
+    },
+    "createdAt": "2026-07-27T21:57:53.678Z",
+    "updatedAt": "2026-07-27T21:57:53.678Z"
+  },
+  {
+    "id": "53a0c23e-c0b4-449f-a568-333e15973505",
+    "type": "appointment",
+    "title": "Evento",
+    "date": "2026-08-03",
+    "time": "22:00:00",
+    "person": null,
+    "chatId": null,
+    "facts": [],
+    "intentions": [
+      {
+        "action": "travel_to",
+        "target": "Barletta",
+        "timepoint_start": "2026-08-03T21:59:00Z"
+      }
+    ],
+    "evidence": [],
+    "status": "planned",
+    "source": "manual",
+    "external": null,
+    "createdAt": "2026-08-03T12:28:29.559Z",
+    "updatedAt": "2026-08-03T12:28:29.559Z"
+  },
+  {
+    "id": "b0a82b9a-56ac-4bfc-9619-3c4c0fec42b1",
+    "type": "appointment",
+    "title": "Con Dolli",
+    "date": "2026-08-03",
+    "time": "22:00:00",
+    "person": "Dolli",
+    "chatId": null,
+    "facts": [
+      {
+        "key": "stasera",
+        "value": "oggi"
+      },
+      {
+        "key": "alle ore 22",
+        "value": "ore 22:00"
+      }
+    ],
+    "intentions": [
+      {
+        "action": "appuntamento",
+        "target": null,
+        "object": "Con Dolli"
+      }
+    ],
+    "evidence": [],
+    "status": "planned",
+    "source": "manual",
+    "external": null,
+    "createdAt": "2026-08-03T12:44:40.378Z",
+    "updatedAt": "2026-08-03T12:44:40.378Z"
+  }
+]

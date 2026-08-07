@@ -1,0 +1,20 @@
+[
+  {
+    "statement": "È morto il Papa",
+    "entities": [],
+    "extracted_at": "2026-08-07T13:49:38.798Z",
+    "confidence": 0.7,
+    "source": "Status di Lucia",
+    "epistemicState": "BELIEF",
+    "lastObservedTimestamp": "2026-08-07T13:49:38.798Z",
+    "sources": [
+      {
+        "source": "Status di Lucia",
+        "author": "unknown",
+        "timestamp": "2026-08-07T13:49:38.798Z",
+        "confidence": 0.7
+      }
+    ],
+    "id": "fact_1786110578798_cdj1t"
+  }
+]

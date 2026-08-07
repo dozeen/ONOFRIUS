@@ -4,7 +4,7 @@ node_modules/
 # Environment & Config
 .env
 .env.*
-config/*.json
+/config/*.json
 !config/*.example.json
 
 # WhatsApp
@@ -22,7 +22,7 @@ backup/
 release/
 
 # Memory
-memory/
+/memory/
 
 # OS
 .DS_Store

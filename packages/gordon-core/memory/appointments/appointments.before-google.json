@@ -1,0 +1,24 @@
+[
+  {
+    "id": "785be2a3-930b-47a3-bca9-f85f2e0ced0c",
+    "type": "birthday",
+    "title": "Compleanno di Dolly",
+    "date": "2026-07-29",
+    "time": null,
+    "person": "Dolly",
+    "chatId": "217535983173871",
+    "facts": [
+      "Il 29 luglio è il compleanno di Dolly"
+    ],
+    "intentions": [
+      "Onofrio vorrebbe trascorrere il compleanno con Dolly"
+    ],
+    "evidence": [
+      "Dolly ha detto che vuole vedere Onofrio mercoledì e festeggiare il suo compleanno con lui"
+    ],
+    "status": "planned",
+    "source": "owner",
+    "createdAt": "2026-07-27T21:25:33.091Z",
+    "updatedAt": "2026-07-27T21:25:33.092Z"
+  }
+]
