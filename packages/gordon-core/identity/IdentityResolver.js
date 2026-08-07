@@ -61,7 +61,7 @@ class IdentityResolver {
 
         return {
             id,
-            displayName: displayName || contact.name,
+            displayName: displayName || contact?.name || 'Utente',
             contact,
             groups: []
         };

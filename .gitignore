@@ -54,3 +54,5 @@ package-lock.old
 # Generated
 coverage/
 dist/
+
+packages/gordon-core/config/chatState.json

@@ -1,3 +1,4 @@
+const ChatControlHandler = require("./handlers/ChatControlHandler");
 const AgendaReasoningHandler = require("./handlers/AgendaReasoningHandler");
 const LearningHandler = require("./handlers/LearningHandler");
 const PluginRouterHandler = require("./handlers/PluginRouterHandler");
@@ -18,6 +19,7 @@ const ResponseHandler = require("./handlers/ResponseHandler");
 class Brain {
     constructor() {
         this.pipeline = [
+            new ChatControlHandler(),
             new IdentityHandler(),
             new WorkingMemoryHandler(),
             new ConversationHandler(),

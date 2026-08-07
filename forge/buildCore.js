@@ -86,6 +86,7 @@ function sanitizeMemoryAndConfig(pkgDir) {
     fs.writeFileSync(path.join(configDir, "identities.json"), JSON.stringify(genericIdentities, null, 2), "utf8");
 
     fs.writeFileSync(path.join(configDir, "addressBook.json"), "[]", "utf8");
+    fs.writeFileSync(path.join(configDir, "chatState.json"), JSON.stringify({ seenChats: [], mutedChats: [] }, null, 2), "utf8");
 }
 
 function auditPrinciple9(pkgDir) {
