@@ -1,4 +1,19 @@
-const gordonCore = require("gordon-core");
+let gordonCore;
+
+try {
+    gordonCore = require("gordon-core");
+} catch (e1) {
+    try {
+        gordonCore = require("../../Gordon3/core");
+    } catch (e2) {
+        try {
+            gordonCore = require("../index");
+        } catch (e3) {
+            console.error("❌ Errore caricamento Gordon Core:", e1.message);
+            throw new Error("Impossibile trovare il modulo 'gordon-core' o la cartella '../../Gordon3/core'. Assicurati che Gordon3 sia posizionato a fianco di ONOFRIUS.");
+        }
+    }
+}
 
 const logger = gordonCore.logger;
 const bus = gordonCore.EventBus;
