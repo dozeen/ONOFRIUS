@@ -1,6 +1,6 @@
 /**
  * buildCore.js - Forge Certified Builder per Gordon Core Package
- * Costruisce, audita e certifica packages/gordon-core per la distribuzione in ONOFRIUS.
+ * Costruisce, sanitizza (Principio 9: Cognitivo ma non Personale) ed audita packages/gordon-core.
  */
 
 const fs = require("fs");
@@ -22,6 +22,94 @@ function copyRecursive(src, dst) {
     }
 }
 
+function sanitizeMemoryAndConfig(pkgDir) {
+    console.log("🧹 SANITIZZAZIONE PRINCIPIO 9: Rimozione di dati personali e cronologie...");
+
+    const memoryDir = path.join(pkgDir, "memory");
+    const configDir = path.join(pkgDir, "config");
+
+    // 1. Rimuovi la cronologia WhatsApp / chat (.jsonl)
+    const historyDir = path.join(memoryDir, "history");
+    if (fs.existsSync(historyDir)) {
+        fs.rmSync(historyDir, { recursive: true, force: true });
+    }
+    fs.mkdirSync(historyDir, { recursive: true });
+
+    // 2. Rimuovi contatti salvati
+    const contactsDir = path.join(memoryDir, "contacts");
+    if (fs.existsSync(contactsDir)) {
+        fs.rmSync(contactsDir, { recursive: true, force: true });
+    }
+    fs.mkdirSync(contactsDir, { recursive: true });
+
+    // 3. Sostituisci i file di memoria con template vuoti ([])
+    const emptyJsonFiles = [
+        path.join(memoryDir, "knowledge/facts.json"),
+        path.join(memoryDir, "knowledge/knowledge.json"),
+        path.join(memoryDir, "intentions/intentions.json"),
+        path.join(memoryDir, "preferences/preferences.json"),
+        path.join(memoryDir, "notes/notes.json"),
+        path.join(memoryDir, "appointments/appointments.json"),
+        path.join(memoryDir, "appointments/appointments.before-google.json"),
+        path.join(memoryDir, "events/events.json"),
+        path.join(memoryDir, "tasks/tasks.json")
+    ];
+
+    for (const file of emptyJsonFiles) {
+        const dir = path.dirname(file);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(file, "[]", "utf8");
+    }
+
+    // 4. File di stile/profili e stato
+    const profilesFile = path.join(memoryDir, "style/profiles.json");
+    if (!fs.existsSync(path.dirname(profilesFile))) fs.mkdirSync(path.dirname(profilesFile), { recursive: true });
+    fs.writeFileSync(profilesFile, "{}", "utf8");
+
+    const stateFile = path.join(memoryDir, "consolidation/state.json");
+    if (!fs.existsSync(path.dirname(stateFile))) fs.mkdirSync(path.dirname(stateFile), { recursive: true });
+    fs.writeFileSync(stateFile, "{}", "utf8");
+
+    // 5. Sanitizza config personalizzati (se presenti)
+    const personalAddressBook = path.join(configDir, "addressBook.json");
+    if (fs.existsSync(personalAddressBook)) {
+        fs.writeFileSync(personalAddressBook, "[]", "utf8");
+    }
+}
+
+function auditPrinciple9(pkgDir) {
+    console.log("🛡️ AUDIT PRINCIPIO 9 (Cognitivo ma non Personale)...");
+    let violations = 0;
+
+    function checkDir(dir) {
+        for (const item of fs.readdirSync(dir)) {
+            const fullPath = path.join(dir, item);
+            const stats = fs.statSync(fullPath);
+            if (stats.isDirectory()) {
+                checkDir(fullPath);
+            } else {
+                if (item.endsWith(".jsonl")) {
+                    console.error(`❌ VIOLAZIONE PRINCIPIO 9: Trovata cronologia (.jsonl) in ${path.relative(pkgDir, fullPath)}`);
+                    violations++;
+                }
+                if (fullPath.includes("/memory/contacts/") && item.endsWith(".json")) {
+                    console.error(`❌ VIOLAZIONE PRINCIPIO 9: Trovato contatto personale in ${path.relative(pkgDir, fullPath)}`);
+                    violations++;
+                }
+            }
+        }
+    }
+
+    checkDir(pkgDir);
+
+    if (violations === 0) {
+        console.log("✅ AUDIT PRINCIPIO 9 SUPERATO: Nessun dato personale o cronologia presente nel pacchetto.");
+    } else {
+        console.error(`❌ AUDIT PRINCIPIO 9 FALLITO: Rilevate ${violations} violazioni!`);
+        process.exit(1);
+    }
+}
+
 async function buildCore() {
     console.log("=========================================");
     console.log("🔨 FORGE CORE BUILDER: Packaging Gordon Core");
@@ -36,8 +124,11 @@ async function buildCore() {
         fs.rmSync(targetPkgDir, { recursive: true, force: true });
     }
 
-    console.log("📦 Copia dell'albero cognitivo da Gordon3/core...");
+    console.log("📦 Copia del motore da Gordon3/core...");
     copyRecursive(g3CoreDir, targetPkgDir);
+
+    // Sanitizza memoria e configurazioni personali
+    sanitizeMemoryAndConfig(targetPkgDir);
 
     // Genera package.json per gordon-core
     const pkgJson = {
@@ -53,37 +144,8 @@ async function buildCore() {
         "utf8"
     );
 
-    console.log("🔍 Audit dei require interni...");
-    let issuesFound = 0;
-
-    function auditDirectory(dir) {
-        for (const item of fs.readdirSync(dir)) {
-            const fullPath = path.join(dir, item);
-            if (fs.statSync(fullPath).isDirectory()) {
-                auditDirectory(fullPath);
-            } else if (item.endswith && item.endswith(".js") || item.endsWith(".js")) {
-                const content = fs.readFileSync(fullPath, "utf8");
-                if (content.includes('require("../../Gordon3') || content.includes('require("../../../memory') || content.includes('require("../../memory')) {
-                    // Check if it's pointing out of package
-                    const lines = content.split("\n");
-                    lines.forEach((line, idx) => {
-                        if (line.includes("require") && (line.includes("../../Gordon3") || line.includes("../../../memory"))) {
-                            console.warn(`⚠️ Out-of-package require in ${path.relative(targetPkgDir, fullPath)}:${idx + 1}: ${line.trim()}`);
-                            issuesFound++;
-                        }
-                    });
-                }
-            }
-        }
-    }
-
-    auditDirectory(targetPkgDir);
-
-    if (issuesFound === 0) {
-        console.log("✅ AUDIT FORGE COMPLETATO: Nessun require fuori pacchetto rilevato.");
-    } else {
-        console.warn(`⚠️ AUDIT FORGE: Rilevati ${issuesFound} possibili require esterni.`);
-    }
+    // Esegui Audit del Principio 9
+    auditPrinciple9(targetPkgDir);
 
     console.log("🚀 FORGE CORE BUILDER COMPLETATO CON SUCCESSO!\n");
 }

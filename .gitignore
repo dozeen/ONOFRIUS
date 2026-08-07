@@ -22,7 +22,18 @@ backup/
 release/
 
 # Memory
+
+# Memory
 /memory/
+packages/gordon-core/memory/history/
+packages/gordon-core/memory/contacts/
+packages/gordon-core/memory/knowledge/*.json
+packages/gordon-core/memory/preferences/*.json
+packages/gordon-core/memory/intentions/*.json
+packages/gordon-core/memory/notes/*.json
+packages/gordon-core/memory/appointments/*.json
+packages/gordon-core/memory/style/*.json
+packages/gordon-core/config/addressBook.json
 
 # OS
 .DS_Store
