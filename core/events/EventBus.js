@@ -1,5 +1,2 @@
-const EventEmitter = require("events");
-
-class EventBus extends EventEmitter {}
-
-module.exports = new EventBus();
+const gordonCore = require("gordon-core");
+module.exports = gordonCore.EventBus;

@@ -1,4 +1,2 @@
-// Compatibilità con il vecchio codice.
-// In futuro tutti i require() punteranno direttamente a core/events.
-
-module.exports = require("./events/EventBus");
+const gordonCore = require("gordon-core");
+module.exports = gordonCore.EventBus;
