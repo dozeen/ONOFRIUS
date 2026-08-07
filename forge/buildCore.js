@@ -70,16 +70,28 @@ function sanitizeMemoryAndConfig(pkgDir) {
     if (!fs.existsSync(path.dirname(stateFile))) fs.mkdirSync(path.dirname(stateFile), { recursive: true });
     fs.writeFileSync(stateFile, "{}", "utf8");
 
-    // 5. Sanitizza config personalizzati (se presenti)
-    const personalAddressBook = path.join(configDir, "addressBook.json");
-    if (fs.existsSync(personalAddressBook)) {
-        fs.writeFileSync(personalAddressBook, "[]", "utf8");
-    }
+    // 5. Sanitizza configurazioni personali in config/
+    if (!fs.existsSync(configDir)) fs.mkdirSync(configDir, { recursive: true });
+
+    const genericContacts = {
+        "owner": { "name": "Owner", "role": "owner", "personality": "default", "memory": "owner.json" },
+        "contact_example": { "name": "Alex", "role": "friend", "personality": "friendly", "memory": "alex.json" }
+    };
+    fs.writeFileSync(path.join(configDir, "contacts.json"), JSON.stringify(genericContacts, null, 2), "utf8");
+
+    const genericIdentities = {
+        "1234567890": "owner",
+        "9876543210": "contact_example"
+    };
+    fs.writeFileSync(path.join(configDir, "identities.json"), JSON.stringify(genericIdentities, null, 2), "utf8");
+
+    fs.writeFileSync(path.join(configDir, "addressBook.json"), "[]", "utf8");
 }
 
 function auditPrinciple9(pkgDir) {
     console.log("🛡️ AUDIT PRINCIPIO 9 (Cognitivo ma non Personale)...");
     let violations = 0;
+    const forbiddenTerms = ["Dolly", "Silvana", "Roberta", "Cannone", "Inglese"];
 
     function checkDir(dir) {
         for (const item of fs.readdirSync(dir)) {
@@ -96,6 +108,16 @@ function auditPrinciple9(pkgDir) {
                     console.error(`❌ VIOLAZIONE PRINCIPIO 9: Trovato contatto personale in ${path.relative(pkgDir, fullPath)}`);
                     violations++;
                 }
+                // Scansione termini riservati/personali nei file di configurazione
+                if (fullPath.includes("/config/") && item.endsWith(".json")) {
+                    const content = fs.readFileSync(fullPath, "utf8");
+                    for (const term of forbiddenTerms) {
+                        if (content.includes(term)) {
+                            console.error(`❌ VIOLAZIONE PRINCIPIO 9: Trovato termine riservato '${term}' in ${path.relative(pkgDir, fullPath)}`);
+                            violations++;
+                        }
+                    }
+                }
             }
         }
     }
@@ -103,7 +125,7 @@ function auditPrinciple9(pkgDir) {
     checkDir(pkgDir);
 
     if (violations === 0) {
-        console.log("✅ AUDIT PRINCIPIO 9 SUPERATO: Nessun dato personale o cronologia presente nel pacchetto.");
+        console.log("✅ AUDIT PRINCIPIO 9 SUPERATO: Nessun dato personale, contatto o cronologia presente nel pacchetto.");
     } else {
         console.error(`❌ AUDIT PRINCIPIO 9 FALLITO: Rilevate ${violations} violazioni!`);
         process.exit(1);
