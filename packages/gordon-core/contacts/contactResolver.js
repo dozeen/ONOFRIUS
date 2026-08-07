@@ -1,5 +1,5 @@
-let contacts = []; try { contacts = require("../config/contacts.json"); } catch (e) { try { contacts = require("../../config/contacts.json"); } catch (e2) { contacts = []; } }
-let identities = {}; try { identities = require("../config/identities.json"); } catch (e) { try { identities = require("../../config/identities.json"); } catch (e2) { identities = {}; } }
+let contacts = []; try { contacts = require("../config/contacts.json"); } catch (e) { try { contacts = require("../config/contacts.json"); } catch (e2) { contacts = []; } }
+let identities = {}; try { identities = require("../config/identities.json"); } catch (e) { try { identities = require("../config/identities.json"); } catch (e2) { identities = {}; } }
 
 function normalize(id) {
 

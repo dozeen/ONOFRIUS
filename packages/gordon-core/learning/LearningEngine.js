@@ -4,7 +4,7 @@
  * Analizza gli eventi accumulati per consolidare Interaction, Knowledge, Memory, Thought Stream e Preferences.
  */
 
-let ThoughtStream; try { ThoughtStream = require("../memory/thoughts/ThoughtStream"); } catch (e) { ThoughtStream = require("../../memory/thoughts/ThoughtStream"); }
+let ThoughtStream; try { ThoughtStream = require("../memory/thoughts/ThoughtStream"); } catch (e) { ThoughtStream = require("../memory/thoughts/ThoughtStream"); }
 const FactRegistry = require("../cognition/facts/FactRegistry");
 const InteractionProfile = require("../cognition/interaction/InteractionProfile");
 const logger = require("../logger");

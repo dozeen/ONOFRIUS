@@ -3,7 +3,7 @@
  * Include FamilyPrivacyManager e RelevanceFilter per la pertinenza contestuale.
  */
 
-let ThoughtStream; try { ThoughtStream = require("../memory/thoughts/ThoughtStream"); } catch (e) { ThoughtStream = require("../../memory/thoughts/ThoughtStream"); }
+let ThoughtStream; try { ThoughtStream = require("../memory/thoughts/ThoughtStream"); } catch (e) { ThoughtStream = require("../memory/thoughts/ThoughtStream"); }
 const FamilyPrivacyManager = require("../privacy/FamilyPrivacyManager");
 const RelevanceFilter = require("../cognition/RelevanceFilter");
 

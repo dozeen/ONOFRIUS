@@ -10,7 +10,7 @@ const MemoryDecayEngine = require("./MemoryDecayEngine");
 
 class FactRegistry {
     constructor(storagePath) {
-        this.storagePath = storagePath || path.join(__dirname, "../../../memory/knowledge/facts.json");
+        this.storagePath = storagePath || path.join(__dirname, "../../memory/knowledge/facts.json");
         this.fusionEngine = new KnowledgeFusionEngine();
         this.decayEngine = new MemoryDecayEngine();
         this.facts = [];

@@ -3,7 +3,7 @@ try {
     owner = require("../config/owner");
 } catch (e1) {
     try {
-        owner = require("../../config/owner");
+        owner = require("../config/owner");
     } catch (e2) {
         owner = { id: "owner", role: "owner", permissions: ["all"] };
     }

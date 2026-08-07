@@ -1,4 +1,4 @@
-let policy = {}; try { policy = require("../config/groupPolicy"); } catch (e) { try { policy = require("../../config/groupPolicy"); } catch (e2) { policy = {}; } }
+let policy = {}; try { policy = require("../config/groupPolicy"); } catch (e) { try { policy = require("../config/groupPolicy"); } catch (e2) { policy = {}; } }
 
 class Gatekeeper {
 

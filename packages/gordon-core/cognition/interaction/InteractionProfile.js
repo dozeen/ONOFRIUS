@@ -7,7 +7,7 @@ const path = require("path");
 
 class InteractionProfile {
     constructor(storagePath) {
-        this.storagePath = storagePath || path.join(__dirname, "../../../memory/style/profiles.json");
+        this.storagePath = storagePath || path.join(__dirname, "../../memory/style/profiles.json");
         this.profiles = {};
         this._load();
     }

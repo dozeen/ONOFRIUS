@@ -3,7 +3,7 @@ try {
     contacts = require("../config/contacts.json");
 } catch (e1) {
     try {
-        contacts = require("../../config/contacts.json");
+        contacts = require("../config/contacts.json");
     } catch (e2) {
         contacts = [];
     }

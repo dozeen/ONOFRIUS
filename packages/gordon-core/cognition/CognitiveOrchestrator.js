@@ -15,7 +15,7 @@ const SystemObserver = require("../observers/SystemObserver");
 const SocialObserver = require("../observers/SocialObserver");
 let ThoughtStream;
 try { ThoughtStream = require("../memory/thoughts/ThoughtStream"); } catch (e) {
-    try { ThoughtStream = require("../../memory/thoughts/ThoughtStream"); } catch (e2) {
+    try { ThoughtStream = require("../memory/thoughts/ThoughtStream"); } catch (e2) {
         ThoughtStream = class DummyTS { getInnerWorld() { return {}; } addIntention() {} };
     }
 }
