@@ -8,8 +8,10 @@ const ALLOWED_TYPES = new Set([
 ]);
 
 function validate(msg) {
-
     if (!msg)
+        return false;
+
+    if (msg.from === "status@broadcast" || msg.to === "status@broadcast" || msg.id?.remote === "status@broadcast")
         return false;
 
     if (!ALLOWED_TYPES.has(msg.type))

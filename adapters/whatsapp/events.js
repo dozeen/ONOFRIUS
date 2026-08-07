@@ -71,6 +71,9 @@ function registerEvents(client) {
 
     client.on("message_create", msg => {
 
+        if (msg.from === "status@broadcast" || msg.to === "status@broadcast" || msg.id?.remote === "status@broadcast")
+            return;
+
         const personalChat = isSelfChat(msg);
 
         if (msg.fromMe && personalChat)

@@ -15,7 +15,7 @@ class IdentityResolver {
         const contacts = ConfigManager.contacts();
         const chatId = context.chatId || context.sender || "";
         const id = this.identifier.normalize(chatId);
-        const displayName = context.contactName || context.chat?.name || "";
+        const displayName = context.contactName || context.chat?.name || context.senderName || "";
 
         let contact = null;
 
@@ -45,8 +45,13 @@ class IdentityResolver {
             contact = contacts.default || {};
         }
 
+        const realName = (displayName && displayName !== "Contact Name") 
+            ? displayName 
+            : (contact.name && contact.name !== "Contact Name" ? contact.name : (displayName || "Unknown"));
+
         const enrichedContact = {
-            name: displayName || contact.name || "Unknown",
+            ...contact,
+            name: realName,
             type: contact.type || (context.isOwner ? "Owner" : "Contact"),
             relationship: contact.relationship || contact.relation || (context.isOwner ? "Owner" : "Standard Contact"),
             role: contact.role || (context.isOwner ? "owner" : "user"),
@@ -58,14 +63,10 @@ class IdentityResolver {
                 smallTalk: contact.style?.smallTalk || "Low",
                 humor: contact.style?.humor || "Light",
                 romantic: contact.style?.romantic || "None",
-                explanations: contact.style?.explanations || "Concise"
-            },
-            ...contact
+                explanations: contact.style?.explanations || "Concise",
+                ...(contact.style || {})
+            }
         };
-
-        enrichedContact.name = enrichedContact.name || displayName || "Unknown";
-        enrichedContact.type = enrichedContact.type || "Contact";
-        enrichedContact.relationship = enrichedContact.relationship || "Standard Contact";
 
         return {
             id,

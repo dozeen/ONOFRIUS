@@ -113,9 +113,12 @@ async function buildContext(event) {
     // NOMI
     // =====================================================
 
+    const pushname = msg.pushname || msg._data?.notifyName || metadata.pushname || metadata.senderName || metadata.contactName || event.contactName || event.senderName || "";
+
     const senderName =
         contact?.pushname ||
         contact?.name ||
+        pushname ||
         contact?.number ||
         sender ||
         "";
@@ -123,6 +126,7 @@ async function buildContext(event) {
     const contactName =
         contact?.pushname ||
         contact?.name ||
+        pushname ||
         contact?.number ||
         "";
 
