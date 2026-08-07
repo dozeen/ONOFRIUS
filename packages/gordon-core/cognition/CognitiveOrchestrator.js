@@ -207,7 +207,7 @@ class CognitiveOrchestrator {
         // REGOLA FONDAMENTALE DI AUTONOMIA E RISPOSTA:
         // I messaggi inviati dall'Owner o da Gordon stesso (fromMe: true) vengono APPRESI (fatti/pensieri),
         // MA NON DEVONO MAI GENERARE UNA RISPOSTA AUTOMATICA LLM PER EVITARE AUTO-RISPOSTE O LOOP!
-        const isFromMe = context.fromMe || context.isOwner || context.origin === "owner" || context.origin === "gordon" || (context.payload?.raw?.fromMe);
+        const isFromMe = context.fromMe === true || context.origin === "gordon" || (context.payload?.raw?.fromMe === true);
 
         if (isFromMe || (classification.isCognitiveNote && !classification.isConversation)) {
             logger.info("CognitiveOrchestrator", `📝 Messaggio da Owner/Gordon o Nota Cognitiva [${classification.category}] appresa. Salto generazione LLM.`);
