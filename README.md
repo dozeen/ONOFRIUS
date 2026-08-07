@@ -26,13 +26,13 @@
 
 ONOFRIUS is **not a chatbot**.
 
-It is an **Event-Driven Cognitive Operating System** designed to build persistent AI agents capable of:
+It is an **Event-Driven Cognitive Operating System** designed to build persistent, autonomous AI agents powered by **Gordon Core**, capable of:
 
-- observing
-- reasoning
-- learning
-- remembering
-- evolving over time
+- observing & passive perception (WhatsApp status broadcast, social trends, system events)
+- extracting facts & fusing multi-source knowledge (Bayesian confidence boost)
+- managing temporal memory decay (ephemeral vs. immutable facts)
+- distinguishing certainty (*Sapere*) vs probability/beliefs (*Credere*)
+- reasoning, verifying truth & maintaining zero-leak privacy
 
 Instead of reacting to isolated prompts, ONOFRIUS continuously transforms incoming events into persistent knowledge.
 
@@ -42,181 +42,115 @@ Instead of reacting to isolated prompts, ONOFRIUS continuously transforms incomi
 
 ---
 
-# Philosophy
+# Key Principles & Constitution
 
-Traditional assistants begin with a prompt.
+ONOFRIUS follows strict architectural axioms defined in **[CONSTITUTION.md](CONSTITUTION.md)**.
 
-ONOFRIUS begins with reality.
+### 🛡️ Principle 9: Cognitive but Not Personal
+> **"ONOFRIUS è cognitivo ma non personale."**
+>
+> The software contains exclusively the cognitive engine, algorithms, and system logic. All personal knowledge, identities, contacts, memory, events, preferences, and user configurations are created or imported exclusively during bootstrap on the user's computer. **No personal data is ever distributed with the software.**
 
-Every interaction enters a cognitive pipeline where it is:
+---
 
-- Perceived
-- Classified
-- Enriched
-- Stored
-- Reasoned
-- Verified
-- Answered
+# Architecture: Standalone Runtime & Shared Gordon Core
 
-The response is only the final step.
+ONOFRIUS decouples the **cognitive engine** from the **application runtime**:
 
-The real objective is continuous cognitive growth.
+```text
+ONOFRIUS/
+│
+├── app.js               <-- Application Entrypoint
+├── bootstrap/           <-- 10-step Automated Setup & Health Engine
+├── cli/                 <-- Interactive Terminal & Command Interface
+├── doctor/              <-- System Diagnostics
+├── forge/               <-- Certified Release Builder (buildCore.js)
+├── core/                <-- ONOFRIUS Kernel & Adapters
+│
+├── packages/
+│   └── gordon-core/    <-- Certified, Standalone Gordon Core Package
+│       ├── package.json
+│       ├── index.js
+│       ├── brain/
+│       ├── cognition/
+│       ├── events/
+│       ├── identity/
+│       └── memory/      <-- Empty runtime templates (No personal data)
+│
+└── package.json        <-- "dependencies": { "gordon-core": "file:packages/gordon-core" }
+```
 
 ---
 
 # Cognitive Pipeline
 
 ```text
-Incoming Event
+Incoming Event (WhatsApp / CLI / System)
         │
         ▼
- Perception Engine
+ Perception Engine & Passive Status Handler
         │
         ▼
- Attention Engine
+ Input Classification & Attention Engine
         │
         ▼
- Working Memory
+ Working Memory & Intention Lifecycle (ACTIVE/COMPLETED/CANCELLED)
         │
         ▼
- Fact Extraction
+ Fact Extraction & Knowledge Fusion Engine
         │
         ▼
- Reasoning Engine
+ Reasoning Engine & Epistemic Matrix (Sapere vs. Credere)
         │
         ▼
- Decision Engine
+ Decision Engine & Selective Agenda Loading
         │
         ▼
- Prompt Builder
+ Relevant Preference Filter & Prompt Builder
         │
         ▼
- Verification
+ Zero-Trust Fact Verifier & ResponseSanitizer (Anti-Prompt-Leak & Family Privacy)
         │
         ▼
- Response
-```
-
----
-
-# Core Components
-
-- Event Bus
-- Cognitive Kernel
-- Memory System
-- Attention Engine
-- Knowledge Base
-- Learning Engine
-- Identity Engine
-- Agenda Engine
-- Plugin System
-- Forge Release Builder
-- Boot Manager
-- Service Registry
-
----
-
-# Features
-
-- Event-first architecture
-- Persistent memory
-- Cognitive reasoning
-- Explainable decisions
-- Plugin architecture
-- Privacy by design
-- Release certification
-- Modular services
-- Health monitoring
-- Multi-agent ready
-
----
-
-# Project Structure
-
-```text
-core/
-adapters/
-plugins/
-forge/
-setup/
-docs/
-templates/
-tools/
-config/
+ Response / Action Execution
 ```
 
 ---
 
 # Quick Start
 
-Clone the repository:
-
+### 1. Clone the repository
 ```bash
 git clone git@github.com:dozeen/ONOFRIUS.git
 cd ONOFRIUS
 ```
 
-Install dependencies:
-
+### 2. Install dependencies
 ```bash
 npm install
 ```
 
-Initialize ONOFRIUS:
-
-```bash
-npm run setup
-```
-
-Start the system:
-
+### 3. Start ONOFRIUS
 ```bash
 npm start
 ```
+The **Bootstrap Engine** will inspect your environment (Node.js, Chrome, Ollama, Configuration), initialize WhatsApp Web, scan the QR code if required, and launch the unvarnished **ONOFRIUS Cognitive OS**.
 
 ---
 
-# Forge
+# Forge Core Builder
 
-Forge is the internal release certification system.
+Forge is the release certification tool. To update or re-package `gordon-core` from the development environment (`Gordon3`), run:
 
-Every public release is validated through a series of automated audits:
-
-- Dependency Audit
-- Privacy Audit
-- Runtime Audit
-- Documentation Audit
-- Architecture Audit
-
-Only certified releases should be published.
-
----
-
-# Constitution
-
-The architectural principles of ONOFRIUS are defined in:
-
-```text
-CONSTITUTION.md
+```bash
+node forge/buildCore.js
 ```
 
-Every major architectural decision should respect the Constitution.
-
----
-
-# Roadmap
-
-Current development focuses on:
-
-- Event Intelligence
-- Cognitive Planning
-- Service Registry
-- Multi-Agent Architecture
-- Bash Agent
-- Browser Agent
-- Vision Agent
-- Autonomous Learning
-- Distributed Cognition
+### Forge Certified Build Pipeline:
+- 📦 Copies the cognitive engine from `Gordon3/core` into `packages/gordon-core`.
+- 🧹 **Sanitizes all personal data** (removes chat histories, contacts, personal facts & address books).
+- 🔍 **Audits internal requires** to ensure 100% standalone package isolation.
+- 🛡️ **Enforces Principle 9 Compliance**: Fails the build if any personal data file is detected.
 
 ---
 
