@@ -6,14 +6,19 @@
 const AgendaEngine = require("../agenda/AgendaEngine");
 
 class AgendaCapability {
+    static cleanText(text) {
+        if (!text || typeof text !== "string") return "";
+        return text.replace(/[\"\']/g, " ").replace(/\\/g, " ").trim().toLowerCase();
+    }
+
     static isAgendaQuery(text) {
-        if (!text || typeof text !== "string") return false;
-        const lower = text.trim().toLowerCase();
+        const lower = AgendaCapability.cleanText(text);
+        if (!lower) return false;
         return lower.match(/\b(appuntamento|appuntamenti|agenda|calendario|eventi|promemoria|impegno|impegni|programma|cosa devo fare|cosa ho da fare|cosa ho oggi|cosa ho domani)\b/i) !== null;
     }
 
     static getTargetDate(text) {
-        const lower = (text || "").toLowerCase();
+        const lower = AgendaCapability.cleanText(text);
         const today = new Date().toISOString().split("T")[0];
 
         if (lower.includes("domani")) {
@@ -26,7 +31,7 @@ class AgendaCapability {
 
     static executeDeterministic(text) {
         const targetDate = this.getTargetDate(text);
-        const isTomorrow = text.toLowerCase().includes("domani");
+        const isTomorrow = AgendaCapability.cleanText(text).includes("domani");
         const dateLabel = isTomorrow ? "domani" : "oggi";
 
         const allEvents = AgendaEngine.getGlobal();
