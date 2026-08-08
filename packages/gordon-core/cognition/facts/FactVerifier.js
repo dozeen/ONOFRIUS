@@ -1,41 +1,61 @@
 /**
- * FactVerifier.js - Guardiano di Veridicità e Controllo Allucinazioni Operative
+ * FactVerifier.js - Guardiano Cognitivo Anti-Allucinazioni
+ * Intercetta frasi operative allucinate sull'agenda (es. "controlla l'app dei meeting", "nessun appuntamento fisso oggi", "vai dove vuoi")
+ * e le sostituisce con i dati reali ed oggettivi dell'AgendaEngine.
  */
 
-const AgendaCapability = require("../../capability/AgendaCapability");
+const AgendaEngine = require("../../agenda/AgendaEngine");
 
 class FactVerifier {
-    verify(candidateResponse, context = {}) {
-        return FactVerifier.verify(candidateResponse, context);
+    static verify(candidateResponse, context = {}) {
+        const text = context.text || (context.event && context.event.text) || "";
+        const resp = (candidateResponse || "").toLowerCase();
+
+        // Rilevamento query agenda / impegni
+        const isAgendaQuery = text.match(/\b(appuntamento|appuntamenti|agenda|calendario|eventi|impegno|impegni|cosa devo fare|cosa ho da fare)\b/i) !== null;
+
+        if (isAgendaQuery) {
+            // Frasi di allucinazione operativa o invenzioni dell'LLM
+            const isOperationalHallucination = resp.includes("controlla") ||
+                resp.includes("app dei meeting") ||
+                resp.includes("apri il calendario") ||
+                resp.includes("nessun appuntamento fisso") ||
+                resp.includes("fai come preferisci") ||
+                resp.includes("vai dove vuoi");
+
+            if (isOperationalHallucination) {
+                console.warn("⚠️ [FactVerifier] Rilevata allucinazione operativa sull'agenda! Sostituzione deterministica in corso...");
+
+                const isTomorrow = text.toLowerCase().includes("domani");
+                const targetDate = isTomorrow ?
+                    new Date(Date.now() + 86400000).toISOString().split("T")[0] :
+                    new Date().toISOString().split("T")[0];
+
+                const dateLabel = isTomorrow ? "domani" : "oggi";
+                const events = AgendaEngine.getGlobal().filter(e => e.date === targetDate);
+
+                let realReply = "";
+                if (events.length === 0) {
+                    realReply = `Per ${dateLabel} non hai appuntamenti in agenda.`;
+                } else {
+                    realReply = `Hai i seguenti appuntamenti per ${dateLabel}:\n\n` +
+                        events.map(e => `• ${e.time ? e.time + ' - ' : ''}${e.title}${e.person ? ' (con ' + e.person + ')' : ''}`).join("\n");
+                }
+
+                return {
+                    valid: false,
+                    response: realReply,
+                    replaced: true,
+                    reason: "Hallucinated operational agenda phrase replaced by deterministic AgendaEngine output."
+                };
+            }
+        }
+
+        return { valid: true, response: candidateResponse };
     }
 
-    static verify(candidateResponse, context = {}) {
-        if (!candidateResponse || typeof candidateResponse !== "string") {
-            return { valid: true, response: candidateResponse };
-        }
-
-        const userText = (context.text || (context.event && context.event.text) || "").toLowerCase();
-        const lowerResp = candidateResponse.toLowerCase();
-
-        // 1. Controllo Allucinazione Operativa sull'Agenda
-        const isAgendaAsk = AgendaCapability.isAgendaQuery(userText);
-        const hasHallucinatedAction = lowerResp.match(/\b(controlla|apri|guarda|nell'app|sul pc|nel calendario|l'app|l'applicazione)\b/i);
-
-        if (isAgendaAsk && hasHallucinatedAction) {
-            console.log("⚠️ [FactVerifier] Rilevata allucinazione operativa sull'agenda! Sostituzione deterministica in corso...");
-            const realAgendaReply = AgendaCapability.executeDeterministic(userText);
-            return {
-                valid: false,
-                response: realAgendaReply,
-                replaced: true,
-                reason: "Hallucinated operational agenda phrase replaced by deterministic AgendaEngine output."
-            };
-        }
-
-        return {
-            valid: true,
-            response: candidateResponse
-        };
+    verify(candidateResponse, context = {}) {
+        return FactVerifier.verify(candidateResponse, context);
     }
 }
 

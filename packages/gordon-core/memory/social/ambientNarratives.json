@@ -1,15 +1,15 @@
 [
   {
-    "id": "1786196015902",
-    "startDate": 1786196015902,
-    "lastUpdated": 1786196015902,
+    "id": "1786197062273",
+    "startDate": 1786197062273,
+    "lastUpdated": 1786197062273,
     "narrative": "Possibile problema di salute che coinvolge ContattoC",
     "confidence": 0.85
   },
   {
     "id": "1786177411547",
     "startDate": 1786177411547,
-    "lastUpdated": 1786196015876,
+    "lastUpdated": 1786197062249,
     "narrative": "Dal 5 agosto il gruppo parla con preoccupazione della salute di ContattoC.",
     "confidence": 0.883
   }

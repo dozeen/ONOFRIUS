@@ -9,7 +9,7 @@ class AgendaCapability {
     static isAgendaQuery(text) {
         if (!text || typeof text !== "string") return false;
         const lower = text.trim().toLowerCase();
-        return lower.match(/\b(appuntamento|appuntamenti|agenda|calendario|eventi|promemoria)\b/i) !== null;
+        return lower.match(/\b(appuntamento|appuntamenti|agenda|calendario|eventi|promemoria|impegno|impegni|programma|cosa devo fare|cosa ho da fare|cosa ho oggi|cosa ho domani)\b/i) !== null;
     }
 
     static getTargetDate(text) {
