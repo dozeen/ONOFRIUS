@@ -1,33 +1,41 @@
 /**
- * EmergentEventDetector.js - Rileva eventi emergenti correlati (es. ospedale + Antonio + ricovero)
+ * EmergentEventDetector.js - Genera Ipotesi Emergenti con Evidenze (Inferred Context)
  */
 
 class EmergentEventDetector {
     detectEvents(history = []) {
         if (!history || history.length < 3) return null;
 
-        const combinedText = history.slice(-15).map(h => h.text || "").join(" ").toLowerCase();
+        const messages = history.slice(-15);
+        const combinedText = messages.map(h => h.text || "").join(" ").toLowerCase();
 
         // Correlazione Evento di Salute / Ospedale
         if (combinedText.includes("ospedale") || combinedText.includes("ricover") || combinedText.includes("ambulanz")) {
             const names = combinedText.match(/\b(antonio|pietro|christian|onofrio|lucia|silvana|sabino)\b/g) || [];
             const targetName = names[0] ? names[0].charAt(0).toUpperCase() + names[0].slice(1) : "Un contatto";
             
+            const evidence = [];
+            if (combinedText.includes("ambulanz")) evidence.push("ambulanza");
+            if (combinedText.includes("ospedale")) evidence.push("ospedale");
+            if (combinedText.includes("preghiamo") || combinedText.includes("speriamo")) evidence.push("preghiamo");
+
             return {
-                title: `${targetName} - Evento di salute / ricovero`,
+                type: "emergent_hypothesis",
+                title: `Possibile problema di salute che coinvolge ${targetName}`,
                 confidence: 0.85,
-                category: "health_event",
-                summary: `Segnali correlati rilevano un potenziale ricovero o visita per ${targetName}.`
+                evidence,
+                category: "health_event"
             };
         }
 
         // Correlazione Organizzazione Evento / Festa
         if (combinedText.includes("festa") || combinedText.includes("serata") || combinedText.includes("matrimonio")) {
             return {
-                title: "Organizzazione Evento / Serata in corso",
+                type: "emergent_hypothesis",
+                title: "Ipotesi: Pianificazione di un evento sociale o serata",
                 confidence: 0.88,
-                category: "event_organization",
-                summary: "Discussione attiva per l'organizzazione di un evento."
+                evidence: ["festa", "serata", "organizz"],
+                category: "event_organization"
             };
         }
 

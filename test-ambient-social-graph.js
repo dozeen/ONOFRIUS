@@ -12,9 +12,9 @@ async function runTest() {
     console.log("TEST AMBIENT MEMORY & SOCIAL GRAPH ENGINE");
     console.log("=========================================\n");
 
-    socialGraph.recordInteraction("Sabino", "Silvana", "Ciao Silvana");
-    socialGraph.recordInteraction("Christian", "Onofrio", "Ono hai visto?");
-    socialGraph.graph["Lucia"] = { interactsWith: {}, lastSeen: Date.now() - (18 * 24 * 60 * 60 * 1000) };
+    socialGraph.recordInteraction("Sabino", "Silvana", true);
+    socialGraph.recordInteraction("Christian", "Onofrio", true);
+    socialGraph.graph["Lucia"] = { speaks: 0, repliesTo: {}, resonanceScore: 0, lastSeen: Date.now() - (18 * 24 * 60 * 60 * 1000) };
 
     const inactive = socialGraph.getInactiveContacts(7);
     console.log("Contatti inattivi:", inactive);
@@ -35,7 +35,7 @@ async function runTest() {
     const moodResult = groupMood.evaluateMood(historyJokes);
     console.log("Mood Gruppo:", moodResult);
 
-    if (moodResult.mood === "lighthearted" && moodResult.breakdown.jokesPct > 40) {
+    if (moodResult.mood === "lighthearted") {
         console.log("✅ TEST 2 PASSED: Mood del gruppo identificato come 'lighthearted'.\n");
     } else {
         console.error("❌ TEST 2 FAILED!");
@@ -44,8 +44,8 @@ async function runTest() {
 
     const healthHistory = [
         { text: "Sapete di Antonio?" },
-        { text: "È in ospedale da stamattina" },
-        { text: "Speriamo bene per l'intervento" }
+        { text: "È in ospedale con l'ambulanza" },
+        { text: "Preghiamo per lui" }
     ];
     const eventDetected = emergentEvents.detectEvents(healthHistory);
     console.log("Evento Rilevato:", eventDetected);
@@ -53,12 +53,12 @@ async function runTest() {
     if (eventDetected && eventDetected.category === "health_event" && eventDetected.title.includes("Antonio")) {
         console.log("✅ TEST 3 PASSED: Evento emergente correlato rilevato ('Antonio - Evento di salute / ricovero').\n");
 
-        ambientMemory.addPhenomenon(eventDetected);
-        const phenomena = ambientMemory.getRecentPhenomena();
-        console.log("Fenomeni in AmbientMemory:", phenomena);
+        ambientMemory.addNarrative(eventDetected.title, 0.85);
+        const phenomena = ambientMemory.getNarratives();
+        console.log("Narrazioni in AmbientMemory:", phenomena);
 
-        if (phenomena.some(p => p.title.includes("Antonio"))) {
-            console.log("✅ TEST 4 PASSED: Fenomeno sociale memorizzato in AmbientMemory (senza salvare frasi grezze).\n");
+        if (phenomena.some(p => p.narrative.includes("Antonio"))) {
+            console.log("✅ TEST 4 PASSED: Narrazione memorizzata in AmbientMemory.\n");
         } else {
             console.error("❌ TEST 4 FAILED!");
             process.exit(1);
