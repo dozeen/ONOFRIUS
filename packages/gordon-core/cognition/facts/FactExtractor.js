@@ -1,29 +1,24 @@
 /**
- * FactExtractor.js - Motore di estrazione entità e categorizzazione cognizione
+ * FactExtractor.js - Motore dinamico di estrazione entità, relazioni e fatti cognitivi
  */
 
 const { ENTITY_TYPES, FACT_CATEGORIES } = require("./FactTypes");
 
 class FactExtractor {
     static INPUT = ["text", "meta"];
-    static OUTPUT = ["facts", "thoughts", "agenda", "preferences", "entities"];
+    static OUTPUT = ["facts", "thoughts", "agenda", "preferences", "entities", "relationships"];
 
     constructor(logger = console) {
         this.logger = logger;
     }
 
-    /**
-     * Estrae entità e fatto/intenzione dal testo
-     * @param {string} text - Testo in ingresso
-     * @param {Object} [meta={}] - Metadati contesto
-     * @returns {Object} Cognition Payload { facts, thoughts, agenda, preferences, entities }
-     */
     extract(text, meta = {}) {
         if (!text || typeof text !== "string") {
-            return { facts: [], thoughts: [], agenda: [], preferences: [], entities: [] };
+            return { facts: [], thoughts: [], agenda: [], preferences: [], entities: [], relationships: [] };
         }
 
         const entities = this._extractEntities(text);
+        const relationships = this._extractRelationships(text);
         const category = this._categorizeText(text);
 
         const payload = {
@@ -31,10 +26,35 @@ class FactExtractor {
             thoughts: [],
             agenda: [],
             preferences: [],
-            entities: entities
+            entities: entities,
+            relationships: relationships
         };
 
         const cleanedText = text.trim();
+
+        // 1. Intenzione di comunicazione / Outreach ("comunicare a X che...", "dici a X che...")
+        const outreachMatch = cleanedText.match(/\b(comunicare|dire|avvisare|scrivere)\s+a\s+([A-Za-z]+)\s+che\s+(.+)/i);
+        if (outreachMatch) {
+            payload.thoughts.push({
+                type: "outreach_intention",
+                target: outreachMatch[2],
+                content: outreachMatch[3],
+                created_at: meta.timestamp || Date.now()
+            });
+        }
+
+        // 2. Regole e valori per familiari ("X mia figlia non fuma...")
+        if (relationships.length > 0) {
+            for (const rel of relationships) {
+                payload.facts.push({
+                    type: "relationship_fact",
+                    person: rel.person,
+                    relation: rel.relation,
+                    details: cleanedText,
+                    extracted_at: new Date().toISOString()
+                });
+            }
+        }
 
         if (category === FACT_CATEGORIES.INTENTION || category === FACT_CATEGORIES.REMINDER) {
             payload.thoughts.push({
@@ -43,7 +63,7 @@ class FactExtractor {
                 entities: entities,
                 created_at: meta.timestamp || Date.now()
             });
-        } else if (category === FACT_CATEGORIES.PREFERENCE) {
+        } else if (category === FACT_CATEGORIES.PREFERENCE || cleanedText.includes("non fuma") || cleanedText.includes("non beve")) {
             payload.preferences.push({
                 type: "preference",
                 content: cleanedText,
@@ -71,15 +91,13 @@ class FactExtractor {
         const trimmed = text.trim();
         const lower = trimmed.toLowerCase();
 
-        // Estrai intenzioni solo se c'è un comando esplicito di intenzione all'inizio o "ricordami"
-        if (lower.startsWith("ricordami ") || lower.startsWith("intenzione:") || lower.startsWith("pensiero:") || lower.startsWith("vorrei ") || lower.startsWith("voglio ")) {
-            // Evita di catturare domande o casual chat come intenzioni (es. "voglio cominciare?", "voglio sapere")
-            if (!trimmed.includes("?") && !lower.includes("voglio sapere") && !lower.includes("voglio che")) {
+        if (lower.startsWith("ricordami ") || lower.startsWith("intenzione:") || lower.includes("comunicare a") || lower.startsWith("vorrei ") || lower.startsWith("voglio ")) {
+            if (!trimmed.includes("?") && !lower.includes("voglio sapere")) {
                 return FACT_CATEGORIES.INTENTION;
             }
         }
 
-        if (lower.startsWith("preferisco ") || lower.startsWith("preferenza:") || lower.startsWith("non sopporto ")) {
+        if (lower.startsWith("preferisco ") || lower.startsWith("preferenza:") || lower.includes("non fuma") || lower.includes("non beve")) {
             return FACT_CATEGORIES.PREFERENCE;
         }
 
@@ -88,6 +106,20 @@ class FactExtractor {
         }
 
         return FACT_CATEGORIES.FACT;
+    }
+
+    _extractRelationships(text) {
+        const rels = [];
+        // Match: "Roberta ( mia figlia )", "Mario ( mio fratello )", "Silvana ( mia moglie )"
+        const relRegex = /\b([A-Z][a-z]+)\s*\(\s*mi[ao]\s+(figlia|figlio|moglie|marito|fratello|sorella|madre|padre)\s*\)/gi;
+        let match;
+        while ((match = relRegex.exec(text)) !== null) {
+            rels.push({
+                person: match[1],
+                relation: match[2].toLowerCase()
+            });
+        }
+        return rels;
     }
 
     _extractEntities(text) {
@@ -104,42 +136,25 @@ class FactExtractor {
             });
         }
 
-        // 2. Persone (es. Alice, Bob, Charlie)
-        const personRegex = /\b(Alice|Bob|Charlie|David|Eva|Frank|Grace)\b/gi;
+        // 2. Persone (Qualsiasi nome proprio maiuscolo o Nomi noti)
+        const personRegex = /\b([A-Z][a-z]+)\b/g;
+        const ignoreWords = new Set(["Sei", "Gordon", "Scrivi", "Onofrio", "WhatsApp", "Utente", "Direttiva", "Suprema", "Oggi", "Domani", "Ok", "Roberta", "Minervino"]);
         while ((match = personRegex.exec(text)) !== null) {
-            entities.push({
-                type: ENTITY_TYPES.PERSON,
-                value: match[0],
-                index: match.index
-            });
+            if (!ignoreWords.has(match[1]) && match[1].length > 2) {
+                entities.push({
+                    type: ENTITY_TYPES.PERSON,
+                    value: match[1],
+                    index: match.index
+                });
+            }
         }
 
-        // 3. Date (es. 07 Maggio 1970, 29 luglio, giovedì, domattina)
-        const dateRegex = /\b([0-3]?[0-9]\s+(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)(?:\s+\d{4})?|giovedì|giovedi|domattina|domani)\b/gi;
-        while ((match = dateRegex.exec(text)) !== null) {
-            entities.push({
-                type: ENTITY_TYPES.DATE,
-                value: match[0],
-                index: match.index
-            });
-        }
-
-        // 4. Luoghi (es. a Roma, a Milano, a Napoli)
-        const locationRegex = /\ba\s+(Roma|Milano|Napoli|Bari|Torino|Bologna|Firenze)\b/gi;
+        // 3. Luoghi dinamici (es. a Minervino, a Bari, a Roma, a Torre Giulia)
+        const locationRegex = /\ba\s+([A-Z][a-z]+)\b/gi;
         while ((match = locationRegex.exec(text)) !== null) {
             entities.push({
                 type: ENTITY_TYPES.LOCATION,
-                value: match[0],
-                index: match.index
-            });
-        }
-
-        // 5. Importi (es. €300, 300 euro, 500 euro)
-        const amountRegex = /(?:€\s*\d+|\d+\s*euro)/gi;
-        while ((match = amountRegex.exec(text)) !== null) {
-            entities.push({
-                type: ENTITY_TYPES.AMOUNT,
-                value: match[0],
+                value: match[1],
                 index: match.index
             });
         }
