@@ -22,34 +22,59 @@ class MessageClassifier {
             return { primary: TYPES.URL, confidence: 0.95 };
         }
 
-        // 3. Domanda
-        if (text.includes("?")) {
+        // 3. Saluto / Ritual
+        if (text.match(/\b(buongiorno|buonasera|ciao|salve|hola|ehi|bentornato|buondì|buondi)\b/)) {
+            return { primary: TYPES.GREETING, confidence: 0.96 };
+        }
+
+        // 4. Ringraziamento / Chiusura
+        if (text.match(/\b(grazie|grazie mille|prego|figurati|a dopo|ci vediamo|buona giornata|buona serata)\b/)) {
+            return { primary: TYPES.GRATITUDE, confidence: 0.95 };
+        }
+
+        // 5. Conferma
+        if (text.match(/\b(ok|va bene|perfetto|d'accordo|certamente|capito|chiaro|esatto|ricevuto)\b/)) {
+            return { primary: TYPES.CONFIRMATION, confidence: 0.95 };
+        }
+
+        // 6. Domanda
+        if (text.includes("?") || text.match(/^(chi|cosa|come|dove|quando|perché|perche)\b/)) {
             return { primary: TYPES.QUESTION, confidence: 0.95 };
         }
 
-        // 4. Task / Promemoria
+        // 7. Task / Promemoria
         if (text.includes("ricordami") || text.startsWith("ricorda ")) {
             return { primary: TYPES.TASK, confidence: 0.98 };
         }
 
-        // 5. Evento
+        // 8. Evento
         if (text.match(/\b(domani|oggi|stasera|alle\s+\d+)/)) {
             return { primary: TYPES.EVENT, confidence: 0.90 };
         }
 
-        // 6. Notizia / Evento del Mondo
-        if (text.includes("terremoto") || text.includes("condoglianze") || text.includes("morto") || text.includes("papa") || text.includes("notizia") || text.includes("elezioni") || text.includes("incidente") || text.includes("scoperta")) {
+        // 9. Tecnico / Codice / System
+        if (text.match(/\b(bug|codice|build|err|errore|git|push|pull|script|server|node|python|kernel|whisper|ffmpeg|plugin)\b/)) {
+            return { primary: TYPES.TECHNICAL, confidence: 0.94 };
+        }
+
+        // 10. Notizia / Evento del Mondo
+        if (text.match(/\b(terremoto|condoglianze|morto|papa|notizia|elezioni|incidente|scoperta)\b/)) {
             return { primary: TYPES.NEWS, confidence: 0.92 };
         }
 
-        // 7. Fatto
+        // 11. Fatto / Dichiarazione
         if (text.includes(" è ") || text.includes(" e'") || text.includes("sono")) {
-            return { primary: TYPES.FACT, confidence: 0.70 };
+            return { primary: TYPES.FACT, confidence: 0.75 };
         }
 
-        // 8. Social / Emoji
+        // 12. Social / Emoji
         if (/😂|🤣|😅|😀|😛|👍|❤️/.test(text)) {
-            return { primary: TYPES.SOCIAL, confidence: 0.80 };
+            return { primary: TYPES.SOCIAL, confidence: 0.85 };
+        }
+
+        // 13. Conversazione Casual Naturale (Invece di Fallback Unknown 0.3)
+        if (text.length > 0) {
+            return { primary: TYPES.CASUAL, confidence: 0.85 };
         }
 
         return {

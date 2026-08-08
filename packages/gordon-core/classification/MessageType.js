@@ -14,6 +14,11 @@ module.exports = Object.freeze({
     STICKER: "sticker",
     AUDIO: "audio",
     DOCUMENT: "document",
+    GREETING: "greeting",
+    GRATITUDE: "gratitude",
+    CONFIRMATION: "confirmation",
+    TECHNICAL: "technical",
+    CASUAL: "casual",
     WORLD_EVENT: "world_event",
     UNKNOWN: "unknown"
 });
