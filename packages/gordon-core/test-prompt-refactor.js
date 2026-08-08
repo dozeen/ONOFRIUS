@@ -11,7 +11,7 @@ async function runTest() {
 
     const sampleContext = {
         text: "Ono avresti una di queste?",
-        contactName: "Christian",
+        contactName: "ContattoE",
         isOwner: false,
         agenda_probability: 0.2, // Bassa probabilità -> Agenda DEVE essere esclusa!
         agendaContext: {
@@ -52,7 +52,7 @@ async function runTest() {
     // 4. Verfica inclusione dell'Agenda quando agenda_probability >= 0.7
     const agendaContextSample = {
         text: "Potresti prestarcela per domani?",
-        contactName: "Christian",
+        contactName: "ContattoE",
         isOwner: false,
         agenda_probability: 0.85, // Alta probabilità -> Agenda inclusa!
         agendaContext: {

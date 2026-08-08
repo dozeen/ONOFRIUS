@@ -18,13 +18,13 @@ async function runTest() {
     observedFacts.addObservedFact({ statement: "Onofrio ha inviato un messaggio su WhatsApp", source: "whatsapp" });
     
     const hyp = emergentEvents.detectEvents([
-        { text: "Sapete di Antonio?" },
+        { text: "Sapete di ContattoC?" },
         { text: "È in ospedale con l'ambulanza" },
         { text: "Preghiamo per lui" }
     ]);
     inferredContext.addHypothesis(hyp);
 
-    ambientMemory.addNarrative("Dal 5 agosto il gruppo parla con preoccupazione della salute di Antonio.", 0.85);
+    ambientMemory.addNarrative("Dal 5 agosto il gruppo parla con preoccupazione della salute di ContattoC.", 0.85);
 
     if (observedFacts.getFacts().length > 0 && inferredContext.getHypotheses().length > 0 && ambientMemory.getNarratives().length > 0) {
         console.log("✅ TEST 1 PASSED: I 3 livelli di conoscenza sono rigorosamente separati ed operativi.\n");
@@ -40,12 +40,12 @@ async function runTest() {
         process.exit(1);
     }
 
-    socialGraph.recordInteraction("Sabino", "Silvana", true);
-    socialGraph.recordInteraction("Christian", "Silvana", true);
-    socialGraph.recordInteraction("Onofrio", "Silvana", true);
+    socialGraph.recordInteraction("ContattoB", "ContattoA", true);
+    socialGraph.recordInteraction("ContattoE", "ContattoA", true);
+    socialGraph.recordInteraction("Onofrio", "ContattoA", true);
 
-    const silvanaResonance = socialGraph.getResonance("Silvana");
-    if (silvanaResonance === 3) {
+    const contattoAResonance = socialGraph.getResonance("ContattoA");
+    if (contattoAResonance === 3) {
         console.log("✅ TEST 3 PASSED: Risonanza sociale calcolata correttamente.\n");
     } else {
         console.error("❌ TEST 3 FAILED!");

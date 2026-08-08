@@ -1,198 +1,75 @@
-<div align="center">
+# ⚡ ONOFRIUS OS v1.1.0 — Cognitive Artificial Consciousness & OS Architecture
 
-# ONOFRIUS
-
-### Your Invisible Friend
-
-**An Event-Driven Cognitive Operating System for Persistent AI Agents**
-
-[![Website](https://img.shields.io/badge/Website-Online-00ff99?style=for-the-badge)](https://dozeen.ns0.it/onofrius/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![Node.js](https://img.shields.io/badge/Node.js-22-green?style=for-the-badge)]()
-[![Release](https://img.shields.io/badge/Release-v1.0.0-purple?style=for-the-badge)]()
-
-🌐 **Official Website:** https://dozeen.ns0.it/onofrius/
-
-📖 [Constitution](CONSTITUTION.md) • ⭐ [GitHub Repository](https://github.com/dozeen/ONOFRIUS)
+> **ONOFRIUS è cognitivo ma non personale.**
+> *ONOFRIUS è l'Architettura Sistema Operativo per Agenti Cognitivi. Tutta la memoria personale, l'identità, le relazioni ed i contatti vengono generati durante la fase di Bootstrap dell'utente.*
 
 ---
 
-*"Everything begins with an Event."*
-
-</div>
-
----
-
-# What is ONOFRIUS?
-
-ONOFRIUS is **not a chatbot**.
-
-It is an **Event-Driven Cognitive Operating System** designed to build persistent, autonomous AI agents powered by **Gordon Core**, capable of:
-
-- observing & passive perception (WhatsApp status broadcast, social trends, system events)
-- extracting facts & fusing multi-source knowledge (Bayesian confidence boost)
-- managing temporal memory decay (ephemeral vs. immutable facts)
-- distinguishing certainty (*Sapere*) vs probability/beliefs (*Credere*)
-- learning continuously from real human responses via **StyleLearningEngine** (Few-Shot Canonical Patterns)
-- filtering output authenticity through **LinguisticConscience** (*"Onofrio scriverebbe davvero questa frase?"*)
-- evaluating situational social behavior via **SocialIntuitionEngine** & **ConversationParticipation**
-- transcribing voice notes and audio messages automatically via **Whisper Audio Engine**
-
-Instead of reacting to isolated prompts, ONOFRIUS continuously transforms incoming events into persistent knowledge and human-like natural behavior.
-
-> **Every Event may become Knowledge.**
->
-> **Every Knowledge may improve Intelligence.**
-
----
-
-# Key Principles & Constitution
-
-ONOFRIUS follows strict architectural axioms defined in **[CONSTITUTION.md](CONSTITUTION.md)**.
-
-### 🛡️ Principle 9: Cognitive but Not Personal
-> **"ONOFRIUS è cognitivo ma non personale."**
->
-> The software contains exclusively the cognitive engine, algorithms, and system logic. All personal knowledge, identities, contacts, memory, events, preferences, and user configurations are created or imported exclusively during bootstrap on the user's computer. **No personal data is ever distributed with the software.**
-
----
-
-# Architecture: Standalone Runtime & Shared Gordon Core
-
-ONOFRIUS decouples the **cognitive engine** from the **application runtime**:
+## 🏛️ Architettura dei 3 Livelli di Conoscenza (3-Tier Knowledge)
 
 ```text
-ONOFRIUS/
-│
-├── app.js               <-- Application Entrypoint
-├── bootstrap/           <-- 10-step Automated Setup & Health Engine
-├── cli/                 <-- Interactive Terminal & Command Interface
-├── doctor/              <-- System Diagnostics
-├── forge/               <-- Certified Release Builder (buildCore.js)
-├── core/                <-- ONOFRIUS Kernel & Adapters
-│
-├── packages/
-│   └── gordon-core/    <-- Certified, Standalone Gordon Core Package
-│       ├── brain/
-│       ├── cognition/
-│       │   └── interaction/  <-- ConversationDynamicsEngine & SocialIntuitionEngine
-│       ├── events/
-│       ├── identity/
-│       ├── learning/         <-- StyleLearningEngine (Few-Shot Patterns)
-│       ├── personality/      <-- LinguisticConscience & LanguageEngine
-│       └── memory/           <-- Empty runtime templates (No personal data)
-│
-└── package.json        <-- "dependencies": { "gordon-core": "file:packages/gordon-core" }
+┌─────────────────────────────────────────────────────────────┐
+│ 1️⃣ OBSERVED FACTS (ObservedFacts.js)                         │
+│ Fatti oggettivi osservati e registrati (Zero inferenze)     │
+├─────────────────────────────────────────────────────────────┤
+│ 2️⃣ INFERRED CONTEXT (InferredContext.js)                    │
+│ Ipotesi ed inferenze (emergent_hypothesis + evidenze)       │
+├─────────────────────────────────────────────────────────────┤
+│ 3️⃣ AMBIENT MEMORY (AmbientMemory.js)                        │
+│ Narrazioni sociali sostenute con decadimento (0.99/giorno)   │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-# Decoupled Cognitive Pipeline
+## 🎭 Motore del Registro Relazionale (`ToneEngine.js`)
 
-```text
-Incoming Event (WhatsApp / CLI / System / Audio Voice Note)
-        │
-        ▼
- Perception Engine & Passive Status Handler
-        │
-        ▼
- Whisper Audio Transcriber (faster-whisper + ffmpeg)
-        │
-        ▼
- Input Classification & Attention Engine
-        │
-        ▼
- Working Memory & Intention Lifecycle (ACTIVE/COMPLETED/CANCELLED)
-        │
-        ▼
- Fact Extraction & Knowledge Fusion Engine
-        │
-        ▼
- Reasoning Engine & Epistemic Matrix (Sapere vs. Credere)
-        │
-        ▼
- Decision Engine & Selective Agenda Loading
-        │
-        ▼
- SocialIntuitionEngine & ConversationParticipation (SILENT, MINIMAL, NORMAL, ENGAGED, ADVISOR)
-        │
-        ▼
- StyleLearningEngine (Few-Shot Canonical Patterns Memory)
-        │
-        ▼
- PersonalityEngine & LanguageEngine (Natural Text Generation)
-        │
-        ▼
- LinguisticConscience ("Onofrio scriverebbe davvero questa frase?")
-        │
-        ▼
- FactVerifier & ResponseSanitizer (Zero-Trust Anti-Prompt-Leak & Family Privacy)
-        │
-        ▼
- Response / Action Execution & Dispatch
-```
+Adatta il tono della risposta in base al registro relazionale rilevato per evitare l'appiattimento assistenziale o professionale:
+
+- **`ROMANTIC`** (*"amore", "mi manchi", partner*): Risponde con complicità, calore ed affetto naturale.
+- **`IRONIC`** (*"ahah", "bastardo", battute*): Risponde con leggera ironia e complicità senza spiegare le battute.
+- **`FAMILY`** (madre, sorella, fratelli): Risponde con vicinanza ed affetto familiare.
+- **`TECHNICAL`** (*"bug", "build", "server"*): Risponde in modo preciso, concreto ed essenziale.
+- **`BUSINESS`** (clienti, lavoro): Risponde in modo educato, sollecito e professionale.
+
+### 🌟 Direttiva Suprema Anti-Assistenziale
+> *"Non cercare sempre di essere utile. Se il messaggio è affettuoso, ironico o scherzoso, rispondi con la stessa complicità. Non trasformare mai la chat in un dialogo assistenziale o professionale."*
 
 ---
 
-# Quick Start
+## 🎙️ Autonomia Vocale (`AudioCapability.js` & `faster-whisper`)
 
-### 1. Clone the repository
+- **Speech-to-Text Offline**: Integra `faster-whisper` (modello `small`) per la trascrizione ultra-veloce di vocali WhatsApp (`ptt` / `audio`).
+- **Segmenti Temporali**: Estrae i timestamper per la memoria episodica (`00:00`, `00:03`...).
+- **Archiviazione Episodica**: Salva sia il file `.ogg` originale sia la trascrizione `.txt` in `tmp/voice_archive/`.
+
+---
+
+## 📅 Esecuzione Deterministica Agenda & Anti-Allucinazione
+
+- **Intent Parser Agenda**: Intercetta le domande sull'agenda (*"quali sono gli appuntamenti di oggi?"*) prima dell'LLM, interrogando `AgendaEngine.getGlobal()` (**0 Token LLM, latenza istantanea, 0 allucinazioni**).
+- **FactVerifier Guard**: Boccia e sostituisce qualsiasi risposta contenente allucinazioni operative (*"controlla l'app sul PC"*) con i dati reali ed oggettivi dell'agenda.
+
+---
+
+## 👥 Dinamiche di Gruppo (`GroupDynamicsEngine.js`)
+
+- **Group Participation Score**: Calcola la convenienza sociale di intervenire nei gruppi WhatsApp.
+- **Silenzio Sociale**: Se $\text{Score} < 0$ (es. troppi saluti ripetuti o chat rumorosa), Gordon sceglie saggiamente il **Silenzio Sociale (`Participation: SILENT`)**.
+
+---
+
+## 🛡️ Audit e Principio 9 (Cognitivo ma non Personale)
+
+Ogni release viene sottoposta all'audit automatico `node forge/buildCore.js` che garantisce la totale assenza di dati personali, contatti o cronologie private nel pacchetto distribuito su GitHub.
+
+---
+
+### 💻 Installazione & Avvio
+
 ```bash
 git clone git@github.com:dozeen/ONOFRIUS.git
 cd ONOFRIUS
-```
-
-### 2. Install dependencies
-```bash
 npm install
-```
-
-### 3. Start ONOFRIUS
-```bash
 npm start
 ```
-The **Bootstrap Engine** will inspect your environment (Node.js, Chrome, Ollama, Configuration), initialize WhatsApp Web, scan the QR code if required, and launch the unvarnished **ONOFRIUS Cognitive OS**.
-
----
-
-# Forge Core Builder
-
-Forge is the release certification tool. To update or re-package `gordon-core` from the development environment (`Gordon3`), run:
-
-```bash
-node forge/buildCore.js
-```
-
-### Forge Certified Build Pipeline:
-- 📦 Copies the cognitive engine from `Gordon3/core` into `packages/gordon-core`.
-- 🧹 **Sanitizes all personal data** (removes chat histories, contacts, personal facts & address books).
-- 🔍 **Audits internal requires** to ensure 100% standalone package isolation.
-- 🛡️ **Enforces Principle 9 Compliance**: Fails the build if any personal data file is detected.
-
----
-
-# License
-
-MIT License
-
----
-
-<div align="center">
-
-## ONOFRIUS
-
-### Your Invisible Friend
-
-**Traditional AI starts from Prompts.**
-
-**ONOFRIUS starts from Events.**
-
----
-
-*Every Event begins a Story.*
-
-*Every Story becomes Knowledge.*
-
-*Every Knowledge improves Intelligence.*
-
-</div>

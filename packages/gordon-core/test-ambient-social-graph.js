@@ -12,15 +12,15 @@ async function runTest() {
     console.log("TEST AMBIENT MEMORY & SOCIAL GRAPH ENGINE");
     console.log("=========================================\n");
 
-    socialGraph.recordInteraction("Sabino", "Silvana", true);
-    socialGraph.recordInteraction("Christian", "Onofrio", true);
-    socialGraph.graph["Lucia"] = { speaks: 0, repliesTo: {}, resonanceScore: 0, lastSeen: Date.now() - (18 * 24 * 60 * 60 * 1000) };
+    socialGraph.recordInteraction("ContattoB", "ContattoA", true);
+    socialGraph.recordInteraction("ContattoE", "Onofrio", true);
+    socialGraph.graph["ContattoF"] = { speaks: 0, repliesTo: {}, resonanceScore: 0, lastSeen: Date.now() - (18 * 24 * 60 * 60 * 1000) };
 
     const inactive = socialGraph.getInactiveContacts(7);
     console.log("Contatti inattivi:", inactive);
 
-    if (inactive.some(i => i.person === "Lucia" && i.inactiveDays >= 18)) {
-        console.log("✅ TEST 1 PASSED: Lucia identificata come inattiva da 18 giorni.\n");
+    if (inactive.some(i => i.person === "ContattoF" && i.inactiveDays >= 18)) {
+        console.log("✅ TEST 1 PASSED: ContattoF identificata come inattiva da 18 giorni.\n");
     } else {
         console.error("❌ TEST 1 FAILED!");
         process.exit(1);
@@ -43,21 +43,21 @@ async function runTest() {
     }
 
     const healthHistory = [
-        { text: "Sapete di Antonio?" },
+        { text: "Sapete di ContattoC?" },
         { text: "È in ospedale con l'ambulanza" },
         { text: "Preghiamo per lui" }
     ];
     const eventDetected = emergentEvents.detectEvents(healthHistory);
     console.log("Evento Rilevato:", eventDetected);
 
-    if (eventDetected && eventDetected.category === "health_event" && eventDetected.title.includes("Antonio")) {
-        console.log("✅ TEST 3 PASSED: Evento emergente correlato rilevato ('Antonio - Evento di salute / ricovero').\n");
+    if (eventDetected && eventDetected.category === "health_event" && eventDetected.title.includes("ContattoC")) {
+        console.log("✅ TEST 3 PASSED: Evento emergente correlato rilevato ('ContattoC - Evento di salute / ricovero').\n");
 
         ambientMemory.addNarrative(eventDetected.title, 0.85);
         const phenomena = ambientMemory.getNarratives();
         console.log("Narrazioni in AmbientMemory:", phenomena);
 
-        if (phenomena.some(p => p.narrative.includes("Antonio"))) {
+        if (phenomena.some(p => p.narrative.includes("ContattoC"))) {
             console.log("✅ TEST 4 PASSED: Narrazione memorizzata in AmbientMemory.\n");
         } else {
             console.error("❌ TEST 4 FAILED!");

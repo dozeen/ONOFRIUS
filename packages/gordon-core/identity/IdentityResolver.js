@@ -44,7 +44,7 @@ class IdentityResolver {
             }
         }
 
-        // 3) Se il contatto ha un pushname/displayName valido (es. Lucia, Marco)
+        // 3) Se il contatto ha un pushname/displayName valido (es. ContattoF, Marco)
         if (!contact && displayName && displayName !== "Sconosciuto" && displayName.length > 1) {
             contact = {
                 name: displayName,

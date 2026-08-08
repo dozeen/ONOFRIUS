@@ -11,7 +11,7 @@ class EmergentEventDetector {
 
         // Correlazione Evento di Salute / Ospedale
         if (combinedText.includes("ospedale") || combinedText.includes("ricover") || combinedText.includes("ambulanz")) {
-            const names = combinedText.match(/\b(antonio|pietro|christian|onofrio|lucia|silvana|sabino)\b/g) || [];
+            const names = combinedText.match(/\b(contattoC|contattoD|contattoE|onofrio|contattoF|contattoA|contattoB)\b/g) || [];
             const targetName = names[0] ? names[0].charAt(0).toUpperCase() + names[0].slice(1) : "Un contatto";
             
             const evidence = [];

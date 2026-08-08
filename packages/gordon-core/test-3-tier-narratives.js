@@ -20,13 +20,13 @@ async function runTest() {
     observedFacts.addObservedFact({ statement: "Onofrio ha inviato un messaggio su WhatsApp", source: "whatsapp" });
     
     const hyp = emergentEvents.detectEvents([
-        { text: "Sapete di Antonio?" },
+        { text: "Sapete di ContattoC?" },
         { text: "È in ospedale con l'ambulanza" },
         { text: "Preghiamo per lui" }
     ]);
     inferredContext.addHypothesis(hyp);
 
-    ambientMemory.addNarrative("Dal 5 agosto il gruppo parla con preoccupazione della salute di Antonio.", 0.85);
+    ambientMemory.addNarrative("Dal 5 agosto il gruppo parla con preoccupazione della salute di ContattoC.", 0.85);
 
     console.log("Observed Facts:", observedFacts.getFacts());
     console.log("Inferred Hypotheses:", inferredContext.getHypotheses());
@@ -51,15 +51,15 @@ async function runTest() {
 
     // 3. VERIFICA SOCIAL GRAPH & RISONANZA ("Chi risponde a chi")
     console.log("--- 3. Social Graph & Risonanza ---");
-    socialGraph.recordInteraction("Sabino", "Silvana", true); // Sabino risponde a Silvana
-    socialGraph.recordInteraction("Christian", "Silvana", true); // Christian risponde a Silvana
-    socialGraph.recordInteraction("Onofrio", "Silvana", true); // Onofrio risponde a Silvana
+    socialGraph.recordInteraction("ContattoB", "ContattoA", true); // ContattoB risponde a ContattoA
+    socialGraph.recordInteraction("ContattoE", "ContattoA", true); // ContattoE risponde a ContattoA
+    socialGraph.recordInteraction("Onofrio", "ContattoA", true); // Onofrio risponde a ContattoA
 
-    const silvanaResonance = socialGraph.getResonance("Silvana");
-    console.log("Risonanza di Silvana (risposte ricevute):", silvanaResonance);
+    const contattoAResonance = socialGraph.getResonance("ContattoA");
+    console.log("Risonanza di ContattoA (risposte ricevute):", contattoAResonance);
 
-    if (silvanaResonance === 3) {
-        console.log("✅ TEST 3 PASSED: Risonanza sociale calcolata correttamente (3 risposte ricevute per Silvana).\n");
+    if (contattoAResonance === 3) {
+        console.log("✅ TEST 3 PASSED: Risonanza sociale calcolata correttamente (3 risposte ricevute per ContattoA).\n");
     } else {
         console.error("❌ TEST 3 FAILED!");
         process.exit(1);

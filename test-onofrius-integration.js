@@ -25,7 +25,7 @@ async function testOnofriusUnification() {
         metadata: { chatId: "status@broadcast", sender: "393338887766@c.us" },
         payload: {
             text: "È morto il Papa",
-            raw: { from: "status@broadcast", type: "chat", body: "È morto il Papa", getChat: async () => ({}), getContact: async () => ({ pushname: "Lucia" }) }
+            raw: { from: "status@broadcast", type: "chat", body: "È morto il Papa", getChat: async () => ({}), getContact: async () => ({ pushname: "ContattoF" }) }
         }
     };
 
@@ -37,12 +37,12 @@ async function testOnofriusUnification() {
 
     assert.strictEqual(ctx.isStatus, true);
     assert.strictEqual(ctx.skipLLM, true);
-    assert.strictEqual(ctx.worldEvent?.author, "Lucia");
+    assert.strictEqual(ctx.worldEvent?.author, "ContattoF");
 
     // Test 2: Knowledge Fusion & Dynamic Confidence in ONOFRIUS
     const fusion = new gordonCore.KnowledgeFusionEngine();
     let facts = [];
-    const f1 = fusion.fuse(facts, { statement: "È morto il Papa", source: "Status", author: "Lucia", confidence: 0.70 });
+    const f1 = fusion.fuse(facts, { statement: "È morto il Papa", source: "Status", author: "ContattoF", confidence: 0.70 });
     facts.push(f1.fact);
     const f2 = fusion.fuse(facts, { statement: "Hai sentito che è morto il Papa?", source: "Message", author: "Marco", confidence: 0.80 });
 

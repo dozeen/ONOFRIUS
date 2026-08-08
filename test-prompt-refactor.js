@@ -11,7 +11,7 @@ async function runTest() {
 
     const sampleContext = {
         text: "Ono avresti una di queste?",
-        contactName: "Christian",
+        contactName: "ContattoE",
         isOwner: false,
         agenda_probability: 0.2,
         agendaContext: {
@@ -48,7 +48,7 @@ async function runTest() {
 
     const agendaContextSample = {
         text: "Potresti prestarcela per domani?",
-        contactName: "Christian",
+        contactName: "ContattoE",
         isOwner: false,
         agenda_probability: 0.85,
         agendaContext: {
