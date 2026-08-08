@@ -71,34 +71,34 @@ function resolveTranscribeScript() {
 
 async function transcribe(msg) {
     console.log("\n=========================================");
-    console.log("🎤 [Whisper] Inizio Trascrizione Vocale");
+    console.log("🎤 [Whisper] Inizio Trascrizione Vocale (faster-whisper)");
     console.log("=========================================");
-    console.log("[Whisper] Type:", msg.type, "| HasMedia:", msg.hasMedia);
 
-    // Aspetta la sincronizzazione del messaggio
     await new Promise(r => setTimeout(r, 1500));
 
     const media = await downloadWithRetry(msg);
 
     if (!media) {
         console.log("❌ [Whisper] Nessun media disponibile. Trascrizione saltata.");
-        return "";
+        return { status: "error", transcript: "", segments: [] };
     }
 
-    const voiceDir = path.join(__dirname, "..", "tmp", "voice");
-    if (!fs.existsSync(voiceDir)) {
-        fs.mkdirSync(voiceDir, { recursive: true });
+    const archiveDir = path.join(__dirname, "..", "tmp", "voice_archive");
+    if (!fs.existsSync(archiveDir)) {
+        fs.mkdirSync(archiveDir, { recursive: true });
     }
 
-    const filename = Date.now() + ".ogg";
-    const filepath = path.join(voiceDir, filename);
+    const fileId = Date.now().toString();
+    const audioFilename = fileId + ".ogg";
+    const audioFilepath = path.join(archiveDir, audioFilename);
+    const transcriptFilepath = path.join(archiveDir, fileId + ".txt");
 
     try {
-        fs.writeFileSync(filepath, Buffer.from(media.data, "base64"));
-        console.log(`[Whisper] 💾 File audio salvato temporaneamente: ${filepath}`);
+        fs.writeFileSync(audioFilepath, Buffer.from(media.data, "base64"));
+        console.log(`[Whisper] 💾 File audio salvato ed archiviato: ${audioFilepath}`);
     } catch (err) {
         console.error("❌ [Whisper] Scrittura file audio fallita:", err.message);
-        return "";
+        return { status: "error", transcript: "", segments: [] };
     }
 
     const pythonBin = resolvePythonBinary();
@@ -106,14 +106,13 @@ async function transcribe(msg) {
 
     if (!scriptPath) {
         console.error("❌ [Whisper] Script transcribe.py non trovato!");
-        fs.unlink(filepath, () => {});
-        return "";
+        return { status: "error", transcript: "", segments: [] };
     }
 
-    console.log(`[Whisper] 🐍 Esecuzione Python: ${pythonBin} ${scriptPath} ${filepath}`);
+    console.log(`[Whisper] 🐍 Esecuzione faster-whisper: ${pythonBin} ${scriptPath} ${audioFilepath}`);
 
     return new Promise((resolve) => {
-        const python = spawn(pythonBin, [scriptPath, filepath]);
+        const python = spawn(pythonBin, [scriptPath, audioFilepath]);
 
         let output = "";
         let errored = false;
@@ -132,19 +131,33 @@ async function transcribe(msg) {
         });
 
         python.on("close", (code) => {
-            fs.unlink(filepath, () => {});
-
             if (errored || code !== 0) {
                 console.error(`❌ [Whisper] Trascrizione fallita (exit code ${code})`);
-                resolve("");
+                resolve({ status: "error", transcript: "", segments: [] });
                 return;
             }
 
-            const transcribedText = output.trim();
-            console.log("📝 [Whisper] Trascrizione completata con successo:");
-            console.log(`"${transcribedText}"`);
-            console.log("=========================================\n");
-            resolve(transcribedText);
+            let parsed = null;
+            try {
+                parsed = JSON.parse(output.trim());
+            } catch (e) {
+                parsed = { status: "success", transcript: output.trim(), segments: [] };
+            }
+
+            const transcript = parsed.transcript || "";
+            if (transcript) {
+                fs.writeFileSync(transcriptFilepath, transcript, "utf8");
+            }
+
+            resolve({
+                status: parsed.status || "success",
+                transcript: transcript,
+                language: parsed.language || "it",
+                duration: parsed.duration || 0,
+                segments: parsed.segments || [],
+                originalFile: audioFilepath,
+                transcriptFile: transcriptFilepath
+            });
         });
     });
 }

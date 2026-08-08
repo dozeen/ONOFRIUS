@@ -1,15 +1,15 @@
 [
   {
-    "id": "1786177924021",
-    "startDate": 1786177924021,
-    "lastUpdated": 1786177924021,
+    "id": "1786181277372",
+    "startDate": 1786181277372,
+    "lastUpdated": 1786181277372,
     "narrative": "Possibile problema di salute che coinvolge Antonio",
     "confidence": 0.85
   },
   {
     "id": "1786177411547",
     "startDate": 1786177411547,
-    "lastUpdated": 1786177923995,
+    "lastUpdated": 1786181277345,
     "narrative": "Dal 5 agosto il gruppo parla con preoccupazione della salute di Antonio.",
     "confidence": 0.883
   }

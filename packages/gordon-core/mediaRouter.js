@@ -1,8 +1,7 @@
-const whisper = require("./whisper");
+const AudioCapability = require("./capability/AudioCapability");
 
 async function buildContext(msg, crypto) {
     const chatId = msg.from;
-
     const isVoice = msg.type === "ptt" || msg.type === "audio";
 
     const context = {
@@ -33,7 +32,11 @@ async function buildContext(msg, crypto) {
     console.log("🎤 [MediaRouter] Tipo media:", msg.type, "| isVoice:", isVoice);
 
     if (context.media.isVoice) {
-        context.text = await whisper.transcribe(msg);
+        const audioRes = await AudioCapability.processAudio(msg);
+        if (audioRes.handled) {
+            context.text = audioRes.transcript;
+            context.audioEvent = audioRes.audioEvent;
+        }
     }
 
     return context;
