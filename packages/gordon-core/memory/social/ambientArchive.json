@@ -1,14 +1,6 @@
 [
   {
     "id": "old_narrative",
-    "startDate": 1777570046138,
-    "lastUpdated": 1778002046138,
-    "narrative": "Nel gruppo DJ si parlava della serata del mese scorso.",
-    "confidence": 0.792,
-    "archivedAt": 1786210046138
-  },
-  {
-    "id": "old_narrative",
     "startDate": 1777537411550,
     "lastUpdated": 1777969411550,
     "narrative": "Nel gruppo DJ si parlava della serata del mese scorso.",
