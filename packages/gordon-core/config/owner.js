@@ -1,6 +1,6 @@
 module.exports = {
 
-    id: "393663580128@c.us",
+    id: "393000000128@c.us",
 
     name: "Onofrio",
 

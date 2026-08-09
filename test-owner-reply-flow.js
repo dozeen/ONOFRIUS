@@ -12,8 +12,8 @@ async function runTest() {
     const orchestrator = new CognitiveOrchestrator();
 
     const ownerEvent = EventBuilder.fromWhatsApp({
-        id: { remote: "393663580128@c.us", fromMe: false },
-        from: "393663580128@c.us",
+        id: { remote: "393000000128@c.us", fromMe: false },
+        from: "393000000128@c.us",
         to: "393000000000@c.us",
         fromMe: false, // In arrivo dal telefono dell'Owner
         body: "Ciao Gordon, come va?",
