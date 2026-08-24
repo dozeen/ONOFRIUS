@@ -45,6 +45,17 @@ class InputClassifier {
             };
         }
 
+        // 0.5. Allarmi di Sistema, Broadcast Tecnologici o Risposte Brevi di Conferma (es. "🚨 Problema Rilevato", "🔍 Causa Radice", "💡 Azione Consigliata", log di sistema, o "Ok.")
+        const isTechnicalAlertOrLog = lower.includes("problema rilevato") || lower.includes("causa radice") || lower.includes("azione consigliata") || lower.includes("snap.docker") || lower.includes("log del kernel") || lower.includes("dxgk") || (lower.startsWith("[") && lower.includes("]")) || lower === "ok." || lower === "ok";
+
+        if (isTechnicalAlertOrLog && !trimmed.includes("?")) {
+            return {
+                category: INPUT_CATEGORIES.FACT_KNOWLEDGE,
+                isCognitiveNote: true,
+                isConversation: false
+            };
+        }
+
         // 1. Comandi espliciti (es. /status, !help)
         if (trimmed.startsWith("/") || trimmed.startsWith("!")) {
             return {

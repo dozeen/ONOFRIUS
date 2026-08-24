@@ -1,11 +1,14 @@
 const Policy = require("../policy/PolicyManager");
 const Modes = require("../policy/PolicyModes");
 const PolicyCommand = require("./commands/PolicyCommand");
+const DailyReportEngine = require("../reporting/DailyReportEngine");
+
+const reportEngine = new DailyReportEngine();
 
 function isCommand(text) {
     if (!text || typeof text !== "string") return false;
     const lower = text.trim().toLowerCase();
-    return lower.startsWith("k/") || lower.startsWith("/") || lower.startsWith("!") || lower.startsWith("#gordon") || lower === "status" || lower === "doctor" || lower === "help";
+    return lower.startsWith("k/") || lower.startsWith("/") || lower.startsWith("!") || lower.startsWith("#gordon") || lower === "status" || lower === "doctor" || lower === "help" || lower === "report" || lower === "fatti";
 }
 
 async function execute(text, context = {}) {
@@ -44,17 +47,24 @@ async function execute(text, context = {}) {
         return { handled: true, reply };
     }
 
-    // 3. Comando HELP (0 Token LLM)
+    // 3. Comando REPORT / FATTI (0 Token LLM) - Report Giornaliero sui fatti da broadcast e gruppi
+    if (cleanCmd === "report" || cleanCmd === "fatti" || cleanCmd === "daily") {
+        const reply = reportEngine.generateDailyReport();
+        return { handled: true, reply };
+    }
+
+    // 4. Comando HELP (0 Token LLM)
     if (cleanCmd === "help") {
         const reply = `🤖 ONOFRIUS OS System Commands:
 - k/status : Visualizza lo stato mentale e operativo
 - k/doctor : Esegue la diagnostica di sistema
+- k/report : Genera il report del giorno dei fatti appresi da broadcast e gruppi
 - k/help   : Elenca i comandi di sistema`;
 
         return { handled: true, reply };
     }
 
-    // 4. Comandi di Policy (off <target>, on <target>, listen <target>)
+    // 5. Comandi di Policy (off <target>, on <target>, listen <target>)
     const cmd = raw.split(/\s+/);
     if (cmd.length >= 2) {
         const action = cmd[0].toLowerCase().replace(/^(k\/|\/|!|#gordon\s*)/i, "");
