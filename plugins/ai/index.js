@@ -1,6 +1,16 @@
 const ai = require("../../core/ai");
 const promptBuilder = require("../../core/promptBuilder");
-const AgendaCapability = require("../../core/capability/AgendaCapability");
+
+let AgendaCapability = null;
+try {
+    AgendaCapability = require("../../core/capability/AgendaCapability");
+} catch (e) {
+    try {
+        AgendaCapability = require("../../packages/gordon-core/capability/AgendaCapability");
+    } catch (e2) {
+        AgendaCapability = { isAgendaQuery: () => false };
+    }
+}
 
 module.exports = {
     name: "AI",
@@ -11,6 +21,7 @@ module.exports = {
     },
 
     async handle(context) {
+        try {
             const text = context.text || (context.event && context.event.text) || "";
 
             // Intercettazione deterministica di comandi di sistema prima dell'LLM (0 Token LLM)
@@ -24,7 +35,7 @@ module.exports = {
             }
 
             // Intercettazione deterministica dell'agenda prima dell'LLM (sia da CLI che da adattatori)
-            if (AgendaCapability.isAgendaQuery(text)) {
+            if (AgendaCapability && typeof AgendaCapability.isAgendaQuery === "function" && AgendaCapability.isAgendaQuery(text)) {
                 const agendaRes = await AgendaCapability.execute(context);
                 if (agendaRes && agendaRes.handled) {
                     console.log("📅 [AI Plugin] Intercettazione deterministica agenda eseguita (0 Token LLM)");
