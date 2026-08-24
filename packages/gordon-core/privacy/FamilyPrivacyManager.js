@@ -2,51 +2,56 @@
  * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale
  * 
  * Regole applicate:
- * 1. VIP: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con VIP o Owner.
+ * 1. VIP / Confidential: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con il soggetto stesso o con Owner.
  * 2. Spouse: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Spouse, Child o Owner.
  */
 
 const PRIVACY_POLICIES = [
     {
         name: "VIP Confidentiality",
-        subjectKeywords: ["vip"],
-        allowedRecipients: ["vip", "owner", "me"]
+        subjectKeywords: ["vip", "dolly"],
+        allowedRecipients: ["vip", "dolly", "owner", "me"]
     },
     {
         name: "Family Confidentiality",
-        subjectKeywords: ["family", "spouse"],
-        allowedRecipients: ["spouse", "child", "owner", "me"]
+        subjectKeywords: ["family", "spouse", "silvana"],
+        allowedRecipients: ["spouse", "silvana", "child", "owner", "me"]
     }
 ];
 
 class FamilyPrivacyManager {
-    /**
-     * Risolve tutte le possibili rappresentazioni del destinatario dal contesto
-     */
     static resolveRecipientString(metaOrName) {
         if (!metaOrName) return "";
         if (typeof metaOrName === "string") return metaOrName.toLowerCase();
 
-        const candidates = [
+        const candidateList = [
             metaOrName.recipient,
             metaOrName.contactName,
             metaOrName.senderName,
             metaOrName.contact?.name,
+            ...(Array.isArray(metaOrName.contact?.aliases) ? metaOrName.contact.aliases : []),
+            metaOrName.identity?.displayName,
             metaOrName.identity?.contact?.name,
+            ...(Array.isArray(metaOrName.identity?.contact?.aliases) ? metaOrName.identity.contact.aliases : []),
             metaOrName.chat?.name,
             metaOrName.sender,
             metaOrName.chatId
-        ].filter(Boolean).join(" ").toLowerCase();
+        ].filter(Boolean);
 
-        return candidates;
+        try {
+            const IdentityResolver = require("../identity/IdentityResolver");
+            const res = IdentityResolver.resolve(metaOrName);
+            if (res && res.displayName && res.displayName !== "Utente") {
+                candidateList.push(res.displayName);
+            }
+            if (res && res.contact && res.contact.name) {
+                candidateList.push(res.contact.name);
+            }
+        } catch (e) {}
+
+        return candidateList.join(" ").toLowerCase();
     }
 
-    /**
-     * Verifica se una frase o risposta rispetta le politiche di riservatezza familiare in base al destinatario reale
-     * @param {string} text - Testo da analizzare
-     * @param {string|Object} metaOrName - Nome del destinatario o oggetto di contesto
-     * @returns {Object} { allowed: boolean, violation?: Object }
-     */
     static checkPrivacy(text, metaOrName = "") {
         if (!text) return { allowed: true };
 
@@ -57,8 +62,11 @@ class FamilyPrivacyManager {
             const matchesSubject = policy.subjectKeywords.some(kw => lowerText.includes(kw));
 
             if (matchesSubject) {
+                // Se la chat corrente è con la persona stessa (es. parliamo con Dolly di Dolly), è SEMPRE consentito!
+                const isSelfRecipient = policy.subjectKeywords.some(kw => lowerRecipient.includes(kw));
+
                 // Controlla se il destinatario effettivo della chat fa parte dei destinatari autorizzati
-                const isAllowedRecipient = policy.allowedRecipients.some(allowed => lowerRecipient.includes(allowed));
+                const isAllowedRecipient = isSelfRecipient || policy.allowedRecipients.some(allowed => lowerRecipient.includes(allowed));
                 
                 if (!isAllowedRecipient) {
                     return {
@@ -77,12 +85,6 @@ class FamilyPrivacyManager {
         return { allowed: true };
     }
 
-    /**
-     * Filtra una lista di elementi (fatti, pensieri, intenzioni) consentendo solo quelli ammessi per il destinatario della chat
-     * @param {Array} items
-     * @param {string|Object} metaOrName
-     * @returns {Array} Array di elementi consentiti
-     */
     static filterAllowed(items, metaOrName = "") {
         if (!items || !Array.isArray(items)) return [];
         return items.filter(item => {

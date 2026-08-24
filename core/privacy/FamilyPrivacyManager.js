@@ -1,7 +1,7 @@
 /**
  * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale Astratta
  * 
- * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json).
+ * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json) e dai contatti.
  */
 
 const OwnerProfile = require('../identity/OwnerProfile');
@@ -56,18 +56,33 @@ class FamilyPrivacyManager {
         if (!metaOrName) return "";
         if (typeof metaOrName === "string") return metaOrName.toLowerCase();
 
-        const candidates = [
+        const candidateList = [
             metaOrName.recipient,
             metaOrName.contactName,
             metaOrName.senderName,
             metaOrName.contact?.name,
+            ...(Array.isArray(metaOrName.contact?.aliases) ? metaOrName.contact.aliases : []),
+            metaOrName.identity?.displayName,
             metaOrName.identity?.contact?.name,
+            ...(Array.isArray(metaOrName.identity?.contact?.aliases) ? metaOrName.identity.contact.aliases : []),
             metaOrName.chat?.name,
             metaOrName.sender,
             metaOrName.chatId
-        ].filter(Boolean).join(" ").toLowerCase();
+        ].filter(Boolean);
 
-        return candidates;
+        // Prova a rinfrescare l'identità se è presente un ID o un numero di telefono
+        try {
+            const IdentityResolver = require('../identity/IdentityResolver');
+            const res = IdentityResolver.resolve(metaOrName);
+            if (res && res.displayName && res.displayName !== "Utente") {
+                candidateList.push(res.displayName);
+            }
+            if (res && res.contact && res.contact.name) {
+                candidateList.push(res.contact.name);
+            }
+        } catch (e) {}
+
+        return candidateList.join(" ").toLowerCase();
     }
 
     static checkPrivacy(text, metaOrName = "") {
@@ -81,7 +96,11 @@ class FamilyPrivacyManager {
             const matchesSubject = policy.subjectKeywords.some(kw => lowerText.includes(kw));
 
             if (matchesSubject) {
-                const isAllowedRecipient = policy.allowedRecipients.some(allowed => lowerRecipient.includes(allowed));
+                // Se la chat corrente è con il soggetto stesso (es. parliamo con Dolly di Dolly), è SEMPRE consentito!
+                const isSelfRecipient = policy.subjectKeywords.some(kw => lowerRecipient.includes(kw));
+
+                // Controlla se il destinatario effettivo della chat fa parte dei destinatari autorizzati
+                const isAllowedRecipient = isSelfRecipient || policy.allowedRecipients.some(allowed => lowerRecipient.includes(allowed));
                 
                 if (!isAllowedRecipient) {
                     return {

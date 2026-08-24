@@ -27,8 +27,10 @@ class IdentityResolver {
 
         let contact = null;
 
-        // 1) Ricerca per numero o ID esatto
-        if (contacts[id]) {
+        // 1) Ricerca per numero o ID esatto (sia grezzo con @lid/@c.us che normalizzato)
+        if (chatId && contacts[chatId]) {
+            contact = contacts[chatId];
+        } else if (id && contacts[id]) {
             contact = contacts[id];
         }
 

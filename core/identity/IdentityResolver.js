@@ -19,7 +19,9 @@ class IdentityResolver {
 
         let contact = null;
 
-        if (contacts[id]) {
+        if (chatId && contacts[chatId]) {
+            contact = contacts[chatId];
+        } else if (id && contacts[id]) {
             contact = contacts[id];
         }
 

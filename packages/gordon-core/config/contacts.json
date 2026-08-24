@@ -5,6 +5,18 @@
     "personality": "default",
     "memory": "owner.json"
   },
+  "217535983173871@lid": {
+    "name": "Dolly",
+    "role": "vip",
+    "personality": "romantic",
+    "aliases": ["dolly", "vip"]
+  },
+  "dolly": {
+    "name": "Dolly",
+    "role": "vip",
+    "personality": "romantic",
+    "aliases": ["dolly", "vip"]
+  },
   "contact_example": {
     "name": "Alex",
     "role": "friend",
