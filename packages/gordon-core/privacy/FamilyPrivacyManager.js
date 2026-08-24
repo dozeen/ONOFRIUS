@@ -4,7 +4,16 @@
  * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json) e dai contatti.
  */
 
-const OwnerProfile = require('../identity/OwnerProfile');
+let OwnerProfile = null;
+try {
+    OwnerProfile = require('../identity/OwnerProfile');
+} catch (e) {
+    try {
+        OwnerProfile = require('../../../core/identity/OwnerProfile');
+    } catch (e2) {
+        OwnerProfile = { get: () => ({ name: "Owner", aliases: ["owner", "me"] }) };
+    }
+}
 
 class FamilyPrivacyManager {
     static getPolicies() {
