@@ -110,7 +110,7 @@ class FactExtractor {
 
     _extractRelationships(text) {
         const rels = [];
-        // Match: "Roberta ( mia figlia )", "Mario ( mio fratello )", "Silvana ( mia moglie )"
+        // Match: "Giulia ( mia figlia )", "Mario ( mio fratello )", "Anna ( mia moglie )"
         const relRegex = /\b([A-Z][a-z]+)\s*\(\s*mi[ao]\s+(figlia|figlio|moglie|marito|fratello|sorella|madre|padre)\s*\)/gi;
         let match;
         while ((match = relRegex.exec(text)) !== null) {
@@ -138,7 +138,7 @@ class FactExtractor {
 
         // 2. Persone (Qualsiasi nome proprio maiuscolo o Nomi noti)
         const personRegex = /\b([A-Z][a-z]+)\b/g;
-        const ignoreWords = new Set(["Sei", "Gordon", "Scrivi", "Onofrio", "WhatsApp", "Utente", "Direttiva", "Suprema", "Oggi", "Domani", "Ok", "Roberta", "Minervino"]);
+        const ignoreWords = new Set(["Sei", "Gordon", "Scrivi", "Onofrio", "WhatsApp", "Utente", "Direttiva", "Suprema", "Oggi", "Domani", "Ok"]);
         while ((match = personRegex.exec(text)) !== null) {
             if (!ignoreWords.has(match[1]) && match[1].length > 2) {
                 entities.push({

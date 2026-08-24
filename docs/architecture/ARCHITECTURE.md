@@ -1,376 +1,104 @@
-# GORDON3
-## Architecture Document
+# ONOFRIUS OS — ARCHITECTURE DOCUMENTATION
 
-Version: 1.0 (Draft)
-
----
-
-# Cos'è Gordon3
-
-Gordon3 non è un chatbot.
-
-Gordon3 è un sistema cognitivo modulare progettato per:
-
-- percepire il mondo esterno;
-- comprendere il contesto;
-- mantenere memoria a breve e lungo termine;
-- ragionare;
-- pianificare;
-- imparare;
-- agire.
-
-WhatsApp è soltanto uno dei possibili canali di comunicazione.
-
-L'obiettivo è costruire un motore cognitivo indipendente dalla piattaforma.
+Version: v1.2.0 (Alpha 0.5 — Identity Abstraction & Cognitive Architecture)
 
 ---
 
-# Filosofia
+# 🏛️ Cos'è ONOFRIUS OS
 
-Ogni modulo deve avere una sola responsabilità.
+ONOFRIUS OS non è un chatbot o un wrapper LLM.
 
-Il sistema deve poter crescere senza modificare il cuore del progetto.
+ONOFRIUS OS è un **Sistema Operativo Cognitivo Ibrido (Deterministico + Probabilistico)** progettato per:
+- percepire il mondo esterno da molteplici canali (WhatsApp, Voce Offline, Log, REST, CLI);
+- separare fatti oggettivi (`FactRegistry`) da pensieri soggettivi (`ThoughtStream`);
+- proteggere la riservatezza tramite privacy Zero-Trust a cerchi concentrici (`FamilyPrivacyManager`);
+- adattare il tono relazionale con complicità ed evitare l'appiattimento assistenziale (`ToneEngine`);
+- garantire zero allucinazioni sulle informazioni deterministiche (`AgendaEngine`, `FactVerifier`);
+- mantenere memoria episodica, semantica e relazionale;
+- pianificare ed eseguire azioni verificate tramite agenti operativi (`BashAgent`).
 
-Ogni nuova funzionalità deve poter essere aggiunta tramite plugin oppure nuovi moduli, evitando dipendenze circolari.
-
-Il codice deve essere leggibile prima ancora che efficiente.
-
----
-
-# Principi fondamentali
-
-1. Single Responsibility
-
-Ogni modulo fa una sola cosa.
-
-2. Loose Coupling
-
-I moduli comunicano tramite Event Bus.
-
-Mai tramite dipendenze dirette quando evitabile.
-
-3. High Cohesion
-
-Le funzioni simili vivono nello stesso modulo.
-
-4. Event Driven
-
-Il sistema reagisce agli eventi.
-
-Non esiste un modulo "onnisciente".
-
-5. Adapter Independence
-
-Il Brain non deve sapere se il messaggio proviene da:
-
-- WhatsApp
-- Telegram
-- Discord
-- REST API
-- Console
-- Voce
+L'istanza di agente cognitivo creata sopra ONOFRIUS OS prenderà il nome di **Gordon Smith** (o Gordon) al momento del Bootstrap dell'utente.
 
 ---
 
-# Architettura generale
+# ⚙️ Architettura del Ciclo Cognitivo a 10 Stage
 
-                    INPUT
-
-                       │
-
-        WhatsApp Telegram Discord REST
-
-                       │
-
-                       ▼
-
-                 ADAPTER LAYER
-
-                       │
-
-                       ▼
-
-                  PERCEPTION
-
-                       │
-
-                       ▼
-
-                  EVENT BUS
-
-                       │
-
-                       ▼
-
-                     KERNEL
-
-                       │
-
-                       ▼
-
-                     BRAIN
-
-                       │
-
-                       ▼
-
-                   PLANNER
-
-                       │
-
-                       ▼
-
-                   ACTIONS
-
-                       │
-
-                       ▼
-
-                    OUTPUT
+```text
+                      STIMULUS (WhatsApp, Audio, CLI, Logs)
+                                │
+                                ▼
+                   [1] PERCEPTION & CONTEXT BUILD
+                                │
+                                ▼
+               [2] FACT EXTRACTOR & THOUGHT STREAM ISOLATION
+                   ├──► FactRegistry (Fatti Oggettivi)
+                   └──► ThoughtStream (Mondo Interiore)
+                                │
+                                ▼
+                   [3] ATTENTION ENGINE V2 (Anomalie/Trend)
+                                │
+                                ▼
+                   [4] INTERACTION ENGINE & TONE ENGINE
+                                │
+                                ▼
+                   [5] PROMPT BUILDER 2.0 (Documento Cognitivo)
+                                │
+                                ▼
+                   [6] LLM EXECUTION (Ollama / Local LLM)
+                                │
+                                ▼
+                   [7] FACT & PRIVACY VERIFIER (Zero-Trust Gate)
+                                │
+                                ▼
+                   [8] DECISION ENGINE & CAPABILITY REGISTRY
+                                │
+                                ▼
+                   [9] ACTION EXECUTION (WhatsApp, Bash, Events)
+                                │
+                                ▼
+                   [10] LEARNING ENGINE (Consolidamento Notturno)
+```
 
 ---
 
-# Componenti
+# Componenti Architetturali
 
-## Adapters
+## 1. Adapters Layer
+Convertitori di protocolli esterni (WhatsApp Client, Audio Whisper STT, CLI, REST API) in `Stimulus` standardizzati per l'Event Bus. Gli Adattatori NON prendono decisioni cognitive.
 
-Responsabilità
+## 2. Perception Engine
+Analizza lo stimolo, recupera la cronologia recente, identifica il contatto, la dinamica di gruppo e costruisce il `Context`.
 
-Tradurre il protocollo esterno in Stimulus.
+## 3. Fact Engine & Thought Isolation
+- **`FactExtractor`**: Riconosce persone, orari, date, importi, telefoni, email.
+- **Isolamento**: Instrada i fatti oggettivi in `FactRegistry` ed i pensieri/intenzioni in `ThoughtStream`.
 
-Gli adapter NON prendono decisioni.
+## 4. Attention Engine v2
+Monitora gli eventi multi-fonte per calcolare l'indice di priorità (0-100), evidenziando anomalie nei log o trend di emergenza.
 
-Gli adapter NON ragionano.
+## 5. Interaction Engine & ToneEngine
+Determina lo stile conversazionale in base a 5 registri relazionali (`ROMANTIC`, `IRONIC`, `FAMILY`, `TECHNICAL`, `BUSINESS`) ed applica la Direttiva Anti-Assistenziale per risposte empatiche e naturali.
 
-Gli adapter NON conoscono il Brain.
+## 6. Prompt Builder 2.0
+Assembla il **Documento Cognitivo** pre-LLM composto da sezioni strutturate: `FACTS`, `AGENDA`, `THOUGHTS`, `MEMORY`, `STYLE`, `TASK`, `CONSTRAINTS`.
 
-Input:
+## 7. LLM Execution
+Modello di Linguaggio locale (es. Ollama `qwen3.5:latest`) responsabile della generazione del testo o del piano.
 
-messaggi esterni.
+## 8. FactVerifier & FamilyPrivacyManager (Zero-Trust Layer)
+Filtro deterministico che analizza l'output LLM prima della trasmissione. Blocca allucinazioni operative e violazioni di privacy familiare (`PRIVACY_VIOLATION`).
 
-Output:
+## 9. Decision Engine & Capability Registry
+Trasforma la decisione approvata in azioni concrete (invio messaggi, comandi shell via `BashAgent`) pubblicando sempre un `SystemEvent`.
 
-Stimulus.
-
----
-
-## Perception
-
-Responsabilità
-
-Analizzare ciò che arriva.
-
-Costruire un Context.
-
-Attività:
-
-- media
-- contatto
-- gruppo
-- emozione preliminare
-- entità
-- metadati
-
-Output
-
-Context
+## 10. Memory & Learning Engine
+- **Memory**: Memoria a breve termine, 3-Tier Knowledge (Observed Facts, Inferred Context, Ambient Memory) e memoria relazionale.
+- **Learning**: Apprendimento notturno differito che consolida la conoscenza senza destabilizzare lo stato in tempo reale.
 
 ---
 
-## Event Bus
-
-Responsabilità
-
-Disaccoppiare completamente il sistema.
-
-Qualunque modulo può emettere eventi.
-
-Qualunque modulo può ascoltare eventi.
-
----
-
-## Kernel
-
-Il Kernel coordina il sistema.
-
-Non contiene logica cognitiva.
-
-Decide semplicemente quale pipeline eseguire.
-
----
-
-## Brain
-
-Il Brain rappresenta il ragionamento.
-
-Utilizza:
-
-- memoria
-- relazioni
-- obiettivi
-- prompt
-- conoscenza
-
-Produce una Decision.
-
----
-
-## Planner
-
-Trasforma una Decision in un piano operativo.
-
-Esempi
-
-- rispondere
-- ignorare
-- ricordare
-- chiedere chiarimenti
-- eseguire plugin
-
----
-
-## Actions
-
-Eseguono il piano.
-
-Possono:
-
-- inviare messaggi
-- salvare dati
-- richiamare plugin
-- usare shell
-- generare documenti
-
----
-
-## Memory
-
-La memoria è divisa in:
-
-Short Term
-
-Memoria della conversazione corrente.
-
-Long Term
-
-Conoscenza persistente.
-
-Semantic Memory
-
-Informazioni generali.
-
-Relationship Memory
-
-Rapporto con le persone.
-
----
-
-## Learning
-
-Il sistema osserva.
-
-Non modifica immediatamente il proprio comportamento.
-
-Le modifiche passano sempre da un processo di validazione.
-
----
-
-## Plugins
-
-I plugin estendono Gordon.
-
-Non modificano il Core.
-
-Ogni plugin dichiara:
-
-- nome
-- versione
-- priorità
-- eventi gestiti
-
----
-
-# Pipeline Cognitiva
-
-Stimulus
-
-↓
-
-Perception
-
-↓
-
-Context
-
-↓
-
-Kernel
-
-↓
-
-Brain
-
-↓
-
-Decision
-
-↓
-
-Planner
-
-↓
-
-Actions
-
-↓
-
-Learning
-
-↓
-
-Memory
-
----
-
-# Struttura del progetto
-
-config/
-    configurazione
-
-core/
-    motore cognitivo
-
-adapters/
-    connessioni esterne
-
-plugins/
-    estensioni
-
-docs/
-    documentazione
-
-data/
-    dati persistenti
-
-tests/
-    test automatici
-
----
-
-# Regole di sviluppo
-
-Nessun modulo può superare una responsabilità.
-
-Ogni cartella deve avere uno scopo preciso.
-
-Ogni nuova feature deve essere documentata.
-
-Il codice segue sempre l'architettura.
-
-Mai il contrario.
-
----
-
-# Visione
-
-L'obiettivo finale di Gordon3 è diventare un sistema cognitivo modulare capace di percepire, comprendere, ricordare, ragionare e agire attraverso qualsiasi canale di comunicazione mantenendo un'architettura semplice, estendibile e indipendente dalla piattaforma.
+# Regole dell'Architettura
+1. **Event First**: Tutto inizia da un Evento.
+2. **Cognitivo ma non Personale**: Zero dati personali nel codebase.
+3. **Single Responsibility & Loose Coupling**: I moduli comunicano unicamente via EventBus.
+4. **Zero Trust Fact & Privacy**: Nessun output LLM viene inviato senza passare il `FactVerifier`.

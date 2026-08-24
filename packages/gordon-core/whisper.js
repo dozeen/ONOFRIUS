@@ -40,7 +40,6 @@ function resolvePythonBinary() {
     const candidateVenvs = [
         path.join(__dirname, "..", ".venv", "bin", "python"),
         path.join(__dirname, "..", "..", "Gordon3", ".venv", "bin", "python"),
-        "/home/onofrio/Gordon3/.venv/bin/python",
         "python3",
         "python"
     ];
@@ -56,9 +55,7 @@ function resolvePythonBinary() {
 function resolveTranscribeScript() {
     const candidateScripts = [
         path.join(__dirname, "..", "python", "transcribe.py"),
-        path.join(__dirname, "..", "..", "Gordon3", "python", "transcribe.py"),
-        "/home/onofrio/Gordon3/python/transcribe.py",
-        "/home/onofrio/ONOFRIUS/python/transcribe.py"
+        path.join(__dirname, "..", "..", "Gordon3", "python", "transcribe.py")
     ];
 
     for (const scriptPath of candidateScripts) {
