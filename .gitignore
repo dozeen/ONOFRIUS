@@ -6,6 +6,8 @@ node_modules/
 .env.*
 /config/*.json
 !config/*.example.json
+packages/gordon-core/config/*.json
+!packages/gordon-core/config/*.example.json
 
 # WhatsApp
 .wwebjs_auth/
@@ -22,9 +24,8 @@ backup/
 release/
 
 # Memory
-
-# Memory
 /memory/
+packages/memory/
 packages/gordon-core/memory/history/
 packages/gordon-core/memory/contacts/
 packages/gordon-core/memory/knowledge/*.json
@@ -34,6 +35,7 @@ packages/gordon-core/memory/notes/*.json
 packages/gordon-core/memory/appointments/*.json
 packages/gordon-core/memory/style/*.json
 packages/gordon-core/config/addressBook.json
+packages/gordon-core/config/chatState.json
 
 # OS
 .DS_Store
@@ -54,5 +56,3 @@ package-lock.old
 # Generated
 coverage/
 dist/
-
-packages/gordon-core/config/chatState.json
