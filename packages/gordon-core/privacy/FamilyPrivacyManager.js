@@ -1,25 +1,72 @@
 /**
- * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale
+ * FamilyPrivacyManager.js - Gestore della Riservatezza Familiare e Personale Astratta
  * 
- * Regole applicate:
- * 1. VIP / Confidential: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con il soggetto stesso o con Owner.
- * 2. Spouse: visibile ed utilizzabile ESCLUSIVAMENTE nelle chat con Spouse, Child o Owner.
+ * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json) e dai contatti.
  */
 
-const PRIVACY_POLICIES = [
-    {
-        name: "VIP Confidentiality",
-        subjectKeywords: ["vip", "dolly"],
-        allowedRecipients: ["vip", "dolly", "owner", "me"]
-    },
-    {
-        name: "Family Confidentiality",
-        subjectKeywords: ["family", "spouse", "silvana"],
-        allowedRecipients: ["spouse", "silvana", "child", "owner", "me"]
-    }
-];
+const OwnerProfile = require('../identity/OwnerProfile');
 
 class FamilyPrivacyManager {
+    static getPolicies() {
+        let owner = { name: "Owner", aliases: ["owner", "me"], confidentialSubjects: [], familyMembers: [] };
+        try {
+            owner = OwnerProfile.get();
+        } catch (e) {}
+
+        const policies = [
+            {
+                name: "VIP Confidentiality",
+                subjectKeywords: ["vip"],
+                allowedRecipients: ["vip", "owner", "me"]
+            },
+            {
+                name: "Family Confidentiality",
+                subjectKeywords: ["family", "spouse"],
+                allowedRecipients: ["spouse", "child", "owner", "me"]
+            }
+        ];
+
+        const ownerAllowed = [
+            "owner",
+            "me",
+            (owner.name || "").toLowerCase(),
+            ...(owner.aliases || []).map(a => a.toLowerCase())
+        ].filter(Boolean);
+
+        if (Array.isArray(owner.confidentialSubjects)) {
+            for (const subj of owner.confidentialSubjects) {
+                if (subj.keywords && subj.keywords.length > 0) {
+                    policies.push({
+                        name: `${subj.name || subj.keywords[0]} Confidentiality`,
+                        subjectKeywords: subj.keywords.map(k => k.toLowerCase()),
+                        allowedRecipients: Array.from(new Set([
+                            ...ownerAllowed,
+                            ...(subj.allowedRecipients || []).map(r => r.toLowerCase())
+                        ]))
+                    });
+                }
+            }
+        }
+
+        if (Array.isArray(owner.familyMembers)) {
+            for (const member of owner.familyMembers) {
+                if (member.privacyLevel === "confidential" && member.name) {
+                    const memberKeywords = [member.name.toLowerCase(), ...(member.aliases || []).map(a => a.toLowerCase())];
+                    policies.push({
+                        name: `${member.name} Confidentiality`,
+                        subjectKeywords: memberKeywords,
+                        allowedRecipients: Array.from(new Set([
+                            ...ownerAllowed,
+                            ...memberKeywords
+                        ]))
+                    });
+                }
+            }
+        }
+
+        return policies;
+    }
+
     static resolveRecipientString(metaOrName) {
         if (!metaOrName) return "";
         if (typeof metaOrName === "string") return metaOrName.toLowerCase();
@@ -57,12 +104,13 @@ class FamilyPrivacyManager {
 
         const lowerText = text.toLowerCase();
         const lowerRecipient = FamilyPrivacyManager.resolveRecipientString(metaOrName);
+        const policies = FamilyPrivacyManager.getPolicies();
 
-        for (const policy of PRIVACY_POLICIES) {
+        for (const policy of policies) {
             const matchesSubject = policy.subjectKeywords.some(kw => lowerText.includes(kw));
 
             if (matchesSubject) {
-                // Se la chat corrente è con la persona stessa (es. parliamo con Dolly di Dolly), è SEMPRE consentito!
+                // Se la chat corrente è con la persona stessa (es. parliamo con il soggetto di se stesso), è SEMPRE consentito!
                 const isSelfRecipient = policy.subjectKeywords.some(kw => lowerRecipient.includes(kw));
 
                 // Controlla se il destinatario effettivo della chat fa parte dei destinatari autorizzati

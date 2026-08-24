@@ -1,10 +1,6 @@
 module.exports = {
-
     names: [
-
-        "onofrio",
+        "owner",
         "gordon"
-
     ]
-
 };
