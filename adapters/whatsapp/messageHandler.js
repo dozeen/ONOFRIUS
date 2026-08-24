@@ -15,9 +15,10 @@ async function handle(event) {
     if ((msg.type === "ptt" || msg.type === "audio") && !event.payload.text) {
         console.log("🎤 Avvio Whisper per trascrizione audio...");
         try {
-            const text = await Whisper.transcribe(msg);
-            event.payload.text = text;
-            console.log("📝 TESTO TRASCRITTO:", text);
+            const res = await Whisper.transcribe(msg);
+            const transcript = (typeof res === "object" && res !== null) ? (res.transcript || "") : String(res || "");
+            event.payload.text = transcript.trim();
+            console.log("📝 TESTO TRASCRITTO:", event.payload.text);
         } catch (err) {
             console.error("Whisper:", err);
         }

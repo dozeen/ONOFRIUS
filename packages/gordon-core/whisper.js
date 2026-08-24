@@ -2,30 +2,49 @@ const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
 
-const MAX_ATTEMPTS = 3;
-const RETRY_DELAY_MS = 1500;
+const MAX_ATTEMPTS = 5;
+const RETRY_DELAYS = [2000, 3000, 4000, 5000, 6000];
 
 async function downloadWithRetry(msg) {
     let lastError = null;
 
+    if (!msg) {
+        console.error("❌ [Whisper] Messaggio nullo passato a downloadWithRetry");
+        return null;
+    }
+
     for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
         try {
             console.log(`[Whisper] 📥 Download media (tentativo ${attempt}/${MAX_ATTEMPTS})...`);
-            const media = await msg.downloadMedia();
 
-            if (media) {
-                console.log("[Whisper] ✅ Download media completato con successo.");
+            // Prova a rinfrescare l'oggetto messaggio se il client è attivo per recuperare le chiavi di decrittazione
+            let targetMsg = msg;
+            if (msg.client && msg.id && msg.id._serialized && typeof msg.client.getMessageById === "function") {
+                try {
+                    const freshMsg = await msg.client.getMessageById(msg.id._serialized);
+                    if (freshMsg) targetMsg = freshMsg;
+                } catch (e) {
+                    // Fallback all'oggetto msg originale
+                }
+            }
+
+            const media = await targetMsg.downloadMedia();
+
+            if (media && media.data && media.data.length > 0) {
+                console.log(`[Whisper] ✅ Download media completato con successo (${media.data.length} bytes).`);
                 return media;
             }
 
-            console.log("[Whisper] ⚠️ Media vuoto, ritento...");
+            console.log("[Whisper] ⚠️ Media vuoto o non ancora decrittografato, ritento...");
         } catch (err) {
             lastError = err;
             console.log(`[Whisper] ⚠️ Tentativo ${attempt} fallito: ${err.message || err}`);
         }
 
         if (attempt < MAX_ATTEMPTS) {
-            await new Promise(r => setTimeout(r, RETRY_DELAY_MS * attempt));
+            const delay = RETRY_DELAYS[attempt - 1] || 3000;
+            console.log(`[Whisper] ⏳ Attesa di ${delay}ms prima del prossimo tentativo...`);
+            await new Promise(r => setTimeout(r, delay));
         }
     }
 
@@ -71,7 +90,7 @@ async function transcribe(msg) {
     console.log("🎤 [Whisper] Inizio Trascrizione Vocale (faster-whisper)");
     console.log("=========================================");
 
-    await new Promise(r => setTimeout(r, 1500));
+    await new Promise(r => setTimeout(r, 2000));
 
     const media = await downloadWithRetry(msg);
 
