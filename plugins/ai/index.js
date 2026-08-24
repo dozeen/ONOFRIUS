@@ -11,8 +11,17 @@ module.exports = {
     },
 
     async handle(context) {
-        try {
             const text = context.text || (context.event && context.event.text) || "";
+
+            // Intercettazione deterministica di comandi di sistema prima dell'LLM (0 Token LLM)
+            const CommandEngine = require("../../core/commands/CommandEngine");
+            if (CommandEngine.isCommand && CommandEngine.isCommand(text)) {
+                const cmdRes = await CommandEngine.execute(text, context);
+                if (cmdRes && cmdRes.handled) {
+                    console.log("⚡ [AI Plugin] Intercettazione deterministica comando eseguita (0 Token LLM)");
+                    return cmdRes.reply;
+                }
+            }
 
             // Intercettazione deterministica dell'agenda prima dell'LLM (sia da CLI che da adattatori)
             if (AgendaCapability.isAgendaQuery(text)) {

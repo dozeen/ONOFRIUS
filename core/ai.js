@@ -65,6 +65,10 @@ async function ask(prompt, model = (config.ollama && config.ollama.model) || "qw
         }
 
         text = text.trim();
+        if (!text && promptStr) {
+            console.warn("⚠️ Ollama ha restituito un testo vuoto. Applico risposta di cortesia fallback.");
+            text = "Dimmi pure, ti ascolto!";
+        }
         console.log(`OLLAMA RESPONSE = ${text}`);
         console.log("✅ Ollama ha risposto con successo.\n");
 

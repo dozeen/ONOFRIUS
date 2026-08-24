@@ -45,8 +45,8 @@ class InputClassifier {
             };
         }
 
-        // 1. Comandi espliciti (es. /status, !help)
-        if (trimmed.startsWith("/") || trimmed.startsWith("!")) {
+        // 1. Comandi espliciti (es. /status, k/status, !help, #gordon)
+        if (trimmed.startsWith("/") || trimmed.startsWith("!") || lower.startsWith("k/") || lower.startsWith("#gordon")) {
             return {
                 category: INPUT_CATEGORIES.COMMAND,
                 isCognitiveNote: false,

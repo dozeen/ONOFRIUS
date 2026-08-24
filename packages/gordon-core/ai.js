@@ -59,7 +59,13 @@ if (response.data.thinking) {
             text = response.data.output;
         }
 
-        return text.trim();
+        text = text.trim();
+        if (!text && prompt) {
+            console.warn("⚠️ Ollama ha restituito un testo vuoto. Applico risposta di cortesia fallback.");
+            text = "Dimmi pure, ti ascolto!";
+        }
+
+        return text;
 
     }
     catch (err) {
