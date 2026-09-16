@@ -1,15 +1,16 @@
 let owner;
 try {
-    owner = require("../config/owner");
+    owner = require("../../config/owner");
 } catch (e1) {
     try {
         owner = require("../config/owner");
     } catch (e2) {
-        owner = { id: "owner", role: "owner", permissions: ["all"] };
+        owner = { id: "owner@c.us", role: "owner", permissions: ["all"] };
     }
 }
 const { detectMedia } = require("./media");
 const { Actors } = require("../events");
+const { isSelfChat } = (() => { try { return require("../../adapters/whatsapp/selfChat"); } catch(e) { return { isSelfChat: () => false }; } })();
 const logger = require("../logger");
 
 async function buildContext(event) {
@@ -93,6 +94,8 @@ async function buildContext(event) {
     const isStatus = fromStr === "status@broadcast" || remoteStr === "status@broadcast" || chatId === "status@broadcast" || msg.isStatus === true;
     const author = msg.author || metadata.sender || sender;
 
+    const selfChatDetected = isSelfChat(msg);
+
     return {
         event,
         id: event.id,
@@ -100,6 +103,7 @@ async function buildContext(event) {
         chatId,
         isGroup,
         isStatus,
+        isSelfChat: selfChatDetected,
         isPassivePerception: isStatus,
         author,
         chat: {
@@ -110,6 +114,8 @@ async function buildContext(event) {
         sender,
         senderName,
         contactName,
+        fromMe: metadata.fromMe || msg.fromMe || false,
+        actor: event.actor,
         origin: isStatus ? "status" : origin,
         isOwner,
         role: isOwner ? owner.role : "user",

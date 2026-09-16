@@ -18,8 +18,24 @@ class GroupDynamicsEngine {
         const history = context.history || [];
         let score = 0;
 
-        // 1. Mention esplicito del nome ("Gordon", "Onofrio", "Ono") -> +20
-        const isMentioned = text.includes("gordon") || text.includes("onofrio") || text.includes("ono") || text.includes("@gordon") || text.includes("@onofrio");
+        // 1. Mention esplicito del bot o dell'Owner -> +20
+        let ownerAliases = ["owner"];
+        try {
+            const OwnerProfile = require("../../identity/OwnerProfile");
+            const owner = OwnerProfile.get();
+            if (owner) {
+                if (owner.name) ownerAliases.push(owner.name.toLowerCase());
+                if (Array.isArray(owner.aliases)) {
+                    owner.aliases.forEach(a => { if (a) ownerAliases.push(a.toLowerCase()); });
+                }
+            }
+        } catch (e) {}
+
+        const isMentioned = text.includes("onofrius") ||
+                            text.includes("gordon") ||
+                            text.includes("@onofrius") ||
+                            text.includes("@gordon") ||
+                            ownerAliases.some(alias => text.includes(alias) || text.includes("@" + alias));
         if (isMentioned) {
             score += 20;
         }

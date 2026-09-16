@@ -22,12 +22,18 @@ class ResponseHandler {
                 // 1. Sanitizzazione e Formattazione Personality Engine (GordonStyle)
                 cleaned = personality.format(cleaned, context);
 
-                // 2. Controllo prima risposta in chat
+                // 2. Inserisce la frase finale obbligatoria per contatti LOCALES o NUOVI CLIENTE POTENZIALI
+                if ((context.isLocales || context.isNewClient) && typeof cleaned === 'string' && cleaned.length > 0) {
+                    const checkStr = cleaned.toUpperCase();
+                    if (!checkStr.includes("L'OWNER VI CONTATTERÀ") && !checkStr.includes("L'OWNER VI CONTATTERA") && !checkStr.includes("TI FACCIO CONTATTARE")) {
+                        cleaned = cleaned.trim() + "\n\nL'OWNER VI CONTATTERÀ IL PIÙ PRESTO POSSIBILE.";
+                    }
+                }
+
+                // 3. Controllo prima risposta in chat
                 const isControlMsg = cleaned.startsWith("🛑 Sistema ONOFRIUS disattivato") || cleaned.startsWith("✅ Sistema ONOFRIUS riattivato");
 
                 if (chatId && !isControlMsg && chatControl.isFirstResponse(chatId)) {
-                    console.log(`📌 ResponseHandler: Prima risposta per la chat [${chatId}]. Aggiunta intestazione.`);
-                    cleaned = "Sistema ONOFRIUS operativo:\n\n" + cleaned;
                     chatControl.markAsSeen(chatId);
                 }
 

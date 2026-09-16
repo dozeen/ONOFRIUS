@@ -17,7 +17,12 @@ async function ask(prompt, model = DEFAULT_MODEL) {
         model,
         prompt,
         stream: false,
-        think: false
+        think: false,
+        keep_alive: "24h",
+        options: {
+            temperature: 0.7,
+            top_p: 0.9
+        }
     },
     {
         timeout: 300000
@@ -59,13 +64,7 @@ if (response.data.thinking) {
             text = response.data.output;
         }
 
-        text = text.trim();
-        if (!text && prompt) {
-            console.warn("⚠️ Ollama ha restituito un testo vuoto. Applico risposta di cortesia fallback.");
-            text = "Dimmi pure, ti ascolto!";
-        }
-
-        return text;
+        return text.trim();
 
     }
     catch (err) {

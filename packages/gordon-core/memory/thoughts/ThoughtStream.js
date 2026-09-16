@@ -8,7 +8,7 @@ const path = require("path");
 
 class ThoughtStream {
     constructor(baseDir) {
-        this.baseDir = baseDir || path.join(__dirname, "../");
+        this.baseDir = baseDir || path.resolve(__dirname, "../../../memory/");
         this.paths = {
             thoughts: path.join(this.baseDir, "thoughts/thoughts.json"),
             intentions: path.join(this.baseDir, "intentions/intentions.json"),

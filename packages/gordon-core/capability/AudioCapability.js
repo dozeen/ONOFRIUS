@@ -15,9 +15,26 @@ class AudioCapability {
     static async processAudio(context) {
         if (!this.isAudioMsg(context)) return { handled: false };
 
-        console.log("🎤 [AudioCapability] Avvio elaborazione messaggio vocale...");
+        console.log("🎤 [AudioCapability] Avvio elaborazione messaggio vocale / audio...");
 
         const result = await whisper.transcribe(context);
+
+        if (result && result.status === "error") {
+            console.error(`❌ [AudioCapability] Trascrizione fallita: ${result.reason || "Errore sconosciuto"} (Codice: ${result.error_code || "N/D"})`);
+            context.text = "";
+            context.audioEvent = {
+                type: "voice_error",
+                error: result.reason,
+                error_code: result.error_code,
+                transcript: ""
+            };
+            return {
+                handled: true,
+                transcript: "",
+                error: result.reason,
+                audioEvent: context.audioEvent
+            };
+        }
 
         const transcript = typeof result === "object" ? (result.transcript || "") : (result || "");
         const segments = typeof result === "object" ? (result.segments || []) : [];
@@ -35,7 +52,7 @@ class AudioCapability {
             transcriptFile: typeof result === "object" ? result.transcriptFile : null
         };
 
-        console.log(`🎤 [AudioCapability] Trascrizione completata (${duration}s, ${segments.length} segmenti): "${transcript}"`);
+        console.log(`🎤 [AudioCapability] ✅ Trascrizione completata (${duration}s, ${segments.length} segmenti): "${transcript}"`);
 
         return {
             handled: true,

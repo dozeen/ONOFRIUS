@@ -1,15 +1,31 @@
 const fs = require("fs/promises");
+const fsSync = require("fs");
 const path = require("path");
 
 const ROOT = path.join(process.cwd(), "memory", "history");
 
 class ChatStore {
-    file(chatId) {
-        const safe = chatId.replace(/[^\w\-]/g, "_");
-        const now = new Date();
-        const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    resolveDir(chatId) {
+        const safe = String(chatId || "").replace(/[^\w\-]/g, "_");
+        const dir = path.join(ROOT, safe);
 
-        return path.join(ROOT, safe, `${month}.jsonl`);
+        if (fsSync.existsSync(dir)) return dir;
+        if (fsSync.existsSync(path.join(ROOT, safe + "_lid"))) return path.join(ROOT, safe + "_lid");
+        if (fsSync.existsSync(path.join(ROOT, safe + "_c_us"))) return path.join(ROOT, safe + "_c_us");
+
+        const withoutSuffix = safe.replace(/_lid$/i, "").replace(/_c_us$/i, "");
+        if (fsSync.existsSync(path.join(ROOT, withoutSuffix))) return path.join(ROOT, withoutSuffix);
+        if (fsSync.existsSync(path.join(ROOT, withoutSuffix + "_lid"))) return path.join(ROOT, withoutSuffix + "_lid");
+
+        return dir;
+    }
+
+    file(chatId) {
+        const dir = this.resolveDir(chatId);
+        const now = new Date();
+        const month = String(now.getFullYear()) + "-" + String(now.getMonth() + 1).padStart(2, "0");
+
+        return path.join(dir, month + ".jsonl");
     }
 
     async append(chatId, message) {
@@ -29,8 +45,7 @@ class ChatStore {
      */
     async loadLast(chatId, limit = 30) {
         try {
-            const safe = chatId.replace(/[^\w\-]/g, "_");
-            const dir = path.join(ROOT, safe);
+            const dir = this.resolveDir(chatId);
 
             const files = await fs.readdir(dir);
             const jsonlFiles = files.filter(f => f.endsWith(".jsonl")).sort();

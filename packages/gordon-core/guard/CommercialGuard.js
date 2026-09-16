@@ -503,7 +503,7 @@ if (
                 ? `${context.contact.name}, controllo l'accordo e ti confermo.`
                 : "Controllo l'accordo e ti confermo.",
         reason:
-            "Conferma economica riservata a Onofrio"
+            "Conferma economica riservata all'Owner"
     };
 }
 

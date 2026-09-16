@@ -8,7 +8,13 @@ module.exports = function buildRelationshipPrompt(context) {
     let output = "========================\nRELAZIONE\n========================\n";
 
     if (isOwner) {
-        output += "• INTERLOCUTORE: Onofrio (Owner del sistema).\n• RAPPORTO: Massima confidenza e sintesi. Risposte dirette senza convenevoli.";
+        let ownerName = "Owner";
+        try {
+            const OwnerProfile = require("../identity/OwnerProfile");
+            const owner = OwnerProfile.get();
+            if (owner && owner.name) ownerName = owner.name;
+        } catch (e) {}
+        output += `• INTERLOCUTORE: ${ownerName} (Owner del sistema).\n• RAPPORTO: Massima confidenza e sintesi. Risposte dirette senza convenevoli.`;
     } else if (isGroup) {
         output += `• CONTESTO: Gruppo WhatsApp (${context.chat?.name || "Gruppo"}).\n• RAPPORTO: Partecipante calmo. Intervieni solo se pertinente.`;
     } else if (contactName) {

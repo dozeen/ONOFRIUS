@@ -5,6 +5,8 @@ const EventTypes = require("./EventTypes");
 const Actors = require("./Actors");
 const Directions = require("./Directions");
 
+const { isRecentReply } = (() => { try { return require("../../adapters/whatsapp/recentReplies"); } catch(e) { return { isRecentReply: () => false }; } })();
+
 class EventBuilder {
 
     static create(data) {
@@ -15,9 +17,12 @@ class EventBuilder {
 
     static fromWhatsApp(msg) {
 
+        const text = (msg.body || "").trim();
+        const isEcho = msg.fromMe && isRecentReply(text);
+
         const actor =
             msg.fromMe
-                ? Actors.GORDON
+                ? (isEcho ? Actors.GORDON : Actors.OWNER)
                 : Actors.HUMAN;
 
         const direction =

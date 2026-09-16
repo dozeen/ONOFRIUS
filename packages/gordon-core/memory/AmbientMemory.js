@@ -8,8 +8,8 @@ const path = require("path");
 
 class AmbientMemory {
     constructor() {
-        this.filePath = path.resolve(__dirname, "../memory/social/ambientNarratives.json");
-        this.archivePath = path.resolve(__dirname, "../memory/social/ambientArchive.json");
+        this.filePath = path.resolve(__dirname, "../../memory/social/ambientNarratives.json");
+        this.archivePath = path.resolve(__dirname, "../../memory/social/ambientArchive.json");
         this.narratives = [];
         this.archive = [];
         this.load();

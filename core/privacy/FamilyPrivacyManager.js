@@ -96,7 +96,7 @@ class FamilyPrivacyManager {
             const matchesSubject = policy.subjectKeywords.some(kw => lowerText.includes(kw));
 
             if (matchesSubject) {
-                // Se la chat corrente è con il soggetto stesso (es. parliamo con Dolly di Dolly), è SEMPRE consentito!
+                // Se la chat corrente è con il soggetto stesso (es. parliamo con il soggetto dei suoi dati), è SEMPRE consentito!
                 const isSelfRecipient = policy.subjectKeywords.some(kw => lowerRecipient.includes(kw));
 
                 // Controlla se il destinatario effettivo della chat fa parte dei destinatari autorizzati

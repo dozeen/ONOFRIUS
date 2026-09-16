@@ -7,7 +7,9 @@ const path = require("path");
 
 class ChatControlManager {
     constructor() {
-        this.filePath = path.resolve(__dirname, "../config/chatState.json");
+        const rootPath = path.resolve(__dirname, "../../config/chatState.json");
+        const fallbackPath = path.resolve(__dirname, "../config/chatState.json");
+        this.filePath = fs.existsSync(rootPath) ? rootPath : (fs.existsSync(fallbackPath) ? fallbackPath : rootPath);
         this.seenChats = new Set();
         this.mutedChats = new Set();
         this.loadState();

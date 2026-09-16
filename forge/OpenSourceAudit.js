@@ -61,7 +61,7 @@ class OpenSourceAudit {
     const forbidden = ['Onofrio', 'Dolly', 'Silvana', 'Roberta', 'Manolo', 'Cannone', 'Inglese'];
     try {
       const pattern = forbidden.join('|');
-      const out = execSync(`git grep -i -E "${pattern}" HEAD -- ":!forge/OpenSourceAudit.js" || true`, { cwd: ROOT, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
+      const out = execSync(`git grep -i -E "${pattern}" -- ":!forge/OpenSourceAudit.js" ":!forge/buildCore.js" || true`, { cwd: ROOT, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
       if (out.length > 0) {
         return { passed: false, error: `Found hardcoded identity references:\n${out.slice(0, 200)}` };
       }

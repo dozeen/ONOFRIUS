@@ -1,12 +1,10 @@
-let contacts = [];
-try {
-    contacts = require("../config/contacts.json");
-} catch (e1) {
-    try {
-        contacts = require("../config/contacts.json");
-    } catch (e2) {
-        contacts = [];
-    }
+let contacts = {};
+try { contacts = require("../../config/contacts.json"); } catch (e) {
+    try { contacts = require("../config/contacts.json"); } catch (e2) { contacts = {}; }
+}
+let identities = {};
+try { identities = require("../../config/identities.json"); } catch (e) {
+    try { identities = require("../config/identities.json"); } catch (e2) { identities = {}; }
 }
 const IdentifierResolver = require("./IdentifierResolver");
 
@@ -27,10 +25,11 @@ class IdentityResolver {
 
         let contact = null;
 
-        // 1) Ricerca per numero o ID esatto (sia grezzo con @lid/@c.us che normalizzato)
-        if (chatId && contacts[chatId]) {
-            contact = contacts[chatId];
-        } else if (id && contacts[id]) {
+        // 1) Ricerca per ID o mapping in identities.json
+        const personKey = identities[id];
+        if (personKey && contacts[personKey]) {
+            contact = contacts[personKey];
+        } else if (contacts[id]) {
             contact = contacts[id];
         }
 
@@ -39,7 +38,9 @@ class IdentityResolver {
             const name = this.normalizeName(displayName);
             for (const [key, value] of Object.entries(contacts)) {
                 if (key === "default") continue;
-                if (this.normalizeName(key) === name || this.normalizeName(value.name) === name) {
+                const normKey = this.normalizeName(key);
+                const normVal = this.normalizeName(value.name);
+                if (normKey === name || normVal === name || (normVal && normVal.length > 2 && name.startsWith(normVal))) {
                     contact = value;
                     break;
                 }
@@ -59,6 +60,19 @@ class IdentityResolver {
         // 4) Fallback
         if (!contact) {
             contact = contacts.default;
+        }
+
+        const rawName = displayName || context.contactName || context.senderName || contact?.name || "";
+        const isLocales = /locale(s)?/i.test(rawName) || /locale(s)?/i.test(id) || /locale(s)?/i.test(contact?.name || "") || /locale(s)?/i.test(contact?.relationship || "") || contact?.isLocales === true;
+
+        if (isLocales) {
+            contact = {
+                ...contact,
+                isLocales: true,
+                relationship: "locales",
+                role: "locales"
+            };
+            context.isLocales = true;
         }
 
         return {

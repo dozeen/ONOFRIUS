@@ -42,10 +42,10 @@ module.exports = function buildThoughtsPrompt(context) {
 
     const recipientName = (context.contactName || context.senderName || context.chat?.name || "");
 
-    thoughts = FamilyPrivacyManager.filterAllowed(thoughts, recipientName);
-    intentions = FamilyPrivacyManager.filterAllowed(intentions, recipientName);
-    goals = FamilyPrivacyManager.filterAllowed(goals, recipientName);
-    preferences = FamilyPrivacyManager.filterAllowed(preferences, recipientName);
+    thoughts = FamilyPrivacyManager.filterAllowed(thoughts, context);
+    intentions = FamilyPrivacyManager.filterAllowed(intentions, context);
+    goals = FamilyPrivacyManager.filterAllowed(goals, context);
+    preferences = FamilyPrivacyManager.filterAllowed(preferences, context);
 
     const inputText = context.text || context.message || "";
     intentions = RelevanceFilter.filterRelevantThoughts(intentions, inputText);

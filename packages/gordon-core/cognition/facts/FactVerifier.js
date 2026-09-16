@@ -5,9 +5,57 @@
  */
 
 const AgendaEngine = require("../../agenda/AgendaEngine");
+const FamilyPrivacyManager = require("../../privacy/FamilyPrivacyManager");
+const ResponseSanitizer = require("./ResponseSanitizer");
+const sanitizer = new ResponseSanitizer();
 
 class FactVerifier {
     static verify(candidateResponse, context = {}) {
+        // 1. Controllo Prompt Leak ed Istruzioni Interne
+        const leakCheck = sanitizer.detectLeak(candidateResponse);
+        if (leakCheck.leaked) {
+            return {
+                valid: false,
+                response: null,
+                blocked: true,
+                reason: `Violazione Anti-Prompt-Leak: ${leakCheck.pattern}`
+            };
+        }
+
+        // 2. Controllo Privacy Familiare e Riservatezza
+        const privacyCheck = FamilyPrivacyManager.checkPrivacy(candidateResponse, context);
+        if (!privacyCheck.allowed) {
+            return {
+                valid: false,
+                response: null,
+                blocked: true,
+                reason: privacyCheck.violation?.message || "Violazione di riservatezza familiare"
+            };
+        }
+
+        // 3. Controllo Incongruenze Entità (es. Orari allucinati se sono fornite entities)
+        const entities = Array.isArray(context) ? context : (context.entities || []);
+        if (entities.length > 0) {
+            const timeEntities = entities.filter(e => e.type === "TIME" || e.type === "time");
+            if (timeEntities.length > 0) {
+                const responseTimes = candidateResponse.match(/\b[0-2]?[0-9]:[0-5][0-9]\b/g) || [];
+                for (const rt of responseTimes) {
+                    const matchesAny = timeEntities.some(te => {
+                        const val = String(te.value || '');
+                        return val.includes(rt) || rt.startsWith(val.replace(/\D/g, ''));
+                    });
+                    if (!matchesAny) {
+                        return {
+                            valid: false,
+                            response: null,
+                            blocked: true,
+                            reason: `Incongruenza temporale: orario '${rt}' non presente nei fatti confermati.`
+                        };
+                    }
+                }
+            }
+        }
+
         const text = (context.text || (context.event && context.event.text) || "").toLowerCase();
         const resp = (candidateResponse || "").toLowerCase();
 

@@ -13,7 +13,7 @@ module.exports = function buildStylePrompt(context) {
     let output = "";
 
     if (exemplars && exemplars.examples && exemplars.examples.length > 0) {
-        output += `==================\nESEMPI CANONICI REALI DI ONOFRIO\n==================\n`;
+        output += `==================\nESEMPI CANONICI REALI DELL'OWNER\n==================\n`;
         for (const ex of exemplars.examples) {
             output += `• "${ex}"\n`;
         }

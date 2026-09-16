@@ -3,6 +3,7 @@ const AgendaReasoningHandler = require("./handlers/AgendaReasoningHandler");
 const LearningHandler = require("./handlers/LearningHandler");
 const PluginRouterHandler = require("./handlers/PluginRouterHandler");
 const IdentityHandler = require("./handlers/IdentityHandler");
+const LocalesHandler = require("./handlers/LocalesHandler");
 const ConversationHandler = require("./handlers/ConversationHandler");
 const WorkingMemoryHandler = require("./handlers/WorkingMemoryHandler");
 const HistoryHandler = require("./handlers/HistoryHandler");
@@ -21,6 +22,7 @@ class Brain {
         this.pipeline = [
             new ChatControlHandler(),
             new IdentityHandler(),
+            new LocalesHandler(),
             new WorkingMemoryHandler(),
             new ConversationHandler(),
             new HistoryHandler(),

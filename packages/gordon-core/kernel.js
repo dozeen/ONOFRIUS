@@ -31,8 +31,8 @@ bus.on("message.received", async (context) => {
             isCognitiveNote: context.isCognitiveNote
         });
 
-        if (context.skipLLM || context.isCognitiveNote) {
-            console.log("➡️ TRACE 8-SKIP: Nota Cognitiva appresa. Nessun reply inviato.");
+        if (!context.response && (context.isCognitiveNote || context.skipLLM)) {
+            console.log("➡️ TRACE 8-SKIP: Nota Cognitiva appresa (senza risposta). Nessun reply inviato.");
             logger.info("Kernel", "📝 Nota Cognitiva appresa. Nessun messaggio WhatsApp da inviare.");
             return;
         }

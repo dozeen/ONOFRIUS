@@ -30,7 +30,7 @@ async function runTest() {
     console.log("PROMPT GENERATO CON ESEMPI CANONICI:\n");
     console.log(promptText);
 
-    if (promptText.includes("ESEMPI CANONICI REALI DI ONOFRIO") && promptText.includes("Ti chiamo.")) {
+    if (promptText.includes("ESEMPI CANONICI REALI DELL'OWNER") && promptText.includes("Ti chiamo.")) {
         console.log("\n✅ TEST 2 PASSED: Gli esempi canonici reali sono stati iniettati nel prompt!\n");
     } else {
         console.error("❌ TEST 2 FAILED!");

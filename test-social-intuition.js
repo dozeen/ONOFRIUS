@@ -48,7 +48,7 @@ async function runTest() {
     console.log("Output:", cleanText);
 
     if (cleanText === "Ho completato l'operazione.") {
-        console.log("✅ TEST 4 PASSED: Coscienza Linguistica purifica il testo mantenendo l'autenticità di Onofrio.\n");
+        console.log("✅ TEST 4 PASSED: Coscienza Linguistica purifica il testo mantenendo l'autenticità dell'Owner.\n");
     } else {
         console.error("❌ TEST 4 FAILED!");
         process.exit(1);

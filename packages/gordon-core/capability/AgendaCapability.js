@@ -14,7 +14,7 @@ class AgendaCapability {
     static isAgendaQuery(text) {
         const lower = AgendaCapability.cleanText(text);
         if (!lower) return false;
-        return lower.match(/\b(appuntamento|appuntamenti|agenda|calendario|eventi|promemoria|impegno|impegni|programma|cosa devo fare|cosa ho da fare|cosa ho oggi|cosa ho domani)\b/i) !== null;
+        return lower.match(/\b(appuntamento|appuntamenti|agenda|calendario|eventi|promemoria|impegno|impegni|programma|cosa devo fare|cosa ho da fare|cosa ho oggi|cosa ho domani|prossimi appuntamenti|prossimi impegni|prossimi|agenda futura)\b/i) !== null;
     }
 
     static getTargetDate(text) {
@@ -30,13 +30,38 @@ class AgendaCapability {
     }
 
     static executeDeterministic(text) {
-        const targetDate = this.getTargetDate(text);
-        const isTomorrow = AgendaCapability.cleanText(text).includes("domani");
-        const dateLabel = isTomorrow ? "domani" : "oggi";
-
+        const lower = AgendaCapability.cleanText(text);
+        const today = new Date().toISOString().split("T")[0];
         const allEvents = AgendaEngine.getGlobal();
 
-        // Filtra eventi per la data target
+        // 1. Prossimi N appuntamenti (es. "i prossimi 5 appuntamenti")
+        if (lower.includes("prossim") || lower.includes("futur")) {
+            const countMatch = lower.match(/\b(\d+)\b/);
+            const limit = countMatch ? parseInt(countMatch[1]) : 5;
+
+            const futureEvents = allEvents
+                .filter(e => e.date >= today)
+                .sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || "")))
+                .slice(0, limit);
+
+            if (futureEvents.length === 0) {
+                return `Non ci sono prossimi appuntamenti registrati in agenda.`;
+            }
+
+            let output = `📅 *I prossimi ${futureEvents.length} appuntamenti in agenda*:\n\n`;
+            for (const e of futureEvents) {
+                const dateParts = e.date ? e.date.split("-") : [];
+                const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : e.date;
+                const timeStr = e.time ? `${e.time}` : "Tutto il giorno";
+                output += `• *${formattedDate}* (${timeStr}): ${e.title}${e.person ? ' (con ' + e.person + ')' : ''}\n`;
+            }
+            return output.trim();
+        }
+
+        const targetDate = this.getTargetDate(text);
+        const isTomorrow = lower.includes("domani");
+        const dateLabel = isTomorrow ? "domani" : "oggi";
+
         const dayEvents = allEvents.filter(e => e.date === targetDate);
 
         if (dayEvents.length === 0) {

@@ -1,27 +1,13 @@
 /**
- * OwnerProfile.js - Centralized Accessor for Owner Identity Configuration in packages/gordon-core
+ * OwnerProfile.js - Centralized Accessor for Owner Identity Configuration
+ * Delegates to ConfigManager.owner()
  */
 
-let ConfigManager = null;
-try {
-    ConfigManager = require("../../core/config/ConfigManager");
-} catch (e) {
-    try {
-        ConfigManager = require("../config/ConfigManager");
-    } catch (e2) {}
-}
+const ConfigManager = require("../config/ConfigManager");
 
 class OwnerProfile {
     static get() {
-        if (ConfigManager && typeof ConfigManager.owner === "function") {
-            return ConfigManager.owner();
-        }
-        return {
-            name: "Owner",
-            aliases: ["owner", "me"],
-            confidentialSubjects: [],
-            familyMembers: []
-        };
+        return ConfigManager.owner();
     }
 }
 

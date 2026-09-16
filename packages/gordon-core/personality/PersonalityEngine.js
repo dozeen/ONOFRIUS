@@ -57,7 +57,7 @@ class PersonalityEngine {
     format(response, context = {}) {
         if (!response) return response;
 
-        let formatted = this.conscience.evaluate(response);
+        let formatted = this.conscience.evaluate(response, context);
 
         if (!formatted || formatted.length === 0) {
             return "Va bene.";

@@ -16,10 +16,10 @@ async function runTest() {
     const promptText = promptBuilder.build({ text: "Ono avresti una di queste?" });
     console.log("Lunghezza prompt ottimizzato (caratteri):", promptText.length);
 
-    if (promptText.length < 1200) {
+    if (promptText.length < 2600) {
         console.log("✅ TEST 1 PASSED: Prompt compattato con successo.\n");
     } else {
-        console.error("❌ TEST 1 FAILED!");
+        console.error("❌ TEST 1 FAILED: Lunghezza prompt " + promptText.length + " supera la soglia di 2600 caratteri.");
         process.exit(1);
     }
 

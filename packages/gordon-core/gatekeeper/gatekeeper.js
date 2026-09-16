@@ -1,9 +1,16 @@
-let policy = {}; try { policy = require("../config/groupPolicy"); } catch (e) { try { policy = require("../config/groupPolicy"); } catch (e2) { policy = {}; } }
+let policy = {};
+try {
+    policy = require("../../config/groupPolicy");
+} catch (e) {
+    try {
+        policy = require("../config/groupPolicy");
+    } catch (e2) {
+        policy = {};
+    }
+}
 
 class Gatekeeper {
-
     shouldProcess(context) {
-
         // Chat privata
         if (!context.isGroup)
             return true;
@@ -11,7 +18,7 @@ class Gatekeeper {
         if (!policy.enabled)
             return true;
 
-        if (!policy.groups.passive)
+        if (!policy.groups || !policy.groups.passive)
             return true;
 
         if (context.isOwner)
@@ -33,11 +40,8 @@ class Gatekeeper {
             return true;
 
         console.log("🚪 Gruppo ignorato.");
-
         return false;
-
     }
-
 }
 
 module.exports = new Gatekeeper();

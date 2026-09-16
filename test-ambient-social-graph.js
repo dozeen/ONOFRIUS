@@ -13,7 +13,7 @@ async function runTest() {
     console.log("=========================================\n");
 
     socialGraph.recordInteraction("ContattoB", "ContattoA", true);
-    socialGraph.recordInteraction("ContattoE", "Onofrio", true);
+    socialGraph.recordInteraction("ContattoE", "Owner", true);
     socialGraph.graph["ContattoF"] = { speaks: 0, repliesTo: {}, resonanceScore: 0, lastSeen: Date.now() - (18 * 24 * 60 * 60 * 1000) };
 
     const inactive = socialGraph.getInactiveContacts(7);

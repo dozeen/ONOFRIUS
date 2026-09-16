@@ -4,36 +4,12 @@
  * Carica le politiche di privacy in modo dinamico dal profilo owner (config/owner.json) e dai contatti.
  */
 
-let OwnerProfile = null;
-try {
-    OwnerProfile = require('../identity/OwnerProfile');
-} catch (e) {
-    try {
-        OwnerProfile = require('../../../core/identity/OwnerProfile');
-    } catch (e2) {
-        OwnerProfile = { get: () => ({ name: "Owner", aliases: ["owner", "me"] }) };
-    }
-}
+const OwnerProfile = require('../identity/OwnerProfile');
 
 class FamilyPrivacyManager {
     static getPolicies() {
-        let owner = { name: "Owner", aliases: ["owner", "me"], confidentialSubjects: [], familyMembers: [] };
-        try {
-            owner = OwnerProfile.get();
-        } catch (e) {}
-
-        const policies = [
-            {
-                name: "VIP Confidentiality",
-                subjectKeywords: ["vip"],
-                allowedRecipients: ["vip", "owner", "me"]
-            },
-            {
-                name: "Family Confidentiality",
-                subjectKeywords: ["family", "spouse"],
-                allowedRecipients: ["spouse", "child", "owner", "me"]
-            }
-        ];
+        const owner = OwnerProfile.get();
+        const policies = [];
 
         const ownerAllowed = [
             "owner",
@@ -94,8 +70,9 @@ class FamilyPrivacyManager {
             metaOrName.chatId
         ].filter(Boolean);
 
+        // Prova a rinfrescare l'identità se è presente un ID o un numero di telefono
         try {
-            const IdentityResolver = require("../identity/IdentityResolver");
+            const IdentityResolver = require('../identity/IdentityResolver');
             const res = IdentityResolver.resolve(metaOrName);
             if (res && res.displayName && res.displayName !== "Utente") {
                 candidateList.push(res.displayName);
@@ -119,7 +96,7 @@ class FamilyPrivacyManager {
             const matchesSubject = policy.subjectKeywords.some(kw => lowerText.includes(kw));
 
             if (matchesSubject) {
-                // Se la chat corrente è con la persona stessa (es. parliamo con il soggetto di se stesso), è SEMPRE consentito!
+                // Se la chat corrente è con il soggetto stesso (es. parliamo con il soggetto dei suoi dati), è SEMPRE consentito!
                 const isSelfRecipient = policy.subjectKeywords.some(kw => lowerRecipient.includes(kw));
 
                 // Controlla se il destinatario effettivo della chat fa parte dei destinatari autorizzati

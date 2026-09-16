@@ -2,6 +2,7 @@
  * InteractionEngine.js - Motore per l'adattamento sociale e dello stile di risposta
  */
 
+const OwnerProfile = require("../../identity/OwnerProfile");
 const InteractionProfile = require("./InteractionProfile");
 
 class InteractionEngine {
@@ -12,38 +13,29 @@ class InteractionEngine {
         this.profileStore = profileStore || new InteractionProfile();
     }
 
-    /**
-     * Determina lo stile di interazione ottimale per il contesto corrente
-     * @param {Object} context
-     * @returns {Object} InteractionStyle { profile, directives }
-     */
     evaluateStyle(context) {
+        const owner = OwnerProfile.get();
         const sender = context.sender || context.senderName || "unknown";
         const senderName = (context.senderName || context.contactName || "").toLowerCase();
 
-        // 1. Inserimento o recupero del profilo di base
         let defaults = { role: "unknown", formality: 0.5, emojiUsage: 0.3, affection: 0.3 };
 
         if (context.isOwner) {
             defaults = { role: "owner", formality: 0.2, irony: 0.4, affection: 0.5 };
-        } else if (senderName.includes("vip")) {
+        } else if (context.isFamily) {
             defaults = { role: "family", formality: 0.1, emojiUsage: 0.6, affection: 0.9, irony: 0.3 };
-        } else if (senderName.includes("referente") || sender.includes("393000000999")) {
-            defaults = { role: "client_reference", formality: 0.8, emojiUsage: 0.1, affection: 0.1, messageLength: "medium" };
         } else if (context.isGroup) {
             defaults = { role: "group", formality: 0.5, emojiUsage: 0.2, affection: 0.1, messageLength: "concise" };
-        } else if (senderName.includes("cliente") || context.isClient) {
+        } else if (context.isClient) {
             defaults = { role: "client", formality: 0.85, emojiUsage: 0.0, affection: 0.0, messageLength: "medium" };
         }
 
         const profile = this.profileStore.getProfile(sender, defaults);
-
-        // 2. Costruzione direttive di stile
         const directives = [];
 
         if (profile.role === "client" || profile.role === "client_reference") {
             directives.push("Usa un tono professionale, rispettoso ed essenziale.");
-            directives.push("FORMATO RISPOSTA PREVENTIVI/PRESTAZIONI (Modello Gerardo Pizzaiolo +39 350 090 3187): Rispondi nello stile esatto: 'Perfetto [Nome], il costo della serenata / evento tutto compreso luci, impianto audio e tutto il necessario è di €[Prezzo]'. Sii trasparente ed essenziale.");
+            directives.push("FORMATO RISPOSTA PREVENTIVI/PRESTAZIONI: Rispondi in modo trasparente ed essenziale specificando i dettagli ed i costi.");
             directives.push("Non utilizzare emoji eccessive né confidenza inappropriata.");
         } else if (profile.role === "family" || profile.affection > 0.7) {
             directives.push("Usa un tono affettuoso, caldo e vicino.");
@@ -51,7 +43,7 @@ class InteractionEngine {
         } else if (profile.role === "group") {
             directives.push("Stai nel gruppo: sii conciso, rispondi solo se direttamente chiamato in causa o rilevante.");
         } else if (profile.role === "owner") {
-            directives.push("Tratta Onofrio con naturalezza, brevità e ironia leggera.");
+            directives.push(`Tratta ${owner.name || "l'owner"} con naturalezza, brevità e ironia leggera.`);
         } else {
             directives.push("Mantieni un tono naturale, neutro ed equilibrato.");
         }

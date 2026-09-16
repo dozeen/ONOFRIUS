@@ -34,7 +34,7 @@ class AttentionEngineV2 {
             reasons.push(`Anomalia di sistema: ${context.systemAnomaly.service}`);
         }
 
-        // 3. Mittente prioritario (es. Owner / Onofrio)
+        // 3. Mittente prioritario (es. Owner)
         if (context.isOwner) {
             score += 30;
             reasons.push("Mittente prioritario (Owner)");

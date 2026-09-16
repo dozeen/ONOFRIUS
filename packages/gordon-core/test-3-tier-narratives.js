@@ -17,7 +17,7 @@ async function runTest() {
 
     // 1. VERIFICA SEPARAZIONE DEI 3 LIVELLI DI CONOSCENZA
     console.log("--- 1. Separazione dei 3 Livelli ---");
-    observedFacts.addObservedFact({ statement: "Onofrio ha inviato un messaggio su WhatsApp", source: "whatsapp" });
+    observedFacts.addObservedFact({ statement: "L'Owner ha inviato un messaggio su WhatsApp", source: "whatsapp" });
     
     const hyp = emergentEvents.detectEvents([
         { text: "Sapete di ContattoC?" },
@@ -53,7 +53,7 @@ async function runTest() {
     console.log("--- 3. Social Graph & Risonanza ---");
     socialGraph.recordInteraction("ContattoB", "ContattoA", true); // ContattoB risponde a ContattoA
     socialGraph.recordInteraction("ContattoE", "ContattoA", true); // ContattoE risponde a ContattoA
-    socialGraph.recordInteraction("Onofrio", "ContattoA", true); // Onofrio risponde a ContattoA
+    socialGraph.recordInteraction("Owner", "ContattoA", true); // Owner risponde a ContattoA
 
     const contattoAResonance = socialGraph.getResonance("ContattoA");
     console.log("Risonanza di ContattoA (risposte ricevute):", contattoAResonance);

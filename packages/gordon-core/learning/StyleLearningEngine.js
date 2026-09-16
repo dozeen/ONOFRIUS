@@ -1,5 +1,5 @@
 /**
- * StyleLearningEngine.js - Apprendimento dai Messaggi Reali di Onofrio (Few-Shot Canonical Patterns)
+ * StyleLearningEngine.js - Apprendimento dai Messaggi Reali dell'Owner (Few-Shot Canonical Patterns)
  */
 
 const fs = require("fs");
@@ -7,7 +7,7 @@ const path = require("path");
 
 class StyleLearningEngine {
     constructor() {
-        this.filePath = path.resolve(__dirname, "../memory/style/canonicalPatterns.json");
+        this.filePath = path.resolve(__dirname, "../../memory/style/canonicalPatterns.json");
         this.patterns = {};
         this.loadMemory();
         this.seedInitialPatterns();
@@ -35,7 +35,7 @@ class StyleLearningEngine {
     }
 
     /**
-     * Pattern Canonici Iniziali tratti dalle risposte reali di Onofrio
+     * Pattern Canonici Iniziali tratti dalle risposte reali dell'Owner
      */
     seedInitialPatterns() {
         if (Object.keys(this.patterns).length === 0) {
@@ -99,7 +99,7 @@ class StyleLearningEngine {
     }
 
     /**
-     * Apprende una nuova risposta reale inviata da Onofrio (fromMe: true dell'Owner)
+     * Apprende una nuova risposta reale inviata dall'Owner (fromMe: true dell'Owner)
      */
     learnRealOwnerReply(inputText, ownerReplyText) {
         if (!inputText || !ownerReplyText) return;
@@ -126,7 +126,7 @@ class StyleLearningEngine {
     }
 
     /**
-     * Recupera gli esempi canonici di Onofrio per il messaggio corrente
+     * Recupera gli esempi canonici dell'Owner per il messaggio corrente
      */
     getCanonicalExemplars(text) {
         const speechAct = this.classifySpeechAct(text);

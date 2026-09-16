@@ -1,15 +1,8 @@
-const ownerProfile = require("./profiles/ownerProfile");
-const normal = require("./profiles/default");
+const ownerProfile = require("./profiles/default");
 
 class CharacterEngine {
     build(message) {
-        let profile = ownerProfile;
-
-        if (message.contact?.personality === "formal") {
-            profile = normal;
-        }
-
-        return profile;
+        return ownerProfile;
     }
 }
 

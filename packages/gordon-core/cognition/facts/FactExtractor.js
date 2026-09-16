@@ -110,7 +110,7 @@ class FactExtractor {
 
     _extractRelationships(text) {
         const rels = [];
-        // Match: "Giulia ( mia figlia )", "Mario ( mio fratello )", "Anna ( mia moglie )"
+        // Match: "Alice ( mia figlia )", "Mario ( mio fratello )", "Anna ( mia moglie )"
         const relRegex = /\b([A-Z][a-z]+)\s*\(\s*mi[ao]\s+(figlia|figlio|moglie|marito|fratello|sorella|madre|padre)\s*\)/gi;
         let match;
         while ((match = relRegex.exec(text)) !== null) {
@@ -125,8 +125,8 @@ class FactExtractor {
     _extractEntities(text) {
         const entities = [];
 
-        // 1. Orari (es. 22:30, 18:00, alle 20)
-        const timeRegex = /\b([0-2]?[0-9]:[0-5][0-9]|alle\s+[0-2]?[0-9]|ore\s+[0-2]?[0-9])\b/gi;
+        // 1. Orari (es. 22:30, 18:00, alle 18:00, alle 20, ore 19)
+        const timeRegex = /\b((?:alle\s+|ore\s+)?[0-2]?[0-9]:[0-5][0-9]|(?:alle\s+|ore\s+)[0-2]?[0-9])\b/gi;
         let match;
         while ((match = timeRegex.exec(text)) !== null) {
             entities.push({
@@ -138,7 +138,7 @@ class FactExtractor {
 
         // 2. Persone (Qualsiasi nome proprio maiuscolo o Nomi noti)
         const personRegex = /\b([A-Z][a-z]+)\b/g;
-        const ignoreWords = new Set(["Sei", "Gordon", "Scrivi", "Onofrio", "WhatsApp", "Utente", "Direttiva", "Suprema", "Oggi", "Domani", "Ok"]);
+        const ignoreWords = new Set(["Sei", "Gordon", "Scrivi", "Owner", "WhatsApp", "Utente", "Direttiva", "Suprema", "Oggi", "Domani", "Ok",  "Minervino"]);
         while ((match = personRegex.exec(text)) !== null) {
             if (!ignoreWords.has(match[1]) && match[1].length > 2) {
                 entities.push({

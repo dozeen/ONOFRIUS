@@ -56,3 +56,8 @@ package-lock.old
 # Generated
 coverage/
 dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv

@@ -43,12 +43,12 @@ if (social.shouldReply) {
         }
 
         if (result?.handled) {
-
-            context.response =
-                result.reply;
-
+            context.response = result.reply || result.response || context.response;
+            if (result.sendMediaFilePath) {
+                context.sendMediaFilePath = result.sendMediaFilePath;
+            }
+            context.skipLLM = true;
             return context;
-
         }
 
         return context;

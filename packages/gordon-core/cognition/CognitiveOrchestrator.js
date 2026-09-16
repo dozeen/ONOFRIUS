@@ -3,6 +3,7 @@
  * Integrate con CognitiveProfiler, QuestionClassifier (Assioma 11) e RelevanceFilter.
  */
 
+const identityResolver = require("../identity/IdentityResolver");
 const { buildContext } = require("../perception/contextBuilder");
 const FactExtractor = require("./facts/FactExtractor");
 const FactRegistry = require("./facts/FactRegistry");
@@ -108,10 +109,22 @@ class CognitiveOrchestrator {
         // 1. PERCEPTION / CONTEXT BUILD
         profiler.start("Perception");
         try {
-            if (eventOrContext && eventOrContext.payload && eventOrContext.payload.raw) {
+            if (eventOrContext && eventOrContext.identity) {
+                context = eventOrContext;
+            } else if (eventOrContext && eventOrContext.payload && eventOrContext.payload.raw) {
                 context = await buildContext(eventOrContext);
             } else {
                 context = eventOrContext || {};
+            }
+
+            if (!context.identity) {
+                context.identity = identityResolver.resolve(context);
+            }
+            if (context.identity && context.identity.contact) {
+                context.contact = context.identity.contact;
+                if (context.contact.name && context.contact.name !== 'Sconosciuto' && context.contact.name !== '.') {
+                    context.contactName = context.contact.name;
+                }
             }
         } catch (err) {
             logger.warn("CognitiveOrchestrator", `Context building fallback: ${err.message}`);
@@ -132,9 +145,9 @@ class CognitiveOrchestrator {
         const inputText = (context.text || context.message || "").trim();
         const hasMedia = context.media && (context.media.hasMedia === true || (context.media.type && context.media.type !== 'chat') || context.media.url);
 
-        // 1.6 PROTEZIONE MESSAGGI VUOTI
-        if (!inputText && !hasMedia) {
-            logger.info("CognitiveOrchestrator", "🛑 Messaggio vuoto senza media. Interrompo ciclo cognitivo.");
+        // 1.6 PROTEZIONE MESSAGGI VUOTI (inclusi vocali non trascritti o senza testo)
+        if (!inputText) {
+            logger.info("CognitiveOrchestrator", "🛑 Messaggio vuoto o trascrizione vocale fallita/assente. Interrompo ciclo cognitivo.");
             context.skipLLM = true;
             context.isCognitiveNote = true;
             context.response = undefined;
@@ -207,16 +220,44 @@ class CognitiveOrchestrator {
         // REGOLA FONDAMENTALE DI AUTONOMIA E RISPOSTA:
         // I messaggi inviati dall'Owner o da Gordon stesso (fromMe: true) vengono APPRESI (fatti/pensieri),
         // MA NON DEVONO MAI GENERARE UNA RISPOSTA AUTOMATICA LLM PER EVITARE AUTO-RISPOSTE O LOOP!
-        const isFromMe = context.fromMe === true || context.origin === "gordon" || (context.payload?.raw?.fromMe === true);
+        const rawMsg = context.payload?.raw;
+        const selfChatHelper = (() => { try { return require("../../adapters/whatsapp/selfChat"); } catch(e) { return { isSelfChat: () => false }; } })();
+        const isSelfChat = context.isSelfChat === true || (rawMsg && selfChatHelper.isSelfChat(rawMsg));
 
-        if (isFromMe || (classification.isCognitiveNote && !classification.isConversation)) {
+        // Se è una Self-Chat (Messaggi con te stesso), NON è mai un messaggio ad altri contatti!
+        const isFromMeToOther = (context.fromMe === true || context.origin === "gordon" || rawMsg?.fromMe === true) && !isSelfChat;
+
+        if (isFromMeToOther) {
             logger.info("CognitiveOrchestrator", `📝 Messaggio da Owner/Gordon o Nota Cognitiva [${classification.category}] appresa. Salto generazione LLM.`);
             context.isCognitiveNote = true;
-            context.skipLLM = true;
-            context.response = undefined;
-            
+            // Salva il messaggio dell'Owner nella cronologia della chat con il contatto
+            try {
+                const History = require("../history/history");
+                const history = new History();
+                const contactManager = require("../contactManager");
+                const normChatId = contactManager.normalize(context.chatId || context.transport?.chatId);
+                if (normChatId && inputText) {
+                    history.saveAssistant(normChatId, inputText, "OWNER");
+                }
+            } catch (errOwnerHist) {
+                // Silente
+            }
             console.log(profiler.formatSummary());
             return context;
+        }
+
+        // Se è una Self-Chat (Messaggi inviati a se stessi), rispondi SOLO se è un comando o richiesta esplicita ad Agente/Gordon!
+        // Altrimenti impara la nota cognitiva in silenzio senza generare risposte per evitare loop o spam.
+        if (isSelfChat) {
+            const isAgentQuery = /^\s*(agente|gordon|#gordon|crea|leggi|elenca|scrivi|salva|riassunto|cosa|agenda|calendario|appuntamento|appuntamenti|impegno|impegni|promemoria|status|chi sei|come stai)\b/i.test(inputText) || /\b(agente|gordon|#gordon)\b/i.test(inputText);
+            if (!isAgentQuery) {
+                logger.info("CognitiveOrchestrator", `📝 Nota in Self-Chat [${classification.category}] appresa. Salto generazione LLM.`);
+                context.isCognitiveNote = true;
+                context.skipLLM = true;
+                context.response = undefined;
+                console.log(profiler.formatSummary());
+                return context;
+            }
         }
 
         // 8. BRAIN PROCESS (Conversazione da Contatti Esterni)
@@ -230,7 +271,11 @@ class CognitiveOrchestrator {
             const verification = this.factVerifier.verify(context.response, allEntities, context);
             context.verification = verification;
 
-            if (!verification.valid) {
+            if (verification.replaced && verification.response) {
+                logger.info("CognitiveOrchestrator", `🔄 FactVerifier: Risposta allucinata sostituita con dati oggettivi: "${verification.response}"`);
+                context.response = verification.response;
+                context.responseBlocked = false;
+            } else if (!verification.valid) {
                 logger.warn("CognitiveOrchestrator", `🛑 FactVerifier/PrivacyGuard ha bloccato la risposta: ${verification.reason}`);
                 context.responseBlocked = true;
                 context.responseError = verification.reason;

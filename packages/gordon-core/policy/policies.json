@@ -1,27 +1,11 @@
 {
-    "global": {
-        "mode": "on"
-    },
-    "contacts": {
-        "Federico": {
-            "mode": "on"
-        },
-        "VIP": {
-            "mode": "off"
-        },
-        "Mercadante": {
-            "mode": "listen"
-        },
-        "federico": {
-            "mode": "off"
-        },
-        "vip": {
-            "mode": "off"
-        }
-    },
-    "groups": {
-        "Mercadante": {
-            "mode": "listen"
-        }
+  "global": {
+    "mode": "on"
+  },
+  "contacts": {
+    "default": {
+      "mode": "on"
     }
+  },
+  "groups": {}
 }

@@ -2,6 +2,7 @@
  * test-3-tier-narratives.js - Test di verifica dei 3 Livelli di Conoscenza e Narrazioni Ambientali in ONOFRIUS
  */
 
+const assert = require("assert");
 const observedFacts = require("./packages/gordon-core/facts/ObservedFacts");
 const inferredContext = require("./packages/gordon-core/cognition/InferredContext");
 const emergentEvents = require("./packages/gordon-core/cognition/social/EmergentEventDetector");
@@ -15,34 +16,28 @@ async function runTest() {
     console.log("TEST 3 LIVELLI DI CONOSCENZA & NARRAZIONI");
     console.log("=========================================\n");
 
-    observedFacts.addObservedFact({ statement: "Onofrio ha inviato un messaggio su WhatsApp", source: "whatsapp" });
+    observedFacts.addObservedFact({ statement: "L'Owner ha inviato un messaggio su WhatsApp", source: "whatsapp" });
     
     const hyp = emergentEvents.detectEvents([
         { text: "Sapete di ContattoC?" },
         { text: "È in ospedale con l'ambulanza" },
-        { text: "Preghiamo per lui" }
+        { sender: "ContattoC", text: "Ciao a tutti" },
+        { sender: "ContattoB", text: "Come stai?" },
+        { sender: "ContattoC", text: "Purtroppo sono in ospedale con l'ambulanza, preghiamo vada tutto bene" }
     ]);
     inferredContext.addHypothesis(hyp);
 
-    ambientMemory.addNarrative("Dal 5 agosto il gruppo parla con preoccupazione della salute di ContattoC.", 0.85);
+    assert.ok(hyp, "Ipotesi emergente deve essere generata");
+    assert.strictEqual(hyp.category, "health_event");
+    assert.strictEqual(hyp.evidence.length, 3);
+    console.log("✅ 1. Livello Inferred Context & Evidenze generato con successo:\n", hyp);
 
-    if (observedFacts.getFacts().length > 0 && inferredContext.getHypotheses().length > 0 && ambientMemory.getNarratives().length > 0) {
-        console.log("✅ TEST 1 PASSED: I 3 livelli di conoscenza sono rigorosamente separati ed operativi.\n");
-    } else {
-        console.error("❌ TEST 1 FAILED!");
-        process.exit(1);
-    }
-
-    if (hyp.type === "emergent_hypothesis" && hyp.evidence.includes("ambulanza") && hyp.evidence.includes("ospedale")) {
-        console.log("✅ TEST 2 PASSED: L'ipotesi emergente contiene le evidenze analizzate.\n");
-    } else {
-        console.error("❌ TEST 2 FAILED!");
-        process.exit(1);
-    }
-
+    // 2. VERIFICA RESONANCE SCORE E ATTENZIONE AMBIENTALE
+    console.log("\n--- 2. Social Resonance & Attenzione Ambientale ---");
+    socialGraph.recordInteraction("ContattoA", "ContattoB", false);
     socialGraph.recordInteraction("ContattoB", "ContattoA", true);
     socialGraph.recordInteraction("ContattoE", "ContattoA", true);
-    socialGraph.recordInteraction("Onofrio", "ContattoA", true);
+    socialGraph.recordInteraction("Owner", "ContattoA", true);
 
     const contattoAResonance = socialGraph.getResonance("ContattoA");
     if (contattoAResonance === 3) {
