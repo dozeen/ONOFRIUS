@@ -1,0 +1,32 @@
+class ResponseValidator {
+
+    validate(text) {
+
+        const forbidden = [
+
+            "destino",
+            "universo",
+            "tempo si ferma",
+            "anima gemella",
+            "latte caldo",
+            "sciuppare le parole"
+
+        ];
+
+        for (const word of forbidden) {
+
+            if (text.toLowerCase().includes(word.toLowerCase())) {
+
+                return false;
+
+            }
+
+        }
+
+        return true;
+
+    }
+
+}
+
+module.exports = ResponseValidator;

@@ -1,0 +1,5 @@
+{
+  "logLevel": "INFO",
+  "debug": false,
+  "memoryPath": "./memory"
+}

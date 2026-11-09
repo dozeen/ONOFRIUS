@@ -1,0 +1,11 @@
+{
+  "global": {
+    "mode": "on"
+  },
+  "contacts": {
+    "default": {
+      "mode": "on"
+    }
+  },
+  "groups": {}
+}

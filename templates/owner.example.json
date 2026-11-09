@@ -1,0 +1,10 @@
+{
+    "name": "Owner",
+    "nickname": "Me",
+    "aliases": ["owner", "me"],
+    "language": "en",
+    "timezone": "Europe/Rome",
+    "familyMembers": [],
+    "trustedContacts": [],
+    "confidentialSubjects": []
+}

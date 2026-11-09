@@ -1,0 +1,6 @@
+{
+    "llm": "ollama",
+    "model": "qwen3:latest",
+    "whatsapp": true,
+    "learning": true
+}

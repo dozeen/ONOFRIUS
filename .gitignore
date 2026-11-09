@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+
+# Environment & Config
+.env
+.env.*
+/config/*.json
+!config/*.example.json
+packages/gordon-core/config/*.json
+!packages/gordon-core/config/*.example.json
+
+# WhatsApp
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Logs
+logs/
+*.log
+
+# Runtime
+tmp/
+cache/
+backup/
+release/
+
+# Memory
+/memory/
+packages/memory/
+packages/gordon-core/memory/history/
+packages/gordon-core/memory/contacts/
+packages/gordon-core/memory/knowledge/*.json
+packages/gordon-core/memory/preferences/*.json
+packages/gordon-core/memory/intentions/*.json
+packages/gordon-core/memory/notes/*.json
+packages/gordon-core/memory/appointments/*.json
+packages/gordon-core/memory/style/*.json
+packages/gordon-core/config/addressBook.json
+packages/gordon-core/config/chatState.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Certificates
+*.pem
+*.key
+
+# npm
+npm-debug.log*
+package-lock.old
+
+# Generated
+coverage/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv
+
+# Private runtime state: never stage generated memories
+/packages/gordon-core/memory/**/*.json
+/packages/gordon-core/memory/**/*.jsonl
+*.bundle
+/privacy-backups/

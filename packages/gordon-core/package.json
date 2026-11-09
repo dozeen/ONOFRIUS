@@ -1,0 +1,6 @@
+{
+  "name": "gordon-core",
+  "version": "1.0.0",
+  "description": "Certified Cognitive Engine for ONOFRIUS Cognitive OS",
+  "main": "index.js"
+}
